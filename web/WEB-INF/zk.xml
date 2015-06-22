@@ -1,0 +1,71 @@
+<zk>
+    <library-property>
+        <name>org.zkoss.zul.Button.mold</name>
+        <value>trendy</value>
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.web.preferred.locale</name>
+        <value>mn</value>
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.zul.listbox.rod</name>
+        <value>true</value>
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.theme.preferred</name>
+        <value>atlantic</value> <!-- or silvertail, atlantic -->
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.zul.grid.rod</name>
+        <value>true</value>
+    </library-property>
+
+    <!--<listener>-->
+    <!--<listener-class>nous.lis.core.ui.controller.pagesCtrl.MyLocaleProvider</listener-class>-->
+    <!--</listener>-->
+
+    <system-config>
+        <ui-factory-class>
+            org.zkoss.zk.ui.http.SerializableUiFactory
+        </ui-factory-class>
+    </system-config>
+
+    <!--<library-property>-->
+    <!--<name>org.zkoss.zkplus.cdi.DelegatingVariableResolver</name>-->
+    <!--<value>java:global/lis-core/webModule/</value>-->
+    <!--</library-property>-->
+
+
+    <device-config >
+        <device-type>ajax</device-type>
+        <!-- Configure the progress message to show in the center -->
+        <embed><![CDATA[
+        <script type="text/javascript">
+            AU_progressbar = function (id, msg)
+            {
+                Boot_progressbox(id, msg, 0, 0, true, true);
+            };
+        </script>
+    ]]></embed>
+    </device-config>
+
+
+    <!--<library-property>-->
+    <!--<name>org.zkoss.zkplus.cdi.CDIUtil</name>-->
+    <!--<value>java:global/BeanManager</value>-->
+    <!--</library-property>-->
+
+
+    <!--<library-property>-->
+    <!--<name>org.zkoss.bind.DebuggerFactory.enable</name>-->
+    <!--<value>true</value>-->
+    <!--</library-property>-->
+    <!--<library-property>-->
+    <!--<name>org.zkoss.bind.DebuggerFactory.class</name>-->
+    <!--<value>org.zkoss.bind.addon.sys.debugger.ChromeExtensionDebuggerFactory</value>-->
+    <!--</library-property>-->
+</zk>

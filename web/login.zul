@@ -1,0 +1,28 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <window title="login" id="loginWindow" border="normal" width="400px"
+            style="margin-top: 230px;margin-left: 400px;" apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('lw') @init('com.controller.LoginController')">
+        <grid>
+            <columns>
+                <column/>
+                <column/>
+            </columns>
+            <rows>
+                <row>
+                    <label value="Хэрэглэгчийн Нэр"/>
+                    <textbox id="usernameTxt" placeholder="Хэрэглэгчийн Нэр"/>
+                </row>
+                <row>
+                    <label value="Нууц Үг"/>
+                    <textbox id="passwordTxt" type="password" placeholder="???? ??"/>
+                </row>
+                <row>
+                    <cell colspan="2">
+                        <button label="Нэвтрэх" onClick="@command('login')" style="width: 100%;height: 100%"/>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+    </window>
+</zk>
