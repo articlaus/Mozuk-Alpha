@@ -1,8 +1,8 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
     <window title="login" id="loginWindow" border="normal" width="400px"
-            style="margin-top: 230px;margin-left: 400px;" apply="org.zkoss.bind.BindComposer"
-            viewModel="@id('lw') @init('com.controller.LoginController')">
+            apply="org.zkoss.bind.BindComposer" mode="modal" position="center"
+            viewModel="@id('lw') @init('com.ui.controller.LoginController')">
         <grid>
             <columns>
                 <column/>
