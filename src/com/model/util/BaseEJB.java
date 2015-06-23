@@ -1,6 +1,7 @@
 package com.model.util;
 
 import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -10,7 +11,7 @@ import javax.persistence.PersistenceContext;
 public class BaseEJB {
 
 
-    @PersistenceContext(unitName = "avoUNIT")
+    @PersistenceContext(unitName = "mozukUnit")
     public EntityManager em;
 
     @Resource

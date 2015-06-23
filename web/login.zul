@@ -15,7 +15,7 @@
                 </row>
                 <row>
                     <label value="Нууц Үг"/>
-                    <textbox id="passwordTxt" type="password" placeholder="???? ??"/>
+                    <textbox id="passwordTxt" type="password" placeholder="Нууц үг"/>
                 </row>
                 <row>
                     <cell colspan="2">
