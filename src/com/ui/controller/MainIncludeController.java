@@ -27,6 +27,8 @@ public class MainIncludeController extends MainComponent {
     @Override
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
+        System.out.println("mainInclude = " + mainInclude);
         Executions.getCurrent().getSession().setAttribute("mainInclude", mainInclude);
+        System.out.println("Executions.getCurrent().getSession().getAttribute(\"mainInclude\") = " + Executions.getCurrent().getSession().getAttribute("mainInclude"));
     }
 }

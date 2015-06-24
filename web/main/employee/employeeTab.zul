@@ -1,0 +1,17 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel>
+        <panelchildren>
+            <tabbox>
+                <tabs>
+                    <tab id="employeeDetails" label="Ерөнхий Мэдээлэл" iconSclass="z-icon-user" selected="true"/>
+                </tabs>
+                <tabpanels>
+                    <tabpanel>
+                        <include src="/main/employee/employeeDetails.zul"/>
+                    </tabpanel>
+                </tabpanels>
+            </tabbox>
+        </panelchildren>
+    </panel>
+</zk>

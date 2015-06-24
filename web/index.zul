@@ -9,7 +9,7 @@
                            viewModel="@id('mp') @init('com.ui.controller.MenuListController')">
                         <panelchildren>
                             <navbar orient="vertical" width="100%">
-                                <navitem label="Home" iconSclass="z-icon-home"/>
+                                <navitem label="Нүүр" iconSclass="z-icon-home" onClick="@command('home')"/>
                                 <nav label="Ажилтанууд" iconSclass="z-icon-users">
                                     <navitem label="Жагсаалт" iconSclass="z-icon-th-list"
                                              onClick="@command('employeeList')"/>
