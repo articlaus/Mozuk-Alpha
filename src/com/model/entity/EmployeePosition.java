@@ -13,6 +13,7 @@ import java.util.Date;
         {
                 @NamedQuery(name = "EmployeePosition.findAll", query = "SELECT e FROM EmployeePosition AS e "),
                 @NamedQuery(name = "EmployeePosition.findByEmployeeAndIsActive", query = "SELECT e FROM EmployeePosition AS e WHERE e.employee=:employee AND e.isActive=:isActive"),
+                @NamedQuery(name = "EmployeePosition.findByIsActive", query = "SELECT e FROM EmployeePosition AS e WHERE e.isActive=:isActive ORDER BY e.createdDate DESC"),
         }
 )
 public class EmployeePosition implements Serializable {

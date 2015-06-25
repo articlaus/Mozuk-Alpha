@@ -200,6 +200,7 @@ public class Employee implements Serializable {
 
     /**
      * Employee's active position
+     *
      * @return
      */
     @Transient
@@ -209,5 +210,16 @@ public class Employee implements Serializable {
 
     public void setEmployeePosition(EmployeePosition employeePosition) {
         this.employeePosition = employeePosition;
+    }
+
+    @Transient
+    private String fullname;
+
+    public String getFullname() {
+        return getLastname() + " " + getFirstname();
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 }
