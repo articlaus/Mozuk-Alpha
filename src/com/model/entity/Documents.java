@@ -1,6 +1,7 @@
 package com.model.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "Documents.findAll",query = "SELECT d FROM Documents AS d"),
 })
-public class Documents {
+public class Documents implements Serializable {
     private Integer id;
     private Integer foreignKey;
     private String description;

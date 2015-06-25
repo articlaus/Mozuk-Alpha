@@ -1,6 +1,7 @@
 package com.model.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by tseegii on 6/23/15.
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "Overtime.findAll",query = "SELECT o FROM Overtime AS o"),
 })
-public class Overtime {
+public class Overtime implements Serializable {
     private long id;
     private String employeeId;
     private boolean isHoliday;

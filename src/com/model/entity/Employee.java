@@ -1,6 +1,7 @@
 package com.model.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Arrays;
 
@@ -15,7 +16,7 @@ import java.util.Arrays;
 
         }
 )
-public class Employee {
+public class Employee implements Serializable {
     private String code;
     private byte[] portrait;
     private String firstname;

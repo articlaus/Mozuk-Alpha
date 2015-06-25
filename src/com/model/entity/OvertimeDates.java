@@ -1,6 +1,7 @@
 package com.model.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "Overtime_dates.findAll",query = "SELECT o FROM OvertimeDates AS o"),
 })
-public class OvertimeDates {
+public class OvertimeDates implements Serializable {
     private Integer id;
     private Date workDate;
     private Date startTime;

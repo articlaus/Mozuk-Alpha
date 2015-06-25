@@ -1,6 +1,7 @@
 package com.model.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by tseegii on 6/23/15.
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "DocumentType.findAll",query = "SELECT d FROM DocumentType AS d"),
 })
-public class DocumentType {
+public class DocumentType implements Serializable {
     private Integer id;
     private String name;
     private String description;

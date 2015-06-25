@@ -1,6 +1,7 @@
 package com.model.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "Users.findAll",query = "SELECT u FROM Users AS u"),
 })
-public class Users {
+public class Users implements Serializable {
     private String username;
     private String password;
     private String employeeCode;

@@ -1,6 +1,7 @@
 package com.model.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by tseegii on 6/23/15.
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "User_Roles.findAll",query = "SELECT u FROM UserRoles AS u"),
 })
-public class UserRoles {
+public class UserRoles implements Serializable {
     private Integer id;
     private String userRole;
 

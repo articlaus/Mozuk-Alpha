@@ -1,6 +1,7 @@
 package com.model.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Arrays;
 
@@ -12,7 +13,7 @@ import java.util.Arrays;
 @NamedQueries({
         @NamedQuery(name = "Resolution.findAll",query = "SELECT r FROM Resolution AS r"),
 })
-public class Resolution {
+public class Resolution implements Serializable {
     private String code;
     private String employeeId;
     private byte[] resolutionFile;

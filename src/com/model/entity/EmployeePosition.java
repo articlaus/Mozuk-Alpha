@@ -1,6 +1,7 @@
 package com.model.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
                 @NamedQuery(name = "EmployeePosition.findByEmployeeAndIsActive", query = "SELECT e FROM EmployeePosition AS e WHERE e.employee=:employee AND e.isActive=:isActive"),
         }
 )
-public class EmployeePosition {
+public class EmployeePosition implements Serializable {
     private Integer id;
     private Integer salary;
     private String positionCode;

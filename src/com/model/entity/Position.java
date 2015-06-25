@@ -1,6 +1,7 @@
 package com.model.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "Position.findAll",query = "SELECT p FROM Position AS p"),
 })
-public class Position {
+public class Position implements Serializable {
     private String code;
     private String positionTitle;
     private String positionDescription;
