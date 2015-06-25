@@ -114,7 +114,8 @@ public class EmployeePosition {
     private Department department;
 
     @ManyToOne
-    @JoinColumn(name = "employee_code", referencedColumnName = "code")
+    @PrimaryKeyJoinColumn(name = "employee_code", referencedColumnName = "code")
+
     public Employee getEmployee() {
         return employee;
     }
@@ -124,7 +125,7 @@ public class EmployeePosition {
     }
 
     @ManyToOne
-    @JoinColumn(name = "position_code", referencedColumnName = "code")
+    @PrimaryKeyJoinColumn(name = "position_code", referencedColumnName = "code")
     public Position getPosition() {
         return position;
     }
@@ -134,7 +135,7 @@ public class EmployeePosition {
     }
 
     @ManyToOne
-    @JoinColumn(name = "department_code", referencedColumnName = "code")
+    @PrimaryKeyJoinColumn(name = "department_code", referencedColumnName = "code")
     public Department getDepartment() {
         return department;
     }
