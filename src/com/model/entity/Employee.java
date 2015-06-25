@@ -103,6 +103,7 @@ public class Employee {
     }
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "dob")
     public Date getDob() {
         return dob;
