@@ -1,37 +1,82 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
 @Table(name = "RESUME")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Resume.findAll",query = "SELECT r FROM Resume AS r"),
-})
+    @NamedQuery(name = "Resume.findAll", query = "SELECT r FROM Resume r"),
+    @NamedQuery(name = "Resume.findById", query = "SELECT r FROM Resume r WHERE r.id = :id"),
+    @NamedQuery(name = "Resume.findByCreatedDate", query = "SELECT r FROM Resume r WHERE r.createdDate = :createdDate"),
+    @NamedQuery(name = "Resume.findByEmail", query = "SELECT r FROM Resume r WHERE r.email = :email"),
+    @NamedQuery(name = "Resume.findByNote", query = "SELECT r FROM Resume r WHERE r.note = :note")})
 public class Resume implements Serializable {
-    private Integer id;
-    private Date createdDate;
-    private String positionCode;
-    private String email;
-    private String note;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    public Integer getId() {
-        return id;
+    private BigDecimal id;
+    @Basic(optional = false)
+
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @Column(name = "email")
+    private String email;
+    @Column(name = "note")
+    private String note;
+    @JoinColumn(name = "position_code", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Position positionCode;
+
+    public Resume() {
     }
 
-    public void setId(Integer id) {
+    public Resume(BigDecimal id) {
         this.id = id;
     }
 
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
+    public Resume(BigDecimal id, Date createdDate, String email) {
+        this.id = id;
+        this.createdDate = createdDate;
+        this.email = email;
+    }
+
+    public BigDecimal getId() {
+        return id;
+    }
+
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
+
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -40,18 +85,6 @@ public class Resume implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Basic
-    @Column(name = "position_code")
-    public String getPositionCode() {
-        return positionCode;
-    }
-
-    public void setPositionCode(String positionCode) {
-        this.positionCode = positionCode;
-    }
-
-    @Basic
-    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -60,8 +93,6 @@ public class Resume implements Serializable {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "note")
     public String getNote() {
         return note;
     }
@@ -70,30 +101,37 @@ public class Resume implements Serializable {
         this.note = note;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Position getPositionCode() {
+        return positionCode;
+    }
 
-        Resume resume = (Resume) o;
-
-        if (id != resume.id) return false;
-        if (createdDate != null ? !createdDate.equals(resume.createdDate) : resume.createdDate != null) return false;
-        if (positionCode != null ? !positionCode.equals(resume.positionCode) : resume.positionCode != null)
-            return false;
-        if (email != null ? !email.equals(resume.email) : resume.email != null) return false;
-        if (note != null ? !note.equals(resume.note) : resume.note != null) return false;
-
-        return true;
+    public void setPositionCode(Position positionCode) {
+        this.positionCode = positionCode;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        result = 31 * result + (positionCode != null ? positionCode.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (note != null ? note.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Resume)) {
+            return false;
+        }
+        Resume other = (Resume) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.model.entity.Resume[ id=" + id + " ]";
+    }
+    
 }

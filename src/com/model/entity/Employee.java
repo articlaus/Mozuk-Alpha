@@ -1,40 +1,127 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Arrays;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
-@Table(name = "EMPLOYEE", schema = "", catalog = "avocado")
-@NamedQueries(
-        {
-                @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee AS e ORDER BY e.createdDate DESC"),
-
-        }
-)
+@Table(name = "EMPLOYEE")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
+    @NamedQuery(name = "Employee.findByCode", query = "SELECT e FROM Employee e WHERE e.code = :code"),
+    @NamedQuery(name = "Employee.findByFirstname", query = "SELECT e FROM Employee e WHERE e.firstname = :firstname"),
+    @NamedQuery(name = "Employee.findByLastname", query = "SELECT e FROM Employee e WHERE e.lastname = :lastname"),
+    @NamedQuery(name = "Employee.findBySurname", query = "SELECT e FROM Employee e WHERE e.surname = :surname"),
+    @NamedQuery(name = "Employee.findByCellNumber", query = "SELECT e FROM Employee e WHERE e.cellNumber = :cellNumber"),
+    @NamedQuery(name = "Employee.findByGender", query = "SELECT e FROM Employee e WHERE e.gender = :gender"),
+    @NamedQuery(name = "Employee.findByDob", query = "SELECT e FROM Employee e WHERE e.dob = :dob"),
+    @NamedQuery(name = "Employee.findByMaritalStatus", query = "SELECT e FROM Employee e WHERE e.maritalStatus = :maritalStatus"),
+    @NamedQuery(name = "Employee.findByFamilySize", query = "SELECT e FROM Employee e WHERE e.familySize = :familySize"),
+    @NamedQuery(name = "Employee.findBySocialSecurityNumber", query = "SELECT e FROM Employee e WHERE e.socialSecurityNumber = :socialSecurityNumber"),
+    @NamedQuery(name = "Employee.findByCreatedDate", query = "SELECT e FROM Employee e WHERE e.createdDate = :createdDate")})
 public class Employee implements Serializable {
-    private String code;
-    private byte[] portrait;
-    private String firstname;
-    private String lastname;
-    private String surname;
-    private String cellNumber;
-    private String address;
-    private Date dob;
-    private String maritalStatus;
-    private Integer familySize;
-    private String socialSecurityNumber;
-    private Date createdDate;
-
-    private EmployeePosition employeePosition;
-
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "code")
+    private String code;
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "portrait")
+    private byte[] portrait;
+    @Basic(optional = false)
+    @Column(name = "firstname")
+    private String firstname;
+    @Basic(optional = false)
+    @Column(name = "lastname")
+    private String lastname;
+    @Basic(optional = false)
+    @Column(name = "surname")
+    private String surname;
+    @Basic(optional = false)
+    @Column(name = "cell_number")
+    private String cellNumber;
+    @Lob
+    @Column(name = "address")
+    private String address;
+    @Column(name = "gender")
+    private Boolean gender;
+    @Column(name = "dob")
+    @Temporal(TemporalType.DATE)
+    private Date dob;
+    @Basic(optional = false)
+    @Column(name = "marital_status")
+    private String maritalStatus;
+    @Column(name = "family_size")
+    private Integer familySize;
+    @Basic(optional = false)
+    @Column(name = "social_security_number")
+    private String socialSecurityNumber;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    private DepartmentHeads departmentHeads;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    private List<EmployeeWorkMonth> employeeWorkMonthList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    private List<Emergency> emergencyList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    private List<EmployeePosition> employeePositionList;
+    @OneToMany(mappedBy = "employeeId")
+    private List<Resolution> resolutionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
+    private List<LeaveAbsence> leaveAbsenceList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
+    private List<Overtime> overtimeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    private List<Probation> probationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    private List<Users> usersList;
+
+    public Employee() {
+    }
+
+    public Employee(String code) {
+        this.code = code;
+    }
+
+    public Employee(String code, byte[] portrait, String firstname, String lastname, String surname, String cellNumber, Date dob, String maritalStatus, String socialSecurityNumber) {
+        this.code = code;
+        this.portrait = portrait;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.surname = surname;
+        this.cellNumber = cellNumber;
+        this.dob = dob;
+        this.maritalStatus = maritalStatus;
+        this.socialSecurityNumber = socialSecurityNumber;
+    }
+
     public String getCode() {
         return code;
     }
@@ -43,8 +130,6 @@ public class Employee implements Serializable {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "portrait")
     public byte[] getPortrait() {
         return portrait;
     }
@@ -53,8 +138,6 @@ public class Employee implements Serializable {
         this.portrait = portrait;
     }
 
-    @Basic
-    @Column(name = "firstname")
     public String getFirstname() {
         return firstname;
     }
@@ -63,8 +146,6 @@ public class Employee implements Serializable {
         this.firstname = firstname;
     }
 
-    @Basic
-    @Column(name = "lastname")
     public String getLastname() {
         return lastname;
     }
@@ -73,8 +154,6 @@ public class Employee implements Serializable {
         this.lastname = lastname;
     }
 
-    @Basic
-    @Column(name = "surname")
     public String getSurname() {
         return surname;
     }
@@ -83,8 +162,6 @@ public class Employee implements Serializable {
         this.surname = surname;
     }
 
-    @Basic
-    @Column(name = "cell_number")
     public String getCellNumber() {
         return cellNumber;
     }
@@ -93,8 +170,6 @@ public class Employee implements Serializable {
         this.cellNumber = cellNumber;
     }
 
-    @Basic
-    @Column(name = "address")
     public String getAddress() {
         return address;
     }
@@ -103,9 +178,14 @@ public class Employee implements Serializable {
         this.address = address;
     }
 
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "dob")
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
     public Date getDob() {
         return dob;
     }
@@ -114,8 +194,6 @@ public class Employee implements Serializable {
         this.dob = dob;
     }
 
-    @Basic
-    @Column(name = "marital_status")
     public String getMaritalStatus() {
         return maritalStatus;
     }
@@ -124,8 +202,6 @@ public class Employee implements Serializable {
         this.maritalStatus = maritalStatus;
     }
 
-    @Basic
-    @Column(name = "family_size")
     public Integer getFamilySize() {
         return familySize;
     }
@@ -134,8 +210,6 @@ public class Employee implements Serializable {
         this.familySize = familySize;
     }
 
-    @Basic
-    @Column(name = "social_security_number")
     public String getSocialSecurityNumber() {
         return socialSecurityNumber;
     }
@@ -144,9 +218,6 @@ public class Employee implements Serializable {
         this.socialSecurityNumber = socialSecurityNumber;
     }
 
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -155,71 +226,109 @@ public class Employee implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public DepartmentHeads getDepartmentHeads() {
+        return departmentHeads;
+    }
 
-        Employee employee = (Employee) o;
+    public void setDepartmentHeads(DepartmentHeads departmentHeads) {
+        this.departmentHeads = departmentHeads;
+    }
 
-        if (code != null ? !code.equals(employee.code) : employee.code != null) return false;
-        if (!Arrays.equals(portrait, employee.portrait)) return false;
-        if (firstname != null ? !firstname.equals(employee.firstname) : employee.firstname != null) return false;
-        if (lastname != null ? !lastname.equals(employee.lastname) : employee.lastname != null) return false;
-        if (surname != null ? !surname.equals(employee.surname) : employee.surname != null) return false;
-        if (cellNumber != null ? !cellNumber.equals(employee.cellNumber) : employee.cellNumber != null) return false;
-        if (address != null ? !address.equals(employee.address) : employee.address != null) return false;
-        if (dob != null ? !dob.equals(employee.dob) : employee.dob != null) return false;
-        if (maritalStatus != null ? !maritalStatus.equals(employee.maritalStatus) : employee.maritalStatus != null)
-            return false;
-        if (familySize != null ? !familySize.equals(employee.familySize) : employee.familySize != null) return false;
-        if (socialSecurityNumber != null ? !socialSecurityNumber.equals(employee.socialSecurityNumber) : employee.socialSecurityNumber != null)
-            return false;
-        if (createdDate != null ? !createdDate.equals(employee.createdDate) : employee.createdDate != null)
-            return false;
+    @XmlTransient
+    public List<EmployeeWorkMonth> getEmployeeWorkMonthList() {
+        return employeeWorkMonthList;
+    }
 
-        return true;
+    public void setEmployeeWorkMonthList(List<EmployeeWorkMonth> employeeWorkMonthList) {
+        this.employeeWorkMonthList = employeeWorkMonthList;
+    }
+
+    @XmlTransient
+    public List<Emergency> getEmergencyList() {
+        return emergencyList;
+    }
+
+    public void setEmergencyList(List<Emergency> emergencyList) {
+        this.emergencyList = emergencyList;
+    }
+
+    @XmlTransient
+    public List<EmployeePosition> getEmployeePositionList() {
+        return employeePositionList;
+    }
+
+    public void setEmployeePositionList(List<EmployeePosition> employeePositionList) {
+        this.employeePositionList = employeePositionList;
+    }
+
+    @XmlTransient
+    public List<Resolution> getResolutionList() {
+        return resolutionList;
+    }
+
+    public void setResolutionList(List<Resolution> resolutionList) {
+        this.resolutionList = resolutionList;
+    }
+
+    @XmlTransient
+    public List<LeaveAbsence> getLeaveAbsenceList() {
+        return leaveAbsenceList;
+    }
+
+    public void setLeaveAbsenceList(List<LeaveAbsence> leaveAbsenceList) {
+        this.leaveAbsenceList = leaveAbsenceList;
+    }
+
+    @XmlTransient
+    public List<Overtime> getOvertimeList() {
+        return overtimeList;
+    }
+
+    public void setOvertimeList(List<Overtime> overtimeList) {
+        this.overtimeList = overtimeList;
+    }
+
+    @XmlTransient
+    public List<Probation> getProbationList() {
+        return probationList;
+    }
+
+    public void setProbationList(List<Probation> probationList) {
+        this.probationList = probationList;
+    }
+
+    @XmlTransient
+    public List<Users> getUsersList() {
+        return usersList;
+    }
+
+    public void setUsersList(List<Users> usersList) {
+        this.usersList = usersList;
     }
 
     @Override
     public int hashCode() {
-        int result = code != null ? code.hashCode() : 0;
-        result = 31 * result + (portrait != null ? Arrays.hashCode(portrait) : 0);
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + (cellNumber != null ? cellNumber.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (dob != null ? dob.hashCode() : 0);
-        result = 31 * result + (maritalStatus != null ? maritalStatus.hashCode() : 0);
-        result = 31 * result + (familySize != null ? familySize.hashCode() : 0);
-        result = 31 * result + (socialSecurityNumber != null ? socialSecurityNumber.hashCode() : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (code != null ? code.hashCode() : 0);
+        return hash;
     }
 
-    /**
-     * Employee's active position
-     *
-     * @return
-     */
-    @Transient
-    public EmployeePosition getEmployeePosition() {
-        return employeePosition;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Employee)) {
+            return false;
+        }
+        Employee other = (Employee) object;
+        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setEmployeePosition(EmployeePosition employeePosition) {
-        this.employeePosition = employeePosition;
+    @Override
+    public String toString() {
+        return "com.model.entity.Employee[ code=" + code + " ]";
     }
-
-    @Transient
-    private String fullname;
-
-    public String getFullname() {
-        return getLastname() + " " + getFirstname();
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
+    
 }

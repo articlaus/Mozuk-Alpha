@@ -1,35 +1,76 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
 @Table(name = "EMERGENCY")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Emergency.findAll",query = "SELECT e FROM Emergency AS e"),
-})
+    @NamedQuery(name = "Emergency.findAll", query = "SELECT e FROM Emergency e"),
+    @NamedQuery(name = "Emergency.findById", query = "SELECT e FROM Emergency e WHERE e.id = :id"),
+    @NamedQuery(name = "Emergency.findByCellNumber", query = "SELECT e FROM Emergency e WHERE e.cellNumber = :cellNumber"),
+    @NamedQuery(name = "Emergency.findByName", query = "SELECT e FROM Emergency e WHERE e.name = :name"),
+    @NamedQuery(name = "Emergency.findByRelationship", query = "SELECT e FROM Emergency e WHERE e.relationship = :relationship")})
 public class Emergency implements Serializable {
-    private Integer id;
-    private String cellNumber;
-    private String name;
-    private String relationship;
-    private String employeeCode;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    public Integer getId() {
-        return id;
+    private BigDecimal id;
+    @Basic(optional = false)
+    @Column(name = "cell_number")
+    private String cellNumber;
+    @Basic(optional = false)
+    @Column(name = "name")
+    private String name;
+    @Basic(optional = false)
+    @Column(name = "relationship")
+    private String relationship;
+    @JoinColumn(name = "employee_code", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Employee employeeCode;
+
+    public Emergency() {
     }
 
-    public void setId(Integer id) {
+    public Emergency(BigDecimal id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "cell_number")
+    public Emergency(BigDecimal id, String cellNumber, String name, String relationship) {
+        this.id = id;
+        this.cellNumber = cellNumber;
+        this.name = name;
+        this.relationship = relationship;
+    }
+
+    public BigDecimal getId() {
+        return id;
+    }
+
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
+
     public String getCellNumber() {
         return cellNumber;
     }
@@ -38,8 +79,6 @@ public class Emergency implements Serializable {
         this.cellNumber = cellNumber;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -48,8 +87,6 @@ public class Emergency implements Serializable {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "relationship")
     public String getRelationship() {
         return relationship;
     }
@@ -58,41 +95,37 @@ public class Emergency implements Serializable {
         this.relationship = relationship;
     }
 
-    @Basic
-    @Column(name = "employee_code")
-    public String getEmployeeCode() {
+    public Employee getEmployeeCode() {
         return employeeCode;
     }
 
-    public void setEmployeeCode(String employeeCode) {
+    public void setEmployeeCode(Employee employeeCode) {
         this.employeeCode = employeeCode;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
 
-        Emergency emergency = (Emergency) o;
-
-        if (id != emergency.id) return false;
-        if (cellNumber != null ? !cellNumber.equals(emergency.cellNumber) : emergency.cellNumber != null) return false;
-        if (name != null ? !name.equals(emergency.name) : emergency.name != null) return false;
-        if (relationship != null ? !relationship.equals(emergency.relationship) : emergency.relationship != null)
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Emergency)) {
             return false;
-        if (employeeCode != null ? !employeeCode.equals(emergency.employeeCode) : emergency.employeeCode != null)
+        }
+        Emergency other = (Emergency) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
-
+        }
         return true;
     }
 
     @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (cellNumber != null ? cellNumber.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (relationship != null ? relationship.hashCode() : 0);
-        result = 31 * result + (employeeCode != null ? employeeCode.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "com.model.entity.Emergency[ id=" + id + " ]";
     }
+    
 }

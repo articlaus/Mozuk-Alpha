@@ -1,29 +1,82 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Arrays;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
 @Table(name = "RESOLUTION")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Resolution.findAll",query = "SELECT r FROM Resolution AS r"),
-})
+    @NamedQuery(name = "Resolution.findAll", query = "SELECT r FROM Resolution r"),
+    @NamedQuery(name = "Resolution.findByCode", query = "SELECT r FROM Resolution r WHERE r.code = :code"),
+    @NamedQuery(name = "Resolution.findByCreatedDate", query = "SELECT r FROM Resolution r WHERE r.createdDate = :createdDate"),
+    @NamedQuery(name = "Resolution.findByIsDepartment", query = "SELECT r FROM Resolution r WHERE r.isDepartment = :isDepartment"),
+    @NamedQuery(name = "Resolution.findByResolutionType", query = "SELECT r FROM Resolution r WHERE r.resolutionType = :resolutionType")})
 public class Resolution implements Serializable {
-    private String code;
-    private String employeeId;
-    private byte[] resolutionFile;
-    private String departmentId;
-    private Date createdDate;
-    private boolean isDepartment;
-    private String resolutionType;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "code")
+    private String code;
+    @Basic(optional = false)
+
+    @Lob
+    @Column(name = "resolution_file")
+    private byte[] resolutionFile;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    @Basic(optional = false)
+    @Column(name = "isDepartment")
+    private boolean isDepartment;
+    @Basic(optional = false)
+    @Column(name = "resolution_type")
+    private String resolutionType;
+    @JoinColumn(name = "department_id", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Department departmentId;
+    @JoinColumn(name = "employee_id", referencedColumnName = "code")
+    @ManyToOne
+    private Employee employeeId;
+
+    public Resolution() {
+    }
+
+    public Resolution(String code) {
+        this.code = code;
+    }
+
+    public Resolution(String code, byte[] resolutionFile, Date createdDate, boolean isDepartment, String resolutionType) {
+        this.code = code;
+        this.resolutionFile = resolutionFile;
+        this.createdDate = createdDate;
+        this.isDepartment = isDepartment;
+        this.resolutionType = resolutionType;
+    }
+
     public String getCode() {
         return code;
     }
@@ -32,18 +85,6 @@ public class Resolution implements Serializable {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "employee_id")
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    @Basic
-    @Column(name = "resolution_file")
     public byte[] getResolutionFile() {
         return resolutionFile;
     }
@@ -52,19 +93,6 @@ public class Resolution implements Serializable {
         this.resolutionFile = resolutionFile;
     }
 
-    @Basic
-    @Column(name = "department_id")
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -73,8 +101,6 @@ public class Resolution implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Basic
-    @Column(name = "isDepartment")
     public boolean getIsDepartment() {
         return isDepartment;
     }
@@ -83,8 +109,6 @@ public class Resolution implements Serializable {
         this.isDepartment = isDepartment;
     }
 
-    @Basic
-    @Column(name = "resolution_type")
     public String getResolutionType() {
         return resolutionType;
     }
@@ -93,34 +117,45 @@ public class Resolution implements Serializable {
         this.resolutionType = resolutionType;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Department getDepartmentId() {
+        return departmentId;
+    }
 
-        Resolution that = (Resolution) o;
+    public void setDepartmentId(Department departmentId) {
+        this.departmentId = departmentId;
+    }
 
-        if (isDepartment != that.isDepartment) return false;
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-        if (employeeId != null ? !employeeId.equals(that.employeeId) : that.employeeId != null) return false;
-        if (!Arrays.equals(resolutionFile, that.resolutionFile)) return false;
-        if (departmentId != null ? !departmentId.equals(that.departmentId) : that.departmentId != null) return false;
-        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
-        if (resolutionType != null ? !resolutionType.equals(that.resolutionType) : that.resolutionType != null)
-            return false;
+    public Employee getEmployeeId() {
+        return employeeId;
+    }
 
-        return true;
+    public void setEmployeeId(Employee employeeId) {
+        this.employeeId = employeeId;
     }
 
     @Override
     public int hashCode() {
-        int result = code != null ? code.hashCode() : 0;
-        result = 31 * result + (employeeId != null ? employeeId.hashCode() : 0);
-        result = 31 * result + (resolutionFile != null ? Arrays.hashCode(resolutionFile) : 0);
-        result = 31 * result + (departmentId != null ? departmentId.hashCode() : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        result = 31 * result + (isDepartment ? 1 : 0);
-        result = 31 * result + (resolutionType != null ? resolutionType.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (code != null ? code.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Resolution)) {
+            return false;
+        }
+        Resolution other = (Resolution) object;
+        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.model.entity.Resolution[ code=" + code + " ]";
+    }
+    
 }

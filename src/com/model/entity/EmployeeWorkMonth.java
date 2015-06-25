@@ -1,45 +1,72 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
-@Table(name = "EMPLOYEE_WORK_MONTH", schema = "", catalog = "avocado")
+@Table(name = "EMPLOYEE_WORK_MONTH")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "EmployeeWorkMonth.findAll",query = "SELECT e FROM EmployeeWorkMonth AS e"),
-})
+    @NamedQuery(name = "EmployeeWorkMonth.findAll", query = "SELECT e FROM EmployeeWorkMonth e"),
+    @NamedQuery(name = "EmployeeWorkMonth.findById", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.id = :id"),
+    @NamedQuery(name = "EmployeeWorkMonth.findByWorkedHours", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.workedHours = :workedHours"),
+    @NamedQuery(name = "EmployeeWorkMonth.findByFinalSalary", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.finalSalary = :finalSalary")})
 public class EmployeeWorkMonth implements Serializable {
-    private Integer id;
-    private Integer workMonthsid;
-    private Integer workedHours;
-    private Integer finalSalary;
-    private String employeeCode;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    public Integer getId() {
-        return id;
+    private BigDecimal id;
+    @Column(name = "worked_hours")
+    private Integer workedHours;
+    @Basic(optional = false)
+    @Column(name = "final_salary")
+    private int finalSalary;
+    @JoinColumn(name = "Work_Monthsid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private WorkMonths workMonthsid;
+    @JoinColumn(name = "employee_code", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Employee employeeCode;
+
+    public EmployeeWorkMonth() {
     }
 
-    public void setId(Integer id) {
+    public EmployeeWorkMonth(BigDecimal id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "Work_Monthsid")
-    public Integer getWorkMonthsid() {
-        return workMonthsid;
+    public EmployeeWorkMonth(BigDecimal id, int finalSalary) {
+        this.id = id;
+        this.finalSalary = finalSalary;
     }
 
-    public void setWorkMonthsid(Integer workMonthsid) {
-        this.workMonthsid = workMonthsid;
+    public BigDecimal getId() {
+        return id;
     }
 
-    @Basic
-    @Column(name = "worked_hours")
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
+
     public Integer getWorkedHours() {
         return workedHours;
     }
@@ -48,49 +75,53 @@ public class EmployeeWorkMonth implements Serializable {
         this.workedHours = workedHours;
     }
 
-    @Basic
-    @Column(name = "final_salary")
-    public Integer getFinalSalary() {
+    public int getFinalSalary() {
         return finalSalary;
     }
 
-    public void setFinalSalary(Integer finalSalary) {
+    public void setFinalSalary(int finalSalary) {
         this.finalSalary = finalSalary;
     }
 
-    @Basic
-    @Column(name = "employee_code")
-    public String getEmployeeCode() {
+    public WorkMonths getWorkMonthsid() {
+        return workMonthsid;
+    }
+
+    public void setWorkMonthsid(WorkMonths workMonthsid) {
+        this.workMonthsid = workMonthsid;
+    }
+
+    public Employee getEmployeeCode() {
         return employeeCode;
     }
 
-    public void setEmployeeCode(String employeeCode) {
+    public void setEmployeeCode(Employee employeeCode) {
         this.employeeCode = employeeCode;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
 
-        EmployeeWorkMonth that = (EmployeeWorkMonth) o;
-
-        if (id != that.id) return false;
-        if (workMonthsid != that.workMonthsid) return false;
-        if (finalSalary != that.finalSalary) return false;
-        if (workedHours != null ? !workedHours.equals(that.workedHours) : that.workedHours != null) return false;
-        if (employeeCode != null ? !employeeCode.equals(that.employeeCode) : that.employeeCode != null) return false;
-
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof EmployeeWorkMonth)) {
+            return false;
+        }
+        EmployeeWorkMonth other = (EmployeeWorkMonth) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
         return true;
     }
 
     @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + workMonthsid;
-        result = 31 * result + (workedHours != null ? workedHours.hashCode() : 0);
-        result = 31 * result + finalSalary;
-        result = 31 * result + (employeeCode != null ? employeeCode.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "com.model.entity.EmployeeWorkMonth[ id=" + id + " ]";
     }
+    
 }

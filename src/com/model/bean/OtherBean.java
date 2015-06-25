@@ -73,7 +73,7 @@ public class OtherBean extends BaseEJB {
 
     public DocumentType saveByDocumentType(DocumentType documentType) {
         try {
-            documentType.setId(SequenceUtil.nextBigDecimal().intValue());
+            documentType.setId(SequenceUtil.nextBigDecimal());
             getEm().persist(documentType);
             return documentType;
         } catch (Exception e) {
@@ -114,7 +114,7 @@ public class OtherBean extends BaseEJB {
 
     public Emergency saveByEmergency(Emergency emergency) {
         try {
-            emergency.setId(SequenceUtil.nextBigDecimal().intValue());
+            emergency.setId(SequenceUtil.nextBigDecimal());
             getEm().persist(emergency);
             return emergency;
         } catch (Exception e) {

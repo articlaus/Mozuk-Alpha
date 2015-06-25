@@ -1,37 +1,82 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
-@Table(name = "WORK_MONTHS", schema = "", catalog = "avocado")
+@Table(name = "WORK_MONTHS")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "WorkMonths.findAll", query = "SELECT w FROM WorkMonths AS w"),
-})
+    @NamedQuery(name = "WorkMonths.findAll", query = "SELECT w FROM WorkMonths w"),
+    @NamedQuery(name = "WorkMonths.findById", query = "SELECT w FROM WorkMonths w WHERE w.id = :id"),
+    @NamedQuery(name = "WorkMonths.findByYear", query = "SELECT w FROM WorkMonths w WHERE w.year = :year"),
+    @NamedQuery(name = "WorkMonths.findByMonth", query = "SELECT w FROM WorkMonths w WHERE w.month = :month"),
+    @NamedQuery(name = "WorkMonths.findByTotalWorkHours", query = "SELECT w FROM WorkMonths w WHERE w.totalWorkHours = :totalWorkHours"),
+    @NamedQuery(name = "WorkMonths.findByIsLocked", query = "SELECT w FROM WorkMonths w WHERE w.isLocked = :isLocked"),
+    @NamedQuery(name = "WorkMonths.findByCreatedDate", query = "SELECT w FROM WorkMonths w WHERE w.createdDate = :createdDate")})
 public class WorkMonths implements Serializable {
-    private Integer id;
-    private Integer year;
-    private Integer month;
-    private Integer totalWorkHours;
-    private Boolean isLocked;
-    private Date createdDate;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    public Integer getId() {
-        return id;
+    private BigDecimal id;
+    @Column(name = "year")
+    private Integer year;
+    @Column(name = "month")
+    private Integer month;
+    @Column(name = "total_work_hours")
+    private Integer totalWorkHours;
+    @Column(name = "isLocked")
+    private Boolean isLocked;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workMonthsid")
+    private List<EmployeeWorkMonth> employeeWorkMonthList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workMonthsid")
+    private List<LeaveAbsence> leaveAbsenceList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workMonthsid")
+    private List<Overtime> overtimeList;
+
+    public WorkMonths() {
     }
 
-    public void setId(Integer id) {
+    public WorkMonths(BigDecimal id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "year")
+    public BigDecimal getId() {
+        return id;
+    }
+
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
+
     public Integer getYear() {
         return year;
     }
@@ -40,8 +85,6 @@ public class WorkMonths implements Serializable {
         this.year = year;
     }
 
-    @Basic
-    @Column(name = "month")
     public Integer getMonth() {
         return month;
     }
@@ -50,8 +93,6 @@ public class WorkMonths implements Serializable {
         this.month = month;
     }
 
-    @Basic
-    @Column(name = "total_work_hours")
     public Integer getTotalWorkHours() {
         return totalWorkHours;
     }
@@ -60,7 +101,7 @@ public class WorkMonths implements Serializable {
         this.totalWorkHours = totalWorkHours;
     }
 
-    public Boolean isLocked() {
+    public Boolean getIsLocked() {
         return isLocked;
     }
 
@@ -68,9 +109,6 @@ public class WorkMonths implements Serializable {
         this.isLocked = isLocked;
     }
 
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -79,30 +117,56 @@ public class WorkMonths implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @XmlTransient
+    public List<EmployeeWorkMonth> getEmployeeWorkMonthList() {
+        return employeeWorkMonthList;
+    }
 
-        WorkMonths that = (WorkMonths) o;
+    public void setEmployeeWorkMonthList(List<EmployeeWorkMonth> employeeWorkMonthList) {
+        this.employeeWorkMonthList = employeeWorkMonthList;
+    }
 
-        if (id != that.id) return false;
-        if (year != null ? !year.equals(that.year) : that.year != null) return false;
-        if (month != null ? !month.equals(that.month) : that.month != null) return false;
-        if (totalWorkHours != null ? !totalWorkHours.equals(that.totalWorkHours) : that.totalWorkHours != null)
-            return false;
-        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
+    @XmlTransient
+    public List<LeaveAbsence> getLeaveAbsenceList() {
+        return leaveAbsenceList;
+    }
 
-        return true;
+    public void setLeaveAbsenceList(List<LeaveAbsence> leaveAbsenceList) {
+        this.leaveAbsenceList = leaveAbsenceList;
+    }
+
+    @XmlTransient
+    public List<Overtime> getOvertimeList() {
+        return overtimeList;
+    }
+
+    public void setOvertimeList(List<Overtime> overtimeList) {
+        this.overtimeList = overtimeList;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (year != null ? year.hashCode() : 0);
-        result = 31 * result + (month != null ? month.hashCode() : 0);
-        result = 31 * result + (totalWorkHours != null ? totalWorkHours.hashCode() : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof WorkMonths)) {
+            return false;
+        }
+        WorkMonths other = (WorkMonths) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.model.entity.WorkMonths[ id=" + id + " ]";
+    }
+    
 }

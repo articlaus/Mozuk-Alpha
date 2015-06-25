@@ -1,27 +1,75 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
 @Table(name = "USERS")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users AS u"),
-})
+    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
+    @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u WHERE u.username = :username"),
+    @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"),
+    @NamedQuery(name = "Users.findByIsLocked", query = "SELECT u FROM Users u WHERE u.isLocked = :isLocked"),
+    @NamedQuery(name = "Users.findByCreatedDate", query = "SELECT u FROM Users u WHERE u.createdDate = :createdDate")})
 public class Users implements Serializable {
-    private String username;
-    private String password;
-    private String employeeCode;
-    private Integer userRoleId;
-    private boolean isLocked;
-    private Date createdDate;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "username")
+    private String username;
+    @Basic(optional = false)
+    @Column(name = "password")
+    private String password;
+    @Basic(optional = false)
+
+    @Column(name = "isLocked")
+    private boolean isLocked;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    @JoinColumn(name = "user_role_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private UserRoles userRoleId;
+    @JoinColumn(name = "employee_code", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Employee employeeCode;
+
+    public Users() {
+    }
+
+    public Users(String username) {
+        this.username = username;
+    }
+
+    public Users(String username, String password, boolean isLocked) {
+        this.username = username;
+        this.password = password;
+        this.isLocked = isLocked;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -30,8 +78,6 @@ public class Users implements Serializable {
         this.username = username;
     }
 
-    @Basic
-    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -40,28 +86,6 @@ public class Users implements Serializable {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "employee_code")
-    public String getEmployeeCode() {
-        return employeeCode;
-    }
-
-    public void setEmployeeCode(String employeeCode) {
-        this.employeeCode = employeeCode;
-    }
-
-    @Basic
-    @Column(name = "user_role_id")
-    public Integer getUserRoleId() {
-        return userRoleId;
-    }
-
-    public void setUserRoleId(Integer userRoleId) {
-        this.userRoleId = userRoleId;
-    }
-
-    @Basic
-    @Column(name = "isLocked")
     public boolean getIsLocked() {
         return isLocked;
     }
@@ -70,9 +94,6 @@ public class Users implements Serializable {
         this.isLocked = isLocked;
     }
 
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -81,31 +102,45 @@ public class Users implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public UserRoles getUserRoleId() {
+        return userRoleId;
+    }
 
-        Users users = (Users) o;
+    public void setUserRoleId(UserRoles userRoleId) {
+        this.userRoleId = userRoleId;
+    }
 
-        if (userRoleId != users.userRoleId) return false;
-        if (isLocked != users.isLocked) return false;
-        if (username != null ? !username.equals(users.username) : users.username != null) return false;
-        if (password != null ? !password.equals(users.password) : users.password != null) return false;
-        if (employeeCode != null ? !employeeCode.equals(users.employeeCode) : users.employeeCode != null) return false;
-        if (createdDate != null ? !createdDate.equals(users.createdDate) : users.createdDate != null) return false;
+    public Employee getEmployeeCode() {
+        return employeeCode;
+    }
 
-        return true;
+    public void setEmployeeCode(Employee employeeCode) {
+        this.employeeCode = employeeCode;
     }
 
     @Override
     public int hashCode() {
-        int result = username != null ? username.hashCode() : 0;
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (employeeCode != null ? employeeCode.hashCode() : 0);
-        result = 31 * result + userRoleId;
-        result = 31 * result + (isLocked ? 1 : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (username != null ? username.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Users)) {
+            return false;
+        }
+        Users other = (Users) object;
+        if ((this.username == null && other.username != null) || (this.username != null && !this.username.equals(other.username))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.model.entity.Users[ username=" + username + " ]";
+    }
+    
 }

@@ -1,48 +1,92 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
 @Table(name = "DOCUMENT")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Documents.findAll",query = "SELECT d FROM Documents AS d"),
-})
+    @NamedQuery(name = "Document.findAll", query = "SELECT d FROM Documents d"),
+    @NamedQuery(name = "Document.findById", query = "SELECT d FROM Documents d WHERE d.id = :id"),
+    @NamedQuery(name = "Document.findByForeignKey", query = "SELECT d FROM Documents d WHERE d.foreignKey = :foreignKey"),
+    @NamedQuery(name = "Document.findByDescription", query = "SELECT d FROM Documents d WHERE d.description = :description"),
+    @NamedQuery(name = "Document.findByFileName", query = "SELECT d FROM Documents d WHERE d.fileName = :fileName"),
+    @NamedQuery(name = "Document.findByFileType", query = "SELECT d FROM Documents d WHERE d.fileType = :fileType"),
+    @NamedQuery(name = "Document.findByCreatedDate", query = "SELECT d FROM Documents d WHERE d.createdDate = :createdDate")})
 public class Documents implements Serializable {
-    private Integer id;
-    private Integer foreignKey;
-    private String description;
-    private String fileName;
-    private String fileType;
-    private Integer documentTypeId;
-    private Date createdDate;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    public Integer getId() {
-        return id;
+    private BigDecimal id;
+    @Basic(optional = false)
+    @Column(name = "foreign_key")
+    private int foreignKey;
+    @Column(name = "description")
+    private String description;
+    @Basic(optional = false)
+    @Column(name = "file_name")
+    private String fileName;
+    @Column(name = "file_type")
+    private String fileType;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    @JoinColumn(name = "document_type_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private DocumentType documentTypeId;
+
+    public Documents() {
     }
 
-    public void setId(Integer id) {
+    public Documents(BigDecimal id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "foreign_key")
-    public Integer getForeignKey() {
+    public Documents(BigDecimal id, int foreignKey, String fileName) {
+        this.id = id;
+        this.foreignKey = foreignKey;
+        this.fileName = fileName;
+    }
+
+    public BigDecimal getId() {
+        return id;
+    }
+
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
+
+    public int getForeignKey() {
         return foreignKey;
     }
 
-    public void setForeignKey(Integer foreignKey) {
+    public void setForeignKey(int foreignKey) {
         this.foreignKey = foreignKey;
     }
 
-    @Basic
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -51,8 +95,6 @@ public class Documents implements Serializable {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "file_name")
     public String getFileName() {
         return fileName;
     }
@@ -61,8 +103,6 @@ public class Documents implements Serializable {
         this.fileName = fileName;
     }
 
-    @Basic
-    @Column(name = "file_type")
     public String getFileType() {
         return fileType;
     }
@@ -71,19 +111,6 @@ public class Documents implements Serializable {
         this.fileType = fileType;
     }
 
-    @Basic
-    @Column(name = "document_type_id")
-    public Integer getDocumentTypeId() {
-        return documentTypeId;
-    }
-
-    public void setDocumentTypeId(Integer documentTypeId) {
-        this.documentTypeId = documentTypeId;
-    }
-
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -92,35 +119,37 @@ public class Documents implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public DocumentType getDocumentTypeId() {
+        return documentTypeId;
+    }
 
-        Documents documents = (Documents) o;
-
-        if (id != documents.id) return false;
-        if (foreignKey != documents.foreignKey) return false;
-        if (documentTypeId != documents.documentTypeId) return false;
-        if (description != null ? !description.equals(documents.description) : documents.description != null)
-            return false;
-        if (fileName != null ? !fileName.equals(documents.fileName) : documents.fileName != null) return false;
-        if (fileType != null ? !fileType.equals(documents.fileType) : documents.fileType != null) return false;
-        if (createdDate != null ? !createdDate.equals(documents.createdDate) : documents.createdDate != null)
-            return false;
-
-        return true;
+    public void setDocumentTypeId(DocumentType documentTypeId) {
+        this.documentTypeId = documentTypeId;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + foreignKey;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
-        result = 31 * result + (fileType != null ? fileType.hashCode() : 0);
-        result = 31 * result + documentTypeId;
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Documents)) {
+            return false;
+        }
+        Documents other = (Documents) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.model.entity.Document[ id=" + id + " ]";
+    }
+    
 }

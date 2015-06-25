@@ -1,45 +1,79 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
 @Table(name = "OVERTIME")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Overtime.findAll",query = "SELECT o FROM Overtime AS o"),
-})
+    @NamedQuery(name = "Overtime.findAll", query = "SELECT o FROM Overtime o"),
+    @NamedQuery(name = "Overtime.findById", query = "SELECT o FROM Overtime o WHERE o.id = :id"),
+    @NamedQuery(name = "Overtime.findByIsHoliday", query = "SELECT o FROM Overtime o WHERE o.isHoliday = :isHoliday")})
 public class Overtime implements Serializable {
-    private long id;
-    private String employeeId;
-    private boolean isHoliday;
-    private String reason;
-    private Integer workMonthsid;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    public long getId() {
-        return id;
+    private BigDecimal id;
+    @Basic(optional = false)
+    @Column(name = "isHoliday")
+    private boolean isHoliday;
+    @Lob
+    @Column(name = "reason")
+    private String reason;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "overtimeid")
+    private List<OvertimeDates> overtimeDatesList;
+    @JoinColumn(name = "Work_Monthsid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private WorkMonths workMonthsid;
+    @JoinColumn(name = "employee_id", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Employee employeeId;
+
+    public Overtime() {
     }
 
-    public void setId(long id) {
+    public Overtime(BigDecimal id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "employee_id")
-    public String getEmployeeId() {
-        return employeeId;
+    public Overtime(BigDecimal id, boolean isHoliday) {
+        this.id = id;
+        this.isHoliday = isHoliday;
     }
 
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
+    public BigDecimal getId() {
+        return id;
     }
 
-    @Basic
-    @Column(name = "isHoliday")
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
+
     public boolean getIsHoliday() {
         return isHoliday;
     }
@@ -48,8 +82,6 @@ public class Overtime implements Serializable {
         this.isHoliday = isHoliday;
     }
 
-    @Basic
-    @Column(name = "reason")
     public String getReason() {
         return reason;
     }
@@ -58,39 +90,54 @@ public class Overtime implements Serializable {
         this.reason = reason;
     }
 
-    @Basic
-    @Column(name = "Work_Monthsid")
-    public Integer getWorkMonthsid() {
+    @XmlTransient
+    public List<OvertimeDates> getOvertimeDatesList() {
+        return overtimeDatesList;
+    }
+
+    public void setOvertimeDatesList(List<OvertimeDates> overtimeDatesList) {
+        this.overtimeDatesList = overtimeDatesList;
+    }
+
+    public WorkMonths getWorkMonthsid() {
         return workMonthsid;
     }
 
-    public void setWorkMonthsid(Integer workMonthsid) {
+    public void setWorkMonthsid(WorkMonths workMonthsid) {
         this.workMonthsid = workMonthsid;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Employee getEmployeeId() {
+        return employeeId;
+    }
 
-        Overtime overtime = (Overtime) o;
-
-        if (id != overtime.id) return false;
-        if (isHoliday != overtime.isHoliday) return false;
-        if (workMonthsid != overtime.workMonthsid) return false;
-        if (employeeId != null ? !employeeId.equals(overtime.employeeId) : overtime.employeeId != null) return false;
-        if (reason != null ? !reason.equals(overtime.reason) : overtime.reason != null) return false;
-
-        return true;
+    public void setEmployeeId(Employee employeeId) {
+        this.employeeId = employeeId;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (employeeId != null ? employeeId.hashCode() : 0);
-        result = 31 * result + (isHoliday ? 1 : 0);
-        result = 31 * result + (reason != null ? reason.hashCode() : 0);
-        result = 31 * result + workMonthsid;
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Overtime)) {
+            return false;
+        }
+        Overtime other = (Overtime) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.model.entity.Overtime[ id=" + id + " ]";
+    }
+    
 }

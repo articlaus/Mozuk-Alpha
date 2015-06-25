@@ -1,49 +1,97 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
 @Table(name = "PROBATION")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Probation.findAll",query = "SELECT p FROM Probation AS p"),
-})
+    @NamedQuery(name = "Probation.findAll", query = "SELECT p FROM Probation p"),
+    @NamedQuery(name = "Probation.findById", query = "SELECT p FROM Probation p WHERE p.id = :id"),
+    @NamedQuery(name = "Probation.findByProbationReason", query = "SELECT p FROM Probation p WHERE p.probationReason = :probationReason"),
+    @NamedQuery(name = "Probation.findByStartDate", query = "SELECT p FROM Probation p WHERE p.startDate = :startDate"),
+    @NamedQuery(name = "Probation.findByEndDate", query = "SELECT p FROM Probation p WHERE p.endDate = :endDate"),
+    @NamedQuery(name = "Probation.findByIsActive", query = "SELECT p FROM Probation p WHERE p.isActive = :isActive"),
+    @NamedQuery(name = "Probation.findByCreatedDate", query = "SELECT p FROM Probation p WHERE p.createdDate = :createdDate")})
 public class Probation implements Serializable {
-    private Integer id;
-    private String employeeCode;
-    private String probationReason;
-    private Date startDate;
-    private Date endDate;
-    private boolean isActive;
-    private String departmentId;
-    private Date createdDate;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    public Integer getId() {
-        return id;
+    private BigDecimal id;
+    @Basic(optional = false)
+    @Column(name = "probation_reason")
+    private String probationReason;
+    @Basic(optional = false)
+
+    @Column(name = "start_date")
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+
+    @Column(name = "end_date")
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
+    @Basic(optional = false)
+    @Column(name = "isActive")
+    private boolean isActive;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    @JoinColumn(name = "employee_code", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Employee employeeCode;
+    @JoinColumn(name = "department_id", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Department departmentId;
+
+    public Probation() {
     }
 
-    public void setId(Integer id) {
+    public Probation(BigDecimal id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "employee_code")
-    public String getEmployeeCode() {
-        return employeeCode;
+    public Probation(BigDecimal id, String probationReason, Date startDate, Date endDate, boolean isActive, Date createdDate) {
+        this.id = id;
+        this.probationReason = probationReason;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.isActive = isActive;
+        this.createdDate = createdDate;
     }
 
-    public void setEmployeeCode(String employeeCode) {
-        this.employeeCode = employeeCode;
+    public BigDecimal getId() {
+        return id;
     }
 
-    @Basic
-    @Column(name = "probation_reason")
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
+
     public String getProbationReason() {
         return probationReason;
     }
@@ -52,9 +100,6 @@ public class Probation implements Serializable {
         this.probationReason = probationReason;
     }
 
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "start_date")
     public Date getStartDate() {
         return startDate;
     }
@@ -63,9 +108,6 @@ public class Probation implements Serializable {
         this.startDate = startDate;
     }
 
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "end_date")
     public Date getEndDate() {
         return endDate;
     }
@@ -74,8 +116,6 @@ public class Probation implements Serializable {
         this.endDate = endDate;
     }
 
-    @Basic
-    @Column(name = "isActive")
     public boolean getIsActive() {
         return isActive;
     }
@@ -84,19 +124,6 @@ public class Probation implements Serializable {
         this.isActive = isActive;
     }
 
-    @Basic
-    @Column(name = "department_id")
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -105,39 +132,45 @@ public class Probation implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Employee getEmployeeCode() {
+        return employeeCode;
+    }
 
-        Probation probation = (Probation) o;
+    public void setEmployeeCode(Employee employeeCode) {
+        this.employeeCode = employeeCode;
+    }
 
-        if (id != probation.id) return false;
-        if (isActive != probation.isActive) return false;
-        if (employeeCode != null ? !employeeCode.equals(probation.employeeCode) : probation.employeeCode != null)
-            return false;
-        if (probationReason != null ? !probationReason.equals(probation.probationReason) : probation.probationReason != null)
-            return false;
-        if (startDate != null ? !startDate.equals(probation.startDate) : probation.startDate != null) return false;
-        if (endDate != null ? !endDate.equals(probation.endDate) : probation.endDate != null) return false;
-        if (departmentId != null ? !departmentId.equals(probation.departmentId) : probation.departmentId != null)
-            return false;
-        if (createdDate != null ? !createdDate.equals(probation.createdDate) : probation.createdDate != null)
-            return false;
+    public Department getDepartmentId() {
+        return departmentId;
+    }
 
-        return true;
+    public void setDepartmentId(Department departmentId) {
+        this.departmentId = departmentId;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (employeeCode != null ? employeeCode.hashCode() : 0);
-        result = 31 * result + (probationReason != null ? probationReason.hashCode() : 0);
-        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
-        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-        result = 31 * result + (isActive ? 1 : 0);
-        result = 31 * result + (departmentId != null ? departmentId.hashCode() : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Probation)) {
+            return false;
+        }
+        Probation other = (Probation) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.model.entity.Probation[ id=" + id + " ]";
+    }
+    
 }

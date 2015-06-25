@@ -1,71 +1,101 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
-@Table(name = "DEPARTMENT_HEADS", schema = "", catalog = "avocado")
+@Table(name = "DEPARTMENT_HEADS")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Department_Heads.findAll",query = "SELECT d FROM DepartmentHeads AS d"),
-})
+    @NamedQuery(name = "DepartmentHeads.findAll", query = "SELECT d FROM DepartmentHeads d"),
+    @NamedQuery(name = "DepartmentHeads.findById", query = "SELECT d FROM DepartmentHeads d WHERE d.id = :id")})
 public class DepartmentHeads implements Serializable {
-    private String departmentCode;
-    private String employeeCode;
-    private Integer id;
-
-    @Basic
-    @Column(name = "department_code")
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public void setDepartmentCode(String departmentCode) {
-        this.departmentCode = departmentCode;
-    }
-
-    @Basic
-    @Column(name = "employee_code")
-    public String getEmployeeCode() {
-        return employeeCode;
-    }
-
-    public void setEmployeeCode(String employeeCode) {
-        this.employeeCode = employeeCode;
-    }
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    public Integer getId() {
-        return id;
+    private BigDecimal id;
+    @JoinColumn(name = "employee_code", referencedColumnName = "code")
+    @OneToOne(optional = false)
+    private Employee employeeCode;
+    @JoinColumn(name = "department_code", referencedColumnName = "code")
+    @OneToOne(optional = false)
+    private Department departmentCode;
+
+    public DepartmentHeads() {
     }
 
-    public void setId(Integer id) {
+    public DepartmentHeads(BigDecimal id) {
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public BigDecimal getId() {
+        return id;
+    }
 
-        DepartmentHeads that = (DepartmentHeads) o;
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
 
-        if (id != that.id) return false;
-        if (departmentCode != null ? !departmentCode.equals(that.departmentCode) : that.departmentCode != null)
-            return false;
-        if (employeeCode != null ? !employeeCode.equals(that.employeeCode) : that.employeeCode != null) return false;
+    public Employee getEmployeeCode() {
+        return employeeCode;
+    }
 
-        return true;
+    public void setEmployeeCode(Employee employeeCode) {
+        this.employeeCode = employeeCode;
+    }
+
+    public Department getDepartmentCode() {
+        return departmentCode;
+    }
+
+    public void setDepartmentCode(Department departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
     @Override
     public int hashCode() {
-        int result = departmentCode != null ? departmentCode.hashCode() : 0;
-        result = 31 * result + (employeeCode != null ? employeeCode.hashCode() : 0);
-        result = 31 * result + id;
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof DepartmentHeads)) {
+            return false;
+        }
+        DepartmentHeads other = (DepartmentHeads) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.model.entity.DepartmentHeads[ id=" + id + " ]";
+    }
+    
 }

@@ -1,61 +1,95 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
-@Table(name = "LEAVE_ABSENCE", schema = "", catalog = "avocado")
+@Table(name = "LEAVE_ABSENCE")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "LeaveAbsence.findAll",query = "SELECT l FROM LeaveAbsence AS l"),
-})
+    @NamedQuery(name = "LeaveAbsence.findAll", query = "SELECT l FROM LeaveAbsence l"),
+    @NamedQuery(name = "LeaveAbsence.findById", query = "SELECT l FROM LeaveAbsence l WHERE l.id = :id"),
+    @NamedQuery(name = "LeaveAbsence.findByStartDate", query = "SELECT l FROM LeaveAbsence l WHERE l.startDate = :startDate"),
+    @NamedQuery(name = "LeaveAbsence.findByEndDate", query = "SELECT l FROM LeaveAbsence l WHERE l.endDate = :endDate"),
+    @NamedQuery(name = "LeaveAbsence.findByNumberOfDays", query = "SELECT l FROM LeaveAbsence l WHERE l.numberOfDays = :numberOfDays"),
+    @NamedQuery(name = "LeaveAbsence.findByIsPaid", query = "SELECT l FROM LeaveAbsence l WHERE l.isPaid = :isPaid"),
+    @NamedQuery(name = "LeaveAbsence.findByCreatedDate", query = "SELECT l FROM LeaveAbsence l WHERE l.createdDate = :createdDate")})
 public class LeaveAbsence implements Serializable {
-    private Integer id;
-    private String employeeId;
-    private Integer leaveTypeId;
-    private Date startDate;
-    private Date endDate;
-    private Integer numberOfDays;
-    private boolean isPaid;
-    private Integer workMonthsid;
-    private Date createdDate;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    public Integer getId() {
-        return id;
+    private BigDecimal id;
+    @Column(name = "start_date")
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+    @Column(name = "end_date")
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
+    @Basic(optional = false)
+    @Column(name = "number_of_days")
+    private int numberOfDays;
+    @Basic(optional = false)
+    @Column(name = "isPaid")
+    private boolean isPaid;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    @JoinColumn(name = "leave_type_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private LeaveType leaveTypeId;
+    @JoinColumn(name = "Work_Monthsid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private WorkMonths workMonthsid;
+    @JoinColumn(name = "employee_id", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Employee employeeId;
+
+    public LeaveAbsence() {
     }
 
-    public void setId(Integer id) {
+    public LeaveAbsence(BigDecimal id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "employee_id")
-    public String getEmployeeId() {
-        return employeeId;
+    public LeaveAbsence(BigDecimal id, Date startDate, Date endDate, int numberOfDays, boolean isPaid, Date createdDate) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.numberOfDays = numberOfDays;
+        this.isPaid = isPaid;
+        this.createdDate = createdDate;
     }
 
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
+    public BigDecimal getId() {
+        return id;
     }
 
-    @Basic
-    @Column(name = "leave_type_id")
-    public Integer getLeaveTypeId() {
-        return leaveTypeId;
+    public void setId(BigDecimal id) {
+        this.id = id;
     }
 
-    public void setLeaveTypeId(Integer leaveTypeId) {
-        this.leaveTypeId = leaveTypeId;
-    }
-
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "start_date")
     public Date getStartDate() {
         return startDate;
     }
@@ -64,9 +98,6 @@ public class LeaveAbsence implements Serializable {
         this.startDate = startDate;
     }
 
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "end_date")
     public Date getEndDate() {
         return endDate;
     }
@@ -75,18 +106,14 @@ public class LeaveAbsence implements Serializable {
         this.endDate = endDate;
     }
 
-    @Basic
-    @Column(name = "number_of_days")
-    public Integer getNumberOfDays() {
+    public int getNumberOfDays() {
         return numberOfDays;
     }
 
-    public void setNumberOfDays(Integer numberOfDays) {
+    public void setNumberOfDays(int numberOfDays) {
         this.numberOfDays = numberOfDays;
     }
 
-    @Basic
-    @Column(name = "isPaid")
     public boolean getIsPaid() {
         return isPaid;
     }
@@ -95,19 +122,6 @@ public class LeaveAbsence implements Serializable {
         this.isPaid = isPaid;
     }
 
-    @Basic
-    @Column(name = "Work_Monthsid")
-    public Integer getWorkMonthsid() {
-        return workMonthsid;
-    }
-
-    public void setWorkMonthsid(Integer workMonthsid) {
-        this.workMonthsid = workMonthsid;
-    }
-
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -116,37 +130,53 @@ public class LeaveAbsence implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public LeaveType getLeaveTypeId() {
+        return leaveTypeId;
+    }
 
-        LeaveAbsence that = (LeaveAbsence) o;
+    public void setLeaveTypeId(LeaveType leaveTypeId) {
+        this.leaveTypeId = leaveTypeId;
+    }
 
-        if (id != that.id) return false;
-        if (leaveTypeId != that.leaveTypeId) return false;
-        if (numberOfDays != that.numberOfDays) return false;
-        if (isPaid != that.isPaid) return false;
-        if (workMonthsid != that.workMonthsid) return false;
-        if (employeeId != null ? !employeeId.equals(that.employeeId) : that.employeeId != null) return false;
-        if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
-        if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
-        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
+    public WorkMonths getWorkMonthsid() {
+        return workMonthsid;
+    }
 
-        return true;
+    public void setWorkMonthsid(WorkMonths workMonthsid) {
+        this.workMonthsid = workMonthsid;
+    }
+
+    public Employee getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Employee employeeId) {
+        this.employeeId = employeeId;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (employeeId != null ? employeeId.hashCode() : 0);
-        result = 31 * result + leaveTypeId;
-        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
-        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-        result = 31 * result + numberOfDays;
-        result = 31 * result + (isPaid ? 1 : 0);
-        result = 31 * result + workMonthsid;
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof LeaveAbsence)) {
+            return false;
+        }
+        LeaveAbsence other = (LeaveAbsence) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.model.entity.LeaveAbsence[ id=" + id + " ]";
+    }
+    
 }

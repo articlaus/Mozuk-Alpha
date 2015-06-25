@@ -1,25 +1,77 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
 @Table(name = "POSITION")
+@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Position.findAll",query = "SELECT p FROM Position AS p"),
-})
+    @NamedQuery(name = "Position.findAll", query = "SELECT p FROM Position p"),
+    @NamedQuery(name = "Position.findByCode", query = "SELECT p FROM Position p WHERE p.code = :code"),
+    @NamedQuery(name = "Position.findByPositionTitle", query = "SELECT p FROM Position p WHERE p.positionTitle = :positionTitle"),
+    @NamedQuery(name = "Position.findByCreatedDate", query = "SELECT p FROM Position p WHERE p.createdDate = :createdDate")})
 public class Position implements Serializable {
-    private String code;
-    private String positionTitle;
-    private String positionDescription;
-    private Date createdDate;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "code")
+    private String code;
+    @Basic(optional = false)
+
+    @Column(name = "position_title")
+    private String positionTitle;
+    @Basic(optional = false)
+
+    @Lob
+    @Column(name = "position_description")
+    private String positionDescription;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "positionCode")
+    private List<Resume> resumeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "positionCode")
+    private List<EmployeePosition> employeePositionList;
+
+    public Position() {
+    }
+
+    public Position(String code) {
+        this.code = code;
+    }
+
+    public Position(String code, String positionTitle, String positionDescription) {
+        this.code = code;
+        this.positionTitle = positionTitle;
+        this.positionDescription = positionDescription;
+    }
+
     public String getCode() {
         return code;
     }
@@ -28,8 +80,6 @@ public class Position implements Serializable {
         this.code = code;
     }
 
-    @Basic
-    @Column(name = "position_title")
     public String getPositionTitle() {
         return positionTitle;
     }
@@ -38,8 +88,6 @@ public class Position implements Serializable {
         this.positionTitle = positionTitle;
     }
 
-    @Basic
-    @Column(name = "position_description")
     public String getPositionDescription() {
         return positionDescription;
     }
@@ -48,9 +96,6 @@ public class Position implements Serializable {
         this.positionDescription = positionDescription;
     }
 
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -59,30 +104,47 @@ public class Position implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @XmlTransient
+    public List<Resume> getResumeList() {
+        return resumeList;
+    }
 
-        Position position = (Position) o;
+    public void setResumeList(List<Resume> resumeList) {
+        this.resumeList = resumeList;
+    }
 
-        if (code != null ? !code.equals(position.code) : position.code != null) return false;
-        if (positionTitle != null ? !positionTitle.equals(position.positionTitle) : position.positionTitle != null)
-            return false;
-        if (positionDescription != null ? !positionDescription.equals(position.positionDescription) : position.positionDescription != null)
-            return false;
-        if (createdDate != null ? !createdDate.equals(position.createdDate) : position.createdDate != null)
-            return false;
+    @XmlTransient
+    public List<EmployeePosition> getEmployeePositionList() {
+        return employeePositionList;
+    }
 
-        return true;
+    public void setEmployeePositionList(List<EmployeePosition> employeePositionList) {
+        this.employeePositionList = employeePositionList;
     }
 
     @Override
     public int hashCode() {
-        int result = code != null ? code.hashCode() : 0;
-        result = 31 * result + (positionTitle != null ? positionTitle.hashCode() : 0);
-        result = 31 * result + (positionDescription != null ? positionDescription.hashCode() : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (code != null ? code.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Position)) {
+            return false;
+        }
+        Position other = (Position) object;
+        if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.model.entity.Position[ code=" + code + " ]";
+    }
+    
 }

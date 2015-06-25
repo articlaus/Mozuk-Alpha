@@ -1,41 +1,91 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by tseegii on 6/23/15.
+ *
+ * @author tseegii
  */
 @Entity
-@Table(name = "EMPLOYEE_POSITION", schema = "", catalog = "avocado")
-@NamedQueries(
-        {
-                @NamedQuery(name = "EmployeePosition.findAll", query = "SELECT e FROM EmployeePosition AS e "),
-                @NamedQuery(name = "EmployeePosition.findByEmployeeAndIsActive", query = "SELECT e FROM EmployeePosition AS e WHERE e.employee=:employee AND e.isActive=:isActive"),
-                @NamedQuery(name = "EmployeePosition.findByIsActive", query = "SELECT e FROM EmployeePosition AS e WHERE e.isActive=:isActive ORDER BY e.createdDate DESC"),
-        }
-)
+@Table(name = "EMPLOYEE_POSITION")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "EmployeePosition.findAll", query = "SELECT e FROM EmployeePosition e"),
+    @NamedQuery(name = "EmployeePosition.findById", query = "SELECT e FROM EmployeePosition e WHERE e.id = :id"),
+    @NamedQuery(name = "EmployeePosition.findBySalary", query = "SELECT e FROM EmployeePosition e WHERE e.salary = :salary"),
+    @NamedQuery(name = "EmployeePosition.findByCreatedDate", query = "SELECT e FROM EmployeePosition e WHERE e.createdDate = :createdDate"),
+    @NamedQuery(name = "EmployeePosition.findByStartDate", query = "SELECT e FROM EmployeePosition e WHERE e.startDate = :startDate"),
+    @NamedQuery(name = "EmployeePosition.findByEndDate", query = "SELECT e FROM EmployeePosition e WHERE e.endDate = :endDate"),
+    @NamedQuery(name = "EmployeePosition.findByIsActive", query = "SELECT e FROM EmployeePosition e WHERE e.isActive = :isActive")})
 public class EmployeePosition implements Serializable {
-    private Integer id;
-    private Integer salary;
-    private String positionCode;
-    private String employeeCode;
-    private Boolean isActive;
-    private Date createdDate;
-
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    public Integer getId() {
-        return id;
+    private BigDecimal id;
+    @Column(name = "salary")
+    private Integer salary;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    @Column(name = "start_date")
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+    @Column(name = "end_date")
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
+    @Basic(optional = false)
+    @Column(name = "isActive")
+    private boolean isActive;
+    @JoinColumn(name = "department_code", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Department departmentCode;
+    @JoinColumn(name = "position_code", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Position positionCode;
+    @JoinColumn(name = "employee_code", referencedColumnName = "code")
+    @ManyToOne(optional = false)
+    private Employee employeeCode;
+
+    public EmployeePosition() {
     }
 
-    public void setId(Integer id) {
+    public EmployeePosition(BigDecimal id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "salary")
+    public EmployeePosition(BigDecimal id, Date startDate, boolean isActive) {
+        this.id = id;
+        this.startDate = startDate;
+        this.isActive = isActive;
+    }
+
+    public BigDecimal getId() {
+        return id;
+    }
+
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
+
     public Integer getSalary() {
         return salary;
     }
@@ -44,39 +94,6 @@ public class EmployeePosition implements Serializable {
         this.salary = salary;
     }
 
-    @Basic
-    @Column(name = "position_code")
-    public String getPositionCode() {
-        return positionCode;
-    }
-
-    public void setPositionCode(String positionCode) {
-        this.positionCode = positionCode;
-    }
-
-    @Basic
-    @Column(name = "employee_code")
-    public String getEmployeeCode() {
-        return employeeCode;
-    }
-
-    public void setEmployeeCode(String employeeCode) {
-        this.employeeCode = employeeCode;
-    }
-
-    @Basic
-    @Column(name = "isActive")
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -85,64 +102,77 @@ public class EmployeePosition implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Date getStartDate() {
+        return startDate;
+    }
 
-        EmployeePosition that = (EmployeePosition) o;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-        if (id != that.id) return false;
-        if (salary != null ? !salary.equals(that.salary) : that.salary != null) return false;
-        if (positionCode != null ? !positionCode.equals(that.positionCode) : that.positionCode != null) return false;
-        if (employeeCode != null ? !employeeCode.equals(that.employeeCode) : that.employeeCode != null) return false;
-        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
+    public Date getEndDate() {
+        return endDate;
+    }
 
-        return true;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public Department getDepartmentCode() {
+        return departmentCode;
+    }
+
+    public void setDepartmentCode(Department departmentCode) {
+        this.departmentCode = departmentCode;
+    }
+
+    public Position getPositionCode() {
+        return positionCode;
+    }
+
+    public void setPositionCode(Position positionCode) {
+        this.positionCode = positionCode;
+    }
+
+    public Employee getEmployeeCode() {
+        return employeeCode;
+    }
+
+    public void setEmployeeCode(Employee employeeCode) {
+        this.employeeCode = employeeCode;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (salary != null ? salary.hashCode() : 0);
-        result = 31 * result + (positionCode != null ? positionCode.hashCode() : 0);
-        result = 31 * result + (employeeCode != null ? employeeCode.hashCode() : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
-    private Employee employee;
-    private Position position;
-    private Department department;
-
-    @ManyToOne
-    @PrimaryKeyJoinColumn(name = "employee_code", referencedColumnName = "code")
-
-    public Employee getEmployee() {
-        return employee;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof EmployeePosition)) {
+            return false;
+        }
+        EmployeePosition other = (EmployeePosition) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    @Override
+    public String toString() {
+        return "com.model.entity.EmployeePosition[ id=" + id + " ]";
     }
-
-    @ManyToOne
-    @PrimaryKeyJoinColumn(name = "position_code", referencedColumnName = "code")
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    @ManyToOne
-    @PrimaryKeyJoinColumn(name = "department_code", referencedColumnName = "code")
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
+    
 }
