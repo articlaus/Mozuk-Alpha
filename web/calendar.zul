@@ -1,0 +1,19 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <style src="/assets/fullcalendar/fullcalendar.min.css"/>
+
+    <panel width="100%" id="calendarPanel" height="100%" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('cp') @init('com.ui.controller.main.CalendarPanelController')">
+
+        <panelchildren>
+            <!--<calendars id="mainCalendar" firstDayOfWeek="Monday" timeZone="Ulaanbaatar=GMT+8" mold="month"/>-->
+
+            <n:div id="calendar"/>
+        </panelchildren>
+
+    </panel>
+    <!-- Full Calendar -->
+    <script type="text/javascript" src="/assets/fullcalendar/moment.min.js"></script>
+    <script type="text/javascript" src="/assets/fullcalendar/jquery-ui.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/fullcalendar/fullcalendar.min.js"></script>
+</zk>

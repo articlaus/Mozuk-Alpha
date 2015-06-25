@@ -1,0 +1,40 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel id="employeeListPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('elp') @init('com.ui.controller.main.employee.EmployeeListPanelController')"
+            >
+
+        <toolbar>
+            <hbox>
+                <button label="Нэмэх" onClick="@command('addEmployee')" iconSclass="z-icon-user-plus"/>
+                <div id="searchField"/>
+            </hbox>
+        </toolbar>
+        <panelchildren>
+            <listbox id="employeeListBox" height="800px" model="@bind(elp.employeeList)"
+                     selectedItem="@bind(elp.selectedEmployee)" mold="paging" pagingPosition="bottom">
+                <listhead menupopup="auto">
+                    <listheader label="Код" sort="auto(code)"/>
+                    <listheader label="Овог Нэр" sort="auto(fullName)"/>
+                    <listheader label="Албан Тушаал" sort="auto(employeePosition.position.positionTitle)"/>
+                    <listheader label="Хэлтэс" sort="auto(employeePosition.departmentCode.departmentTitle)"/>
+                    <listheader label="Цалин" sort="auto(employeePosition.salary)"/>
+                    <listheader/>
+                </listhead>
+                <template name="model">
+                    <listitem onDoubleClick="@command('editEmployee')">
+                        <listcell label="@bind(each.code)"/>
+                        <listcell label="@bind(each.fullName)"/>
+                        <listcell label="@bind(each.employeePosition.position.positionTitle)"/>
+                        <listcell label="@bind(each.employeePosition.departmentCode.departmentTitle)"/>
+                        <listcell label="@bind(each.employeePosition.salary)"/>
+                    </listitem>
+                </template>
+
+            </listbox>
+
+        </panelchildren>
+
+    </panel>
+
+</zk>

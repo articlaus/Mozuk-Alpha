@@ -1,0 +1,109 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel id="employeeDetailsPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('edp') @init('com.ui.controller.main.employee.EmployeeDetailsPanelController')">
+        <panelchildren>
+            <hbox>
+                <groupbox closable="false" height="800px">
+                    <caption label="Ерөнхий Мэдээлэл"/>
+                    <grid>
+                        <columns>
+                            <column/>
+                            <column/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <label value="Ажилтаны Код -"/>
+                                <textbox value="@bind(edp.employee.code)" width="100%" placeholder="Ажилтаны Код"
+                                         constraint="no empty"/>
+                            </row>
+                            <row>
+                                <label value="Регистрийн Дугаар -"/>
+                                <textbox value="@bind(edp.employee.socialSecurityNumber)" width="100%"
+                                         placeholder="Регистрийн Дугаар" constraint=""/>
+                            </row>
+                            <row>
+                                <label value="Ургийн овог -"/>
+                                <textbox value="@bind(edp.employee.surname)" width="100%" placeholder="Ургийн овог"/>
+                            </row>
+                            <row>
+                                <label value="Нэр -"/>
+                                <cell>
+                                    <textbox value="@bind(edp.employee.lastname)" width="100%" placeholder="Овог"
+                                             constraint="no empty"/>
+                                    <textbox value="@bind(edp.employee.firstname)" width="100%" placeholder="Нэр"
+                                             constraint="no empty"/>
+                                </cell>
+                            </row>
+                            <row>
+                                <label value="Утасны Дугаар -"/>
+                                <intbox value="@bind(edp.employee.cellNumber)" width="100%" placeholder="Утасны Дугаар"
+                                        constraint="no empty"/>
+                            </row>
+                            <row>
+                                <label value="Төрсөн өдөр -"/>
+                                <datebox value="@bind(edp.employee.dob)" width="100%" format="yyyy/MM/dd"
+                                         placeholder="Төрсөн өдөр"
+                                         constraint="no empty"/>
+                            </row>
+                            <row>
+                                <label value="Гэр бүлийн байдал -"/>
+                                <combobox id="maritalBox" model="@load(edp.maritalStatuses)"
+                                          selectedItem="@bind(edp.maritalStatus)"
+                                          width="100%">
+                                    <template name="model">
+                                        <comboitem label="@load(each)"/>
+                                    </template>
+                                </combobox>
+                            </row>
+                            <row>
+                                <label value="Гэр бүлийн xэмжээ -"/>
+                                <intbox value="@bind(edp.employee.familySize)" width="100%"
+                                        placeholder="Гэр бүлийн Хэмжээ"
+                                        constraint="no empty"/>
+                            </row>
+
+                            <row>
+                                <label value="Хаяг -"/>
+                                <textbox value="@bind(edp.employee.address)" width="100%" rows="6" placeholder="Хаяг"
+                                         constraint="no empty"/>
+                            </row>
+                            <row>
+                                <label/>
+                                <cell>
+                                    <button label="Хадгалах" onClick="@command('save')" iconSclass="z-icon-save"/>
+                                    <button label="Хаах" onClick="@command('close')"/>
+                                </cell>
+                            </row>
+
+                        </rows>
+                    </grid>
+                </groupbox>
+                <groupbox closable="false" height="800px">
+                    <caption label="Онцгой үед холбоо барих хүний мэдээлэл"/>
+                    <grid>
+                        <columns>
+                            <column/>
+                            <column/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <label value="Нэр -"/>
+                                <textbox value="@bind(edp.emergency.name)" placeholder="Нэр" width="100%"/>
+                            </row>
+                            <row>
+                                <label value="Харилцаа -"/>
+                                <textbox value="@bind(edp.emergency.relationship)" placeholder="Харилцаа" width="100%"/>
+                            </row>
+                            <row>
+                                <label value="Утасны Дугаар -"/>
+                                <intbox value="@bind(edp.emergency.cellNumber)" placeholder="Утасны Дугаар" width="100%"/>
+                            </row>
+                        </rows>
+                    </grid>
+                </groupbox>
+            </hbox>
+        </panelchildren>
+    </panel>
+
+</zk>
