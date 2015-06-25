@@ -1,20 +1,21 @@
 package com.model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
+@Table(name = "USERS")
+@NamedQueries({
+        @NamedQuery(name = "Users.findAll",query = "SELECT u FROM Users AS u"),
+})
 public class Users {
     private String username;
     private String password;
     private String employeeCode;
-    private int userRoleId;
+    private Integer userRoleId;
     private boolean isLocked;
     private Date createdDate;
 
@@ -50,17 +51,17 @@ public class Users {
 
     @Basic
     @Column(name = "user_role_id")
-    public int getUserRoleId() {
+    public Integer getUserRoleId() {
         return userRoleId;
     }
 
-    public void setUserRoleId(int userRoleId) {
+    public void setUserRoleId(Integer userRoleId) {
         this.userRoleId = userRoleId;
     }
 
     @Basic
     @Column(name = "isLocked")
-    public boolean isLocked() {
+    public boolean getIsLocked() {
         return isLocked;
     }
 

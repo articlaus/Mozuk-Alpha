@@ -1,15 +1,18 @@
 package com.model.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
-@Table(name = "Work_Months", schema = "", catalog = "avocado")
+@Table(name = "WORK_MONTHS", schema = "", catalog = "avocado")
+@NamedQueries({
+        @NamedQuery(name = "WorkMonths.findAll", query = "SELECT w FROM WorkMonths AS w"),
+})
 public class WorkMonths {
-    private int id;
+    private Integer id;
     private Integer year;
     private Integer month;
     private Integer totalWorkHours;
@@ -18,11 +21,11 @@ public class WorkMonths {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

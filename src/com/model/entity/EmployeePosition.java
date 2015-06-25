@@ -1,15 +1,21 @@
 package com.model.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
-@Table(name = "employee_position_salary", schema = "", catalog = "avocado")
-public class EmployeePositionSalary {
-    private int id;
+@Table(name = "EMPLOYEE_POSITION", schema = "", catalog = "avocado")
+@NamedQueries(
+        {
+                @NamedQuery(name = "EmployeePosition.findAll", query = "SELECT e FROM EmployeePosition AS e "),
+                @NamedQuery(name = "EmployeePosition.findByEmployeeAndIsActive", query = "SELECT e FROM EmployeePosition AS e WHERE e.employee=:employee AND e.isActive=:isActive"),
+        }
+)
+public class EmployeePosition {
+    private Integer id;
     private Integer salary;
     private String positionCode;
     private String employeeCode;
@@ -18,11 +24,11 @@ public class EmployeePositionSalary {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -56,7 +62,9 @@ public class EmployeePositionSalary {
         this.employeeCode = employeeCode;
     }
 
-    public Boolean isActive() {
+    @Basic
+    @Column(name = "isActive")
+    public Boolean getIsActive() {
         return isActive;
     }
 
@@ -79,7 +87,7 @@ public class EmployeePositionSalary {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        EmployeePositionSalary that = (EmployeePositionSalary) o;
+        EmployeePosition that = (EmployeePosition) o;
 
         if (id != that.id) return false;
         if (salary != null ? !salary.equals(that.salary) : that.salary != null) return false;
@@ -98,5 +106,39 @@ public class EmployeePositionSalary {
         result = 31 * result + (employeeCode != null ? employeeCode.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
+    }
+
+    private Employee employee;
+    private Position position;
+    private Department department;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_code", referencedColumnName = "code")
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "position_code", referencedColumnName = "code")
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "department_code", referencedColumnName = "code")
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

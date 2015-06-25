@@ -1,15 +1,16 @@
 package com.model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
+@Table(name = "POSITION")
+@NamedQueries({
+        @NamedQuery(name = "Position.findAll",query = "SELECT p FROM Position AS p"),
+})
 public class Position {
     private String code;
     private String positionTitle;

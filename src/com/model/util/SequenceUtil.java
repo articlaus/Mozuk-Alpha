@@ -19,6 +19,8 @@ public class SequenceUtil {
         return BigDecimal.valueOf(nextLong());
     }
 
+
+
     public static String randomUuid() {
         return UUID.randomUUID().toString();
     }

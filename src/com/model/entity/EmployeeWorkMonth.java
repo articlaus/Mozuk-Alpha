@@ -6,31 +6,34 @@ import javax.persistence.*;
  * Created by tseegii on 6/23/15.
  */
 @Entity
-@Table(name = "employee_work_month", schema = "", catalog = "avocado")
+@Table(name = "EMPLOYEE_WORK_MONTH", schema = "", catalog = "avocado")
+@NamedQueries({
+        @NamedQuery(name = "EmployeeWorkMonth.findAll",query = "SELECT e FROM EmployeeWorkMonth AS e"),
+})
 public class EmployeeWorkMonth {
-    private int id;
-    private int workMonthsid;
+    private Integer id;
+    private Integer workMonthsid;
     private Integer workedHours;
-    private int finalSalary;
+    private Integer finalSalary;
     private String employeeCode;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "Work_Monthsid")
-    public int getWorkMonthsid() {
+    public Integer getWorkMonthsid() {
         return workMonthsid;
     }
 
-    public void setWorkMonthsid(int workMonthsid) {
+    public void setWorkMonthsid(Integer workMonthsid) {
         this.workMonthsid = workMonthsid;
     }
 
@@ -46,11 +49,11 @@ public class EmployeeWorkMonth {
 
     @Basic
     @Column(name = "final_salary")
-    public int getFinalSalary() {
+    public Integer getFinalSalary() {
         return finalSalary;
     }
 
-    public void setFinalSalary(int finalSalary) {
+    public void setFinalSalary(Integer finalSalary) {
         this.finalSalary = finalSalary;
     }
 

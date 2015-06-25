@@ -6,18 +6,21 @@ import javax.persistence.*;
  * Created by tseegii on 6/23/15.
  */
 @Entity
-@Table(name = "Leave_Type", schema = "", catalog = "avocado")
+@Table(name = "LEAVE_TYPE", schema = "", catalog = "avocado")
+@NamedQueries({
+        @NamedQuery(name = "LeaveType.findAll",query = "SELECT l FROM LeaveAbsence AS l"),
+})
 public class LeaveType {
-    private int id;
+    private Integer id;
     private String leaveType;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

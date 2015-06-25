@@ -1,17 +1,18 @@
 package com.model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
+@Table(name = "PROBATION")
+@NamedQueries({
+        @NamedQuery(name = "Probation.findAll",query = "SELECT p FROM Probation AS p"),
+})
 public class Probation {
-    private int id;
+    private Integer id;
     private String employeeCode;
     private String probationReason;
     private Date startDate;
@@ -22,11 +23,11 @@ public class Probation {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -72,7 +73,7 @@ public class Probation {
 
     @Basic
     @Column(name = "isActive")
-    public boolean isActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 

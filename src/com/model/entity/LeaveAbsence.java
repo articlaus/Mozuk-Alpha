@@ -1,31 +1,34 @@
 package com.model.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
-@Table(name = "Leave_Absence", schema = "", catalog = "avocado")
+@Table(name = "LEAVE_ABSENCE", schema = "", catalog = "avocado")
+@NamedQueries({
+        @NamedQuery(name = "LeaveAbsence.findAll",query = "SELECT l FROM LeaveAbsence AS l"),
+})
 public class LeaveAbsence {
-    private int id;
+    private Integer id;
     private String employeeId;
-    private int leaveTypeId;
+    private Integer leaveTypeId;
     private Date startDate;
     private Date endDate;
-    private int numberOfDays;
+    private Integer numberOfDays;
     private boolean isPaid;
-    private int workMonthsid;
+    private Integer workMonthsid;
     private Date createdDate;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -41,11 +44,11 @@ public class LeaveAbsence {
 
     @Basic
     @Column(name = "leave_type_id")
-    public int getLeaveTypeId() {
+    public Integer getLeaveTypeId() {
         return leaveTypeId;
     }
 
-    public void setLeaveTypeId(int leaveTypeId) {
+    public void setLeaveTypeId(Integer leaveTypeId) {
         this.leaveTypeId = leaveTypeId;
     }
 
@@ -71,17 +74,17 @@ public class LeaveAbsence {
 
     @Basic
     @Column(name = "number_of_days")
-    public int getNumberOfDays() {
+    public Integer getNumberOfDays() {
         return numberOfDays;
     }
 
-    public void setNumberOfDays(int numberOfDays) {
+    public void setNumberOfDays(Integer numberOfDays) {
         this.numberOfDays = numberOfDays;
     }
 
     @Basic
     @Column(name = "isPaid")
-    public boolean isPaid() {
+    public boolean getIsPaid() {
         return isPaid;
     }
 
@@ -91,11 +94,11 @@ public class LeaveAbsence {
 
     @Basic
     @Column(name = "Work_Monthsid")
-    public int getWorkMonthsid() {
+    public Integer getWorkMonthsid() {
         return workMonthsid;
     }
 
-    public void setWorkMonthsid(int workMonthsid) {
+    public void setWorkMonthsid(Integer workMonthsid) {
         this.workMonthsid = workMonthsid;
     }
 

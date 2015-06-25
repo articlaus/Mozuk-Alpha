@@ -1,16 +1,20 @@
 package com.model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.*;
+import java.util.Date;
 import java.util.Arrays;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
+@Table(name = "EMPLOYEE", schema = "", catalog = "avocado")
+@NamedQueries(
+        {
+                @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee AS e ORDER BY e.createdDate DESC"),
+
+        }
+)
 public class Employee {
     private String code;
     private byte[] portrait;
@@ -24,6 +28,9 @@ public class Employee {
     private Integer familySize;
     private String socialSecurityNumber;
     private Date createdDate;
+
+    private EmployeePosition employeePosition;
+
 
     @Id
     @Column(name = "code")
@@ -186,5 +193,18 @@ public class Employee {
         result = 31 * result + (socialSecurityNumber != null ? socialSecurityNumber.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
+    }
+
+    /**
+     * Employee's active position
+     * @return
+     */
+    @Transient
+    public EmployeePosition getEmployeePosition() {
+        return employeePosition;
+    }
+
+    public void setEmployeePosition(EmployeePosition employeePosition) {
+        this.employeePosition = employeePosition;
     }
 }

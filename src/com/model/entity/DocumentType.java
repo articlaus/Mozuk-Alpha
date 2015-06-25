@@ -6,19 +6,22 @@ import javax.persistence.*;
  * Created by tseegii on 6/23/15.
  */
 @Entity
-@Table(name = "document_type", schema = "", catalog = "avocado")
+@Table(name = "DOCUMENT_TYPE", schema = "", catalog = "avocado")
+@NamedQueries({
+        @NamedQuery(name = "DocumentType.findAll",query = "SELECT d FROM DocumentType AS d"),
+})
 public class DocumentType {
-    private int id;
+    private Integer id;
     private String name;
     private String description;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
