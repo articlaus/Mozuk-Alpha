@@ -12,10 +12,10 @@ public class BaseEJB {
 
 
     @PersistenceContext(unitName = "mozukUnit")
-    public EntityManager em;
+    private EntityManager em;
 
     @Resource
-    public SessionContext sessionContext;
+    private SessionContext sessionContext;
 
     protected EntityManager getEm() {
         return em;

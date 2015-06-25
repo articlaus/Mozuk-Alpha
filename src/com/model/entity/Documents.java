@@ -1,41 +1,42 @@
 package com.model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
+@Table(name = "DOCUMENT")
+@NamedQueries({
+        @NamedQuery(name = "Documents.findAll",query = "SELECT d FROM Documents AS d"),
+})
 public class Documents {
-    private int id;
-    private int foreignKey;
+    private Integer id;
+    private Integer foreignKey;
     private String description;
     private String fileName;
     private String fileType;
-    private int documentTypeId;
+    private Integer documentTypeId;
     private Date createdDate;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "foreign_key")
-    public int getForeignKey() {
+    public Integer getForeignKey() {
         return foreignKey;
     }
 
-    public void setForeignKey(int foreignKey) {
+    public void setForeignKey(Integer foreignKey) {
         this.foreignKey = foreignKey;
     }
 
@@ -71,11 +72,11 @@ public class Documents {
 
     @Basic
     @Column(name = "document_type_id")
-    public int getDocumentTypeId() {
+    public Integer getDocumentTypeId() {
         return documentTypeId;
     }
 
-    public void setDocumentTypeId(int documentTypeId) {
+    public void setDocumentTypeId(Integer documentTypeId) {
         this.documentTypeId = documentTypeId;
     }
 

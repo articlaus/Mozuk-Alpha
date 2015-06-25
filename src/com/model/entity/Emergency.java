@@ -1,16 +1,17 @@
 package com.model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
+@Table(name = "EMERGENCY")
+@NamedQueries({
+        @NamedQuery(name = "Emergency.findAll",query = "SELECT e FROM Emergency AS e"),
+})
 public class Emergency {
-    private int id;
+    private Integer id;
     private String cellNumber;
     private String name;
     private String relationship;
@@ -18,11 +19,11 @@ public class Emergency {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

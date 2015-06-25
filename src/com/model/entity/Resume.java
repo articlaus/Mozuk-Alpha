@@ -1,17 +1,18 @@
 package com.model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
+@Table(name = "RESUME")
+@NamedQueries({
+        @NamedQuery(name = "Resume.findAll",query = "SELECT r FROM Resume AS r"),
+})
 public class Resume {
-    private int id;
+    private Integer id;
     private Date createdDate;
     private String positionCode;
     private String email;
@@ -19,11 +20,11 @@ public class Resume {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

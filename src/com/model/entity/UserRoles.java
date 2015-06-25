@@ -6,18 +6,21 @@ import javax.persistence.*;
  * Created by tseegii on 6/23/15.
  */
 @Entity
-@Table(name = "User_Roles", schema = "", catalog = "avocado")
+@Table(name = "USER_ROLES", schema = "", catalog = "avocado")
+@NamedQueries({
+        @NamedQuery(name = "User_Roles.findAll",query = "SELECT u FROM UserRoles AS u"),
+})
 public class UserRoles {
-    private int id;
+    private Integer id;
     private String userRole;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

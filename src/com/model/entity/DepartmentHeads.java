@@ -6,11 +6,14 @@ import javax.persistence.*;
  * Created by tseegii on 6/23/15.
  */
 @Entity
-@Table(name = "Department_Heads", schema = "", catalog = "avocado")
+@Table(name = "DEPARTMENT_HEADS", schema = "", catalog = "avocado")
+@NamedQueries({
+        @NamedQuery(name = "Department_Heads.findAll",query = "SELECT d FROM DepartmentHeads AS d"),
+})
 public class DepartmentHeads {
     private String departmentCode;
     private String employeeCode;
-    private int id;
+    private Integer id;
 
     @Basic
     @Column(name = "department_code")
@@ -34,11 +37,11 @@ public class DepartmentHeads {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

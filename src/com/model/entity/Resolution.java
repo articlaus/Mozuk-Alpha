@@ -1,16 +1,17 @@
 package com.model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.*;
+import java.util.Date;
 import java.util.Arrays;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
+@Table(name = "RESOLUTION")
+@NamedQueries({
+        @NamedQuery(name = "Resolution.findAll",query = "SELECT r FROM Resolution AS r"),
+})
 public class Resolution {
     private String code;
     private String employeeId;
@@ -72,7 +73,7 @@ public class Resolution {
 
     @Basic
     @Column(name = "isDepartment")
-    public boolean isDepartment() {
+    public boolean getIsDepartment() {
         return isDepartment;
     }
 

@@ -1,30 +1,32 @@
 package com.model.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
-@Table(name = "Overtime_dates", schema = "", catalog = "avocado")
+@Table(name = "OVERTIME_DATES", schema = "", catalog = "avocado")
+@NamedQueries({
+        @NamedQuery(name = "Overtime_dates.findAll",query = "SELECT o FROM OvertimeDates AS o"),
+})
 public class OvertimeDates {
-    private int id;
+    private Integer id;
     private Date workDate;
-    private Timestamp startTime;
-    private Timestamp endTime;
-    private int hours;
+    private Date startTime;
+    private Date endTime;
+    private Integer hours;
     private boolean isHoliday;
     private long overtimeid;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,37 +42,37 @@ public class OvertimeDates {
 
     @Basic
     @Column(name = "start_time")
-    public Timestamp getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
     @Basic
     @Column(name = "end_time")
-    public Timestamp getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
     @Basic
     @Column(name = "hours")
-    public int getHours() {
+    public Integer getHours() {
         return hours;
     }
 
-    public void setHours(int hours) {
+    public void setHours(Integer hours) {
         this.hours = hours;
     }
 
     @Basic
     @Column(name = "isHoliday")
-    public boolean isHoliday() {
+    public boolean getIsHoliday() {
         return isHoliday;
     }
 

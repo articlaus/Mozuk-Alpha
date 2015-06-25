@@ -1,20 +1,21 @@
 package com.model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by tseegii on 6/23/15.
  */
 @Entity
+@Table(name = "OVERTIME")
+@NamedQueries({
+        @NamedQuery(name = "Overtime.findAll",query = "SELECT o FROM Overtime AS o"),
+})
 public class Overtime {
     private long id;
     private String employeeId;
     private boolean isHoliday;
     private String reason;
-    private int workMonthsid;
+    private Integer workMonthsid;
 
     @Id
     @Column(name = "id")
@@ -38,7 +39,7 @@ public class Overtime {
 
     @Basic
     @Column(name = "isHoliday")
-    public boolean isHoliday() {
+    public boolean getIsHoliday() {
         return isHoliday;
     }
 
@@ -58,11 +59,11 @@ public class Overtime {
 
     @Basic
     @Column(name = "Work_Monthsid")
-    public int getWorkMonthsid() {
+    public Integer getWorkMonthsid() {
         return workMonthsid;
     }
 
-    public void setWorkMonthsid(int workMonthsid) {
+    public void setWorkMonthsid(Integer workMonthsid) {
         this.workMonthsid = workMonthsid;
     }
 
