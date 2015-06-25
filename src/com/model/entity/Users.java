@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity
 @Table(name = "USERS")
 @NamedQueries({
-        @NamedQuery(name = "Users.findAll",query = "SELECT u FROM Users AS u"),
+        @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users AS u"),
 })
 public class Users implements Serializable {
     private String username;

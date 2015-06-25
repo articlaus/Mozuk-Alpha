@@ -1,11 +1,11 @@
 package com.ui.controller;
 
+import com.model.bean.LoginBean;
 import com.model.entity.Users;
+import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
-import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
+import com.ui.util.NotificationUtils;
+import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.Selectors;
@@ -21,9 +21,17 @@ import java.util.HashMap;
 public class LoginController extends MainComponent {
 
     Users user;
+    LoginBean loginBean;
 
     @Wire
     Textbox usernameTxt, passwordTxt;
+
+    @Init(superclass = true)
+    @Override
+    public void init() {
+        super.init();
+        loginBean = EBeanUtils.getBean(LoginBean.class);
+    }
 
 
     @AfterCompose(superclass = true)
@@ -55,10 +63,11 @@ public class LoginController extends MainComponent {
             passwordTxt.setFocus(true);
         } else {
             try {
-//                Users entity = loginBean.checkLogin(usernameTxt.getValue(), passwordTxt.getValue());
-//                Executions.getCurrent().getSession().setAttribute("user", entity);
-
-                Executions.sendRedirect("index.zul");
+                Users users = loginBean.checkLogin(usernameTxt.getValue(), passwordTxt.getValue());
+                if (users != null) {
+                    Executions.getCurrent().getSession().setAttribute("currentUser", users);
+                    Executions.sendRedirect("index.zul");
+                } else NotificationUtils.showMsgWarning("Нэвтрэх нэр болон нууц үг буруу байна.");
             } catch (Exception e) {
                 e.printStackTrace();
                 Messagebox.show("Хэрэглэгчийн нэр нууц үг буруу байна !!! ");

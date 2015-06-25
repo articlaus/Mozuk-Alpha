@@ -105,8 +105,8 @@ public abstract class MainComponent {
 
 
     public Include getMainInclude() {
-        return (Include) Executions.getCurrent().getSession().getAttribute("mainInclude");
-//        return mainInclude;
+//        return (Include) Executions.getCurrent().getSession().getAttribute("mainInclude");
+        return mainInclude;
     }
 
     public AnnotateBinder getBinder() {

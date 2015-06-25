@@ -7,26 +7,21 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Include;
 
 /**
  * Created by Articlaus on 6/23/15.
  */
-public class MainIncludeController extends MainComponent {
+public class MainIncludeController {
     @Wire
     Include mainInclude;
 
-    @Init(superclass = true)
-    @Override
-    public void init() {
-        super.init();
-    }
 
-    @AfterCompose(superclass = true)
-    @Override
+    @AfterCompose
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
-        super.afterCompose(view);
+        Selectors.wireComponents(view, this, false);
         System.out.println("mainInclude = " + mainInclude);
         Executions.getCurrent().getSession().setAttribute("mainInclude", mainInclude);
         System.out.println("Executions.getCurrent().getSession().getAttribute(\"mainInclude\") = " + Executions.getCurrent().getSession().getAttribute("mainInclude"));

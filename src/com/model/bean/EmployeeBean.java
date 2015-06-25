@@ -54,14 +54,14 @@ public class EmployeeBean extends BaseEJB {
     }
 
     public List<Employee> findAll() {
-        List<Employee> employees = getEm().createNamedQuery("Employee.findAll", Employee.class).getResultList();
-        for (Employee employee : employees) {
-            employee.setEmployeePosition(
-                    getEm().createNamedQuery("EmployeePosition.findByEmployeeAndIsActive", EmployeePosition.class)
-                            .setParameter("employee", employee)
-                            .setParameter("isActive", true).getSingleResult()
-            );
-        }
+        List<Employee> employees=getEm().createNamedQuery("Employee.findAll",Employee.class).getResultList();
+//        for (Employee employee : employees) {
+//            employee.setEmployeePosition(
+//                    getEm().createNamedQuery("EmployeePosition.findByEmployeeAndIsActive", EmployeePosition.class)
+//                            .setParameter("employee", employee)
+//                            .setParameter("isActive", true).getSingleResult()
+//            );
+//        }
         return employees;
     }
 
