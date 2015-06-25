@@ -53,6 +53,7 @@ public class LeaveAbsence {
     }
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "start_date")
     public Date getStartDate() {
         return startDate;
@@ -63,6 +64,7 @@ public class LeaveAbsence {
     }
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "end_date")
     public Date getEndDate() {
         return endDate;
@@ -103,6 +105,7 @@ public class LeaveAbsence {
     }
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;

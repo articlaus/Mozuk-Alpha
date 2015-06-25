@@ -73,6 +73,7 @@ public class EmployeePosition {
     }
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     public Date getCreatedDate() {
         return createdDate;

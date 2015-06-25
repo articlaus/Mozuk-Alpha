@@ -31,6 +31,7 @@ public class OvertimeDates {
     }
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "work_date")
     public Date getWorkDate() {
         return workDate;
@@ -41,6 +42,7 @@ public class OvertimeDates {
     }
 
     @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_time")
     public Date getStartTime() {
         return startTime;
@@ -51,6 +53,7 @@ public class OvertimeDates {
     }
 
     @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_time")
     public Date getEndTime() {
         return endTime;

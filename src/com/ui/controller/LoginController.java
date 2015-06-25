@@ -22,7 +22,6 @@ public class LoginController extends MainComponent {
 
     Users user;
 
-
     @Wire
     Textbox usernameTxt, passwordTxt;
 
