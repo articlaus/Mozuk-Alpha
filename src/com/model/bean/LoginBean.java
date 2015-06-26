@@ -15,7 +15,8 @@ import javax.ejb.Stateless;
 public class LoginBean extends BaseEJB {
 
     public Users checkLogin(String username, String password) {
-        Users user=getEm().find(Users.class, username);
+        Users user = getEm().find(Users.class, username);
+//        isLocked ?
         if (user != null) {
             if (PasswordUtil.checkPassword(password, user.getPassword())) {
                 return user;

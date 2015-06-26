@@ -22,20 +22,27 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author tseegii
  */
 @Entity
 @Table(name = "LEAVE_ABSENCE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LeaveAbsence.findAll", query = "SELECT l FROM LeaveAbsence l"),
-    @NamedQuery(name = "LeaveAbsence.findById", query = "SELECT l FROM LeaveAbsence l WHERE l.id = :id"),
-    @NamedQuery(name = "LeaveAbsence.findByStartDate", query = "SELECT l FROM LeaveAbsence l WHERE l.startDate = :startDate"),
-    @NamedQuery(name = "LeaveAbsence.findByEndDate", query = "SELECT l FROM LeaveAbsence l WHERE l.endDate = :endDate"),
-    @NamedQuery(name = "LeaveAbsence.findByNumberOfDays", query = "SELECT l FROM LeaveAbsence l WHERE l.numberOfDays = :numberOfDays"),
-    @NamedQuery(name = "LeaveAbsence.findByIsPaid", query = "SELECT l FROM LeaveAbsence l WHERE l.isPaid = :isPaid"),
-    @NamedQuery(name = "LeaveAbsence.findByCreatedDate", query = "SELECT l FROM LeaveAbsence l WHERE l.createdDate = :createdDate")})
+        @NamedQuery(name = "LeaveAbsence.findAll", query = "SELECT l FROM LeaveAbsence l"),
+        @NamedQuery(name = "LeaveAbsence.findById", query = "SELECT l FROM LeaveAbsence l WHERE l.id = :id"),
+        @NamedQuery(name = "LeaveAbsence.findByStartDate", query = "SELECT l FROM LeaveAbsence l WHERE l.startDate = :startDate"),
+        @NamedQuery(name = "LeaveAbsence.findByEndDate", query = "SELECT l FROM LeaveAbsence l WHERE l.endDate = :endDate"),
+        @NamedQuery(name = "LeaveAbsence.findByNumberOfDays", query = "SELECT l FROM LeaveAbsence l WHERE l.numberOfDays = :numberOfDays"),
+        @NamedQuery(name = "LeaveAbsence.findByIsPaid", query = "SELECT l FROM LeaveAbsence l WHERE l.isPaid = :isPaid"),
+        @NamedQuery(name = "LeaveAbsence.findByCreatedDate", query = "SELECT l FROM LeaveAbsence l WHERE l.createdDate = :createdDate"),
+        @NamedQuery(name = "LeaveAbsence.findByEmployee", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeId = :employeeId"),
+        @NamedQuery(name = "LeaveAbsence.findByLeaveType", query = "SELECT l FROM LeaveAbsence l WHERE l.leaveTypeId = :leaveTypeId"),
+        @NamedQuery(name = "LeaveAbsence.findByWorkMonths", query = "SELECT l FROM LeaveAbsence l WHERE l.workMonthsid = :workMonthsid"),
+        @NamedQuery(name = "LeaveAbsence.findByEmployeeAndLeaveType", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeId=:employeeId AND l.leaveTypeId = :leaveTypeId"),
+        @NamedQuery(name = "LeaveAbsence.findByEmployeeAndWorkMonths", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeId=:employeeId AND l.workMonthsid = :workMonthsid"),
+        @NamedQuery(name = "LeaveAbsence.findByStartDateAndEndDate", query = "SELECT l FROM LeaveAbsence l WHERE l.startDate=:startDate AND l.endDate = :endDate"),
+
+})
 public class LeaveAbsence implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -178,5 +185,5 @@ public class LeaveAbsence implements Serializable {
     public String toString() {
         return "com.model.entity.LeaveAbsence[ id=" + id + " ]";
     }
-    
+
 }
