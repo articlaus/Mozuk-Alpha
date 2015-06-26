@@ -2,6 +2,8 @@ package com.model.bean;
 
 import com.model.entity.Employee;
 import com.model.entity.EmployeePosition;
+import com.model.entity.EmployeeWorkMonth;
+import com.model.entity.WorkMonths;
 import com.model.util.BaseEJB;
 import com.model.util.SequenceUtil;
 
@@ -68,7 +70,7 @@ public class EmployeeBean extends BaseEJB {
         return getEm().find(EmployeePosition.class, employeePositionId);
     }
 
-    public List<EmployeePosition> findByEmployee(Employee employee) {
+    public List<EmployeePosition> findPositionByEmployee(Employee employee) {
         try {
             return getEm().createNamedQuery("EmployeePosition.findByEmployee", EmployeePosition.class)
                     .setParameter("employeeCode", employee)
@@ -79,7 +81,7 @@ public class EmployeeBean extends BaseEJB {
         }
     }
 
-    public EmployeePosition findByEmployeeCodeAndIsActive(Employee employee,boolean isActive) {
+    public EmployeePosition findByEmployeeCodeAndIsActive(Employee employee, boolean isActive) {
         try {
             return getEm().createNamedQuery("EmployeePosition.findByEmployeeAndIsActive", EmployeePosition.class)
                     .setParameter("employeeCode", employee)
@@ -129,6 +131,38 @@ public class EmployeeBean extends BaseEJB {
             return false;
         }
     }
+
+//--------------------------Employee Work Month--------------------------------------
+
+    public List<EmployeeWorkMonth> findAllEmployeeWorkMonth() {
+        return getEm().createNamedQuery("EmployeeWorkMonth.findAll", EmployeeWorkMonth.class).getResultList();
+    }
+
+    public List<EmployeeWorkMonth> findWorkMonthByEmployee(Employee employee) {
+        return getEm().createNamedQuery("EmployeeWorkMonth.findByEmployee", EmployeeWorkMonth.class)
+                .setParameter("employeeCode", employee)
+                .getResultList();
+    }
+
+    public List<EmployeeWorkMonth> findWorkMonthByWorkMonth(WorkMonths workMonths) {
+        return getEm().createNamedQuery("EmployeeWorkMonth.findByWorkMonth", EmployeeWorkMonth.class)
+                .setParameter("workMonthsid",workMonths)
+                .getResultList();
+    }
+
+    public List<EmployeeWorkMonth> findWorkMonthByEmployeeAndWorkMonth(Employee employee,WorkMonths workMonths) {
+        return getEm().createNamedQuery("EmployeeWorkMonth.findByEmployeeAndWorkMonth", EmployeeWorkMonth.class)
+                .setParameter("employeeCode",employee)
+                .setParameter("workMonthsid",workMonths)
+                .getResultList();
+    }
+
+    public EmployeeWorkMonth findByEmployeeWorkMonthId(BigDecimal employeeWorkMonthId) {
+        return getEm().find(EmployeeWorkMonth.class, employeeWorkMonthId);
+    }
+
+
+
 
 
 }

@@ -29,7 +29,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EmployeeWorkMonth.findAll", query = "SELECT e FROM EmployeeWorkMonth e"),
     @NamedQuery(name = "EmployeeWorkMonth.findById", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.id = :id"),
     @NamedQuery(name = "EmployeeWorkMonth.findByWorkedHours", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.workedHours = :workedHours"),
-    @NamedQuery(name = "EmployeeWorkMonth.findByFinalSalary", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.finalSalary = :finalSalary")})
+    @NamedQuery(name = "EmployeeWorkMonth.findByFinalSalary", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.finalSalary = :finalSalary"),
+    @NamedQuery(name = "EmployeeWorkMonth.findByEmployee", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.employeeCode = :employeeCode"),
+    @NamedQuery(name = "EmployeeWorkMonth.findByWorkMonth", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.workMonthsid = :workMonthsid"),
+    @NamedQuery(name = "EmployeeWorkMonth.findByEmployeeAndWorkMonth", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.employeeCode=:employeeCode AND e.workMonthsid = :workMonthsid"),
+})
 public class EmployeeWorkMonth implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -144,8 +144,8 @@ public class OtherBean extends BaseEJB {
 
 //------------------------------------------------------------------------
 
-    public LeaveType findByLeaveTypeId(BigDecimal emergencyId) {
-        return getEm().find(LeaveType.class, emergencyId);
+    public LeaveType findByLeaveTypeId(BigDecimal leaveTypeId) {
+        return getEm().find(LeaveType.class, leaveTypeId);
     }
 
     public List<LeaveType> findAllLeaveType() {
@@ -253,6 +253,48 @@ public class OtherBean extends BaseEJB {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+//------------------------------------------------------------------------
+
+    public Position findByPositionCode(String positionCode) {
+        return getEm().find(Position.class, positionCode);
+    }
+
+    public List<Position> findAllPosition() {
+        return getEm().createNamedQuery("Position.findAll", Position.class)
+                .getResultList();
+    }
+
+    public Position saveByPosition(Position position) {
+        try {
+            position.setCreatedDate(Calendar.getInstance().getTime());
+            getEm().persist(position);
+            return position;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Position updateByPosition(Position position) {
+        try {
+            position = getEm().merge(position);
+            return position;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean deleteByPosition(String positionCode) {
+        try {
+            getEm().remove(getEm().getReference(Position.class, positionCode));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
