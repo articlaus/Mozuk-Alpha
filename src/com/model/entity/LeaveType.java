@@ -39,7 +39,7 @@ public class LeaveType implements Serializable {
     @Basic(optional = false)
     @Column(name = "leave_type")
     private String leaveType;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "leaveTypeId")
+    @OneToMany( mappedBy = "leaveTypeId")
     private List<LeaveAbsence> leaveAbsenceList;
 
     public LeaveType() {

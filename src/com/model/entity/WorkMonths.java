@@ -38,7 +38,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "WorkMonths.findByMonth", query = "SELECT w FROM WorkMonths w WHERE w.month = :month"),
     @NamedQuery(name = "WorkMonths.findByTotalWorkHours", query = "SELECT w FROM WorkMonths w WHERE w.totalWorkHours = :totalWorkHours"),
     @NamedQuery(name = "WorkMonths.findByIsLocked", query = "SELECT w FROM WorkMonths w WHERE w.isLocked = :isLocked"),
-    @NamedQuery(name = "WorkMonths.findByCreatedDate", query = "SELECT w FROM WorkMonths w WHERE w.createdDate = :createdDate")})
+    @NamedQuery(name = "WorkMonths.findByCreatedDate", query = "SELECT w FROM WorkMonths w WHERE w.createdDate = :createdDate"),
+    @NamedQuery(name = "WorkMonths.findByYearAndMonth", query = "SELECT w FROM WorkMonths w WHERE w.year = :year AND w.month=:month"),
+    @NamedQuery(name = "WorkMonths.findByYearAndMonthAndIsLocked", query = "SELECT w FROM WorkMonths w WHERE w.year = :year AND w.month=:month AND w.isLocked=:isLocked"),
+})
 public class WorkMonths implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,11 +58,11 @@ public class WorkMonths implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workMonthsid")
+    @OneToMany( mappedBy = "workMonthsid")
     private List<EmployeeWorkMonth> employeeWorkMonthList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workMonthsid")
+    @OneToMany( mappedBy = "workMonthsid")
     private List<LeaveAbsence> leaveAbsenceList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workMonthsid")
+    @OneToMany( mappedBy = "workMonthsid")
     private List<Overtime> overtimeList;
 
     public WorkMonths() {

@@ -54,9 +54,9 @@ public class Position implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "positionCode")
+    @OneToMany( mappedBy = "positionCode")
     private List<Resume> resumeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "positionCode")
+    @OneToMany( mappedBy = "positionCode")
     private List<EmployeePosition> employeePositionList;
 
     public Position() {

@@ -29,21 +29,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "DOCUMENT")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Document.findAll", query = "SELECT d FROM Documents d"),
-    @NamedQuery(name = "Document.findById", query = "SELECT d FROM Documents d WHERE d.id = :id"),
-    @NamedQuery(name = "Document.findByForeignKey", query = "SELECT d FROM Documents d WHERE d.foreignKey = :foreignKey"),
-    @NamedQuery(name = "Document.findByDescription", query = "SELECT d FROM Documents d WHERE d.description = :description"),
-    @NamedQuery(name = "Document.findByFileName", query = "SELECT d FROM Documents d WHERE d.fileName = :fileName"),
-    @NamedQuery(name = "Document.findByFileType", query = "SELECT d FROM Documents d WHERE d.fileType = :fileType"),
-    @NamedQuery(name = "Document.findByCreatedDate", query = "SELECT d FROM Documents d WHERE d.createdDate = :createdDate")})
-public class Documents implements Serializable {
+    @NamedQuery(name = "Document.findAll", query = "SELECT d FROM Document d"),
+    @NamedQuery(name = "Document.findById", query = "SELECT d FROM Document d WHERE d.id = :id"),
+    @NamedQuery(name = "Document.findByForeignKey", query = "SELECT d FROM Document d WHERE d.foreignKey = :foreignKey"),
+    @NamedQuery(name = "Document.findByDescription", query = "SELECT d FROM Document d WHERE d.description = :description"),
+    @NamedQuery(name = "Document.findByFileName", query = "SELECT d FROM Document d WHERE d.fileName = :fileName"),
+    @NamedQuery(name = "Document.findByFileType", query = "SELECT d FROM Document d WHERE d.fileType = :fileType"),
+    @NamedQuery(name = "Document.findByCreatedDate", query = "SELECT d FROM Document d WHERE d.createdDate = :createdDate"),
+    @NamedQuery(name = "Document.findByDocumentType", query = "SELECT d FROM Document d WHERE d.documentTypeId = :documentTypeId"),
+})
+public class Document implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
     private BigDecimal id;
     @Basic(optional = false)
     @Column(name = "foreign_key")
-    private int foreignKey;
+    private BigDecimal foreignKey;
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
@@ -54,18 +56,21 @@ public class Documents implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
+    @Basic
+    @Column(name = "url")
+    private String url;
     @JoinColumn(name = "document_type_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private DocumentType documentTypeId;
 
-    public Documents() {
+    public Document() {
     }
 
-    public Documents(BigDecimal id) {
+    public Document(BigDecimal id) {
         this.id = id;
     }
 
-    public Documents(BigDecimal id, int foreignKey, String fileName) {
+    public Document(BigDecimal id, BigDecimal foreignKey, String fileName) {
         this.id = id;
         this.foreignKey = foreignKey;
         this.fileName = fileName;
@@ -79,11 +84,11 @@ public class Documents implements Serializable {
         this.id = id;
     }
 
-    public int getForeignKey() {
+    public BigDecimal getForeignKey() {
         return foreignKey;
     }
 
-    public void setForeignKey(int foreignKey) {
+    public void setForeignKey(BigDecimal foreignKey) {
         this.foreignKey = foreignKey;
     }
 
@@ -119,6 +124,14 @@ public class Documents implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public DocumentType getDocumentTypeId() {
         return documentTypeId;
     }
@@ -137,10 +150,10 @@ public class Documents implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Documents)) {
+        if (!(object instanceof Document)) {
             return false;
         }
-        Documents other = (Documents) object;
+        Document other = (Document) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

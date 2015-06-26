@@ -7,6 +7,7 @@ import com.model.util.SequenceUtil;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
@@ -54,21 +55,79 @@ public class EmployeeBean extends BaseEJB {
     }
 
     public List<Employee> findAll() {
-        List<Employee> employees=getEm().createNamedQuery("Employee.findAll",Employee.class).getResultList();
-//        for (Employee employee : employees) {
-//            employee.setEmployeePosition(
-//                    getEm().createNamedQuery("EmployeePosition.findByEmployeeAndIsActive", EmployeePosition.class)
-//                            .setParameter("employee", employee)
-//                            .setParameter("isActive", true).getSingleResult()
-//            );
-//        }
-        return employees;
+        return getEm().createNamedQuery("Employee.findAll", Employee.class).getResultList();
+    }
+
+//---------------------Employee Position--------------------------------
+
+    public List<EmployeePosition> findAllEmployeePosition() {
+        return getEm().createNamedQuery("EmployeePosition.findAll", EmployeePosition.class).getResultList();
+    }
+
+    public EmployeePosition findByEmployeePositionId(BigDecimal employeePositionId) {
+        return getEm().find(EmployeePosition.class, employeePositionId);
+    }
+
+    public List<EmployeePosition> findByEmployee(Employee employee) {
+        try {
+            return getEm().createNamedQuery("EmployeePosition.findByEmployee", EmployeePosition.class)
+                    .setParameter("employeeCode", employee)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public EmployeePosition findByEmployeeCodeAndIsActive(Employee employee,boolean isActive) {
+        try {
+            return getEm().createNamedQuery("EmployeePosition.findByEmployeeAndIsActive", EmployeePosition.class)
+                    .setParameter("employeeCode", employee)
+                    .setParameter("isActive", isActive)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public List<EmployeePosition> findByIsActive(boolean isActive) {
         return getEm().createNamedQuery("EmployeePosition.findByIsActive", EmployeePosition.class)
                 .setParameter("isActive", isActive)
                 .getResultList();
+    }
+
+    public EmployeePosition saveByEmployeePosition(EmployeePosition employeePosition) {
+        try {
+            employeePosition.setId(SequenceUtil.nextBigDecimal());
+            employeePosition.setCreatedDate(Calendar.getInstance().getTime());
+            getEm().persist(employeePosition);
+            return employeePosition;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public EmployeePosition updateByEmployeePosition(EmployeePosition employeePosition) {
+        try {
+
+            employeePosition = getEm().merge(employeePosition);
+            return employeePosition;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean deleteByEmployeePosition(BigDecimal employeePositionId) {
+        try {
+            getEm().remove(getEm().getReference(EmployeePosition.class, employeePositionId));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 

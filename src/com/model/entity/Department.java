@@ -50,13 +50,13 @@ public class Department implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "departmentCode")
+    @OneToOne(mappedBy = "departmentCode")
     private DepartmentHeads departmentHeads;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentCode")
+    @OneToMany(mappedBy = "departmentCode")
     private List<EmployeePosition> employeePositionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")
+    @OneToMany(mappedBy = "departmentId")
     private List<Resolution> resolutionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departmentId")
+    @OneToMany(mappedBy = "departmentId")
     private List<Probation> probationList;
 
     public Department() {

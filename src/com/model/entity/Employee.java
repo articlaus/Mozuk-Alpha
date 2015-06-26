@@ -84,23 +84,23 @@ public class Employee implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    @OneToOne( mappedBy = "employeeCode")
     private DepartmentHeads departmentHeads;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    @OneToMany( mappedBy = "employeeCode")
     private List<EmployeeWorkMonth> employeeWorkMonthList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    @OneToMany( mappedBy = "employeeCode")
     private List<Emergency> emergencyList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    @OneToMany( mappedBy = "employeeCode")
     private List<EmployeePosition> employeePositionList;
     @OneToMany(mappedBy = "employeeId")
     private List<Resolution> resolutionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
+    @OneToMany( mappedBy = "employeeId")
     private List<LeaveAbsence> leaveAbsenceList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
+    @OneToMany( mappedBy = "employeeId")
     private List<Overtime> overtimeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    @OneToMany( mappedBy = "employeeCode")
     private List<Probation> probationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeCode")
+    @OneToMany( mappedBy = "employeeCode")
     private List<Users> usersList;
 
     public Employee() {

@@ -41,7 +41,7 @@ public class UserRoles implements Serializable {
     @Basic(optional = false)
     @Column(name = "user_role")
     private String userRole;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userRoleId")
+    @OneToMany( mappedBy = "userRoleId")
     private List<Users> usersList;
 
     public UserRoles() {

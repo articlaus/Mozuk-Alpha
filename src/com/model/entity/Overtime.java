@@ -45,7 +45,7 @@ public class Overtime implements Serializable {
     @Lob
     @Column(name = "reason")
     private String reason;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "overtimeid")
+    @OneToMany( mappedBy = "overtimeid")
     private List<OvertimeDates> overtimeDatesList;
     @JoinColumn(name = "Work_Monthsid", referencedColumnName = "id")
     @ManyToOne(optional = false)

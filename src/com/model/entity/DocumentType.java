@@ -43,8 +43,8 @@ public class DocumentType implements Serializable {
     @Lob
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentTypeId")
-    private List<Documents> documentsList;
+    @OneToMany( mappedBy = "documentTypeId")
+    private List<Document> documentList;
 
     public DocumentType() {
     }
@@ -83,12 +83,12 @@ public class DocumentType implements Serializable {
     }
 
     @XmlTransient
-    public List<Documents> getDocumentsList() {
-        return documentsList;
+    public List<Document> getDocumentList() {
+        return documentList;
     }
 
-    public void setDocumentsList(List<Documents> documentsList) {
-        this.documentsList = documentsList;
+    public void setDocumentList(List<Document> documentList) {
+        this.documentList = documentList;
     }
 
     @Override
