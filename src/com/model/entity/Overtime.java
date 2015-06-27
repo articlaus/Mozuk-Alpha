@@ -33,7 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Overtime.findAll", query = "SELECT o FROM Overtime o"),
     @NamedQuery(name = "Overtime.findById", query = "SELECT o FROM Overtime o WHERE o.id = :id"),
-    @NamedQuery(name = "Overtime.findByIsHoliday", query = "SELECT o FROM Overtime o WHERE o.isHoliday = :isHoliday")})
+    @NamedQuery(name = "Overtime.findByIsHoliday", query = "SELECT o FROM Overtime o WHERE o.isHoliday = :isHoliday"),
+    @NamedQuery(name = "Overtime.findByEmployee", query = "SELECT o FROM Overtime o WHERE o.employeeId = :employeeId"),
+    @NamedQuery(name = "Overtime.findByWorkMonthsId", query = "SELECT o FROM Overtime o WHERE o.workMonthsid = :workMonthsid"),
+    @NamedQuery(name = "Overtime.findByEmployeeAndWorkMonthsId", query = "SELECT o FROM Overtime o WHERE o.employeeId=:employeeId AND o.workMonthsid = :workMonthsid"),
+})
 public class Overtime implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

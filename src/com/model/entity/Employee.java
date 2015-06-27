@@ -8,19 +8,7 @@ package com.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -43,7 +31,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Employee.findByMaritalStatus", query = "SELECT e FROM Employee e WHERE e.maritalStatus = :maritalStatus"),
     @NamedQuery(name = "Employee.findByFamilySize", query = "SELECT e FROM Employee e WHERE e.familySize = :familySize"),
     @NamedQuery(name = "Employee.findBySocialSecurityNumber", query = "SELECT e FROM Employee e WHERE e.socialSecurityNumber = :socialSecurityNumber"),
-    @NamedQuery(name = "Employee.findByCreatedDate", query = "SELECT e FROM Employee e WHERE e.createdDate = :createdDate")})
+    @NamedQuery(name = "Employee.findByCreatedDate", query = "SELECT e FROM Employee e WHERE e.createdDate = :createdDate"),
+    @NamedQuery(name = "Employee.findByIsActive", query = "SELECT e FROM Employee e WHERE e.isActive = :isActive"),
+})
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -341,5 +331,15 @@ public class Employee implements Serializable {
     public String toString() {
         return "com.model.entity.Employee[ code=" + code + " ]";
     }
-    
+
+    @Transient
+    private EmployeePosition employeePosition;
+
+    public EmployeePosition getEmployeePosition() {
+        return employeePosition;
+    }
+
+    public void setEmployeePosition(EmployeePosition employeePosition) {
+        this.employeePosition = employeePosition;
+    }
 }

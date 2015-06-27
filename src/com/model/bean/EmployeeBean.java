@@ -9,6 +9,7 @@ import com.model.util.SequenceUtil;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
@@ -60,6 +61,16 @@ public class EmployeeBean extends BaseEJB {
         return getEm().createNamedQuery("Employee.findAll", Employee.class).getResultList();
     }
 
+    public List<Employee> findByIsActive(boolean isActive) {
+        List<Employee> employees=getEm().createNamedQuery("Employee.findByIsActive", Employee.class)
+                .setParameter("isActive", isActive)
+                .getResultList();
+        for (Employee employee : employees) {
+            employee.setEmployeePosition(findByEmployeeCodeAndIsActive(employee, true));
+        }
+        return employees;
+    }
+
 //---------------------Employee Position--------------------------------
 
     public List<EmployeePosition> findAllEmployeePosition() {
@@ -93,7 +104,7 @@ public class EmployeeBean extends BaseEJB {
         }
     }
 
-    public List<EmployeePosition> findByIsActive(boolean isActive) {
+    public List<EmployeePosition> findEmployeePositionByIsActive(boolean isActive) {
         return getEm().createNamedQuery("EmployeePosition.findByIsActive", EmployeePosition.class)
                 .setParameter("isActive", isActive)
                 .getResultList();

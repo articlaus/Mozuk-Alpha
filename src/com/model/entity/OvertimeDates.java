@@ -36,11 +36,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "OvertimeDates.findByStartTime", query = "SELECT o FROM OvertimeDates o WHERE o.startTime = :startTime"),
     @NamedQuery(name = "OvertimeDates.findByEndTime", query = "SELECT o FROM OvertimeDates o WHERE o.endTime = :endTime"),
     @NamedQuery(name = "OvertimeDates.findByHours", query = "SELECT o FROM OvertimeDates o WHERE o.hours = :hours"),
-    @NamedQuery(name = "OvertimeDates.findByIsHoliday", query = "SELECT o FROM OvertimeDates o WHERE o.isHoliday = :isHoliday")})
+    @NamedQuery(name = "OvertimeDates.findByIsHoliday", query = "SELECT o FROM OvertimeDates o WHERE o.isHoliday = :isHoliday"),
+    @NamedQuery(name = "OvertimeDates.findByOvertime", query = "SELECT o FROM OvertimeDates o WHERE o.overtimeid = :overtimeid"),
+})
 public class OvertimeDates implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-
     @Column(name = "id")
     private BigDecimal id;
     @Basic(optional = false)

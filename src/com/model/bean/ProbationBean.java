@@ -10,5 +10,7 @@ import javax.ejb.Stateless;
  */
 @LocalBean
 @Stateless
-public class ProbationBean extends BaseEJB{
+public class ProbationBean extends BaseEJB {
+
+
 }
