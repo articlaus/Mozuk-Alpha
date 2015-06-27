@@ -84,6 +84,9 @@ public class Employee implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
+    @Basic
+    @Column(name = "ISACTIVE")
+    private boolean isActive;
     @OneToOne( mappedBy = "employeeCode")
     private DepartmentHeads departmentHeads;
     @OneToMany( mappedBy = "employeeCode")
@@ -224,6 +227,14 @@ public class Employee implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     public DepartmentHeads getDepartmentHeads() {
