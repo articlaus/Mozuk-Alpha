@@ -12,6 +12,24 @@ public class NotificationUtils {
         Clients.showNotification(printMsg, Clients.NOTIFICATION_TYPE_WARNING, null, "middle_center", 0, true);
     }
 
+    public static void showSelectValueMsg() {
+        String str = "Та Засах утгаа Сонгон уу.";
+        str.replaceAll(" ", System.lineSeparator());
+        Clients.showNotification(str, Clients.NOTIFICATION_TYPE_WARNING, null, "middle_center", 0, true);
+    }
+
+    public static void showSuccess() {
+        String str = "Амжилттай Хадгалагдлаа!";
+        str.replaceAll(" ", System.lineSeparator());
+        Clients.showNotification(str, Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 0, true);
+    }
+
+    public static void showFailure() {
+        String str = "Мэдээллийг хадгалахад алдаа гарлаа!";
+        str.replaceAll(" ", System.lineSeparator());
+        Clients.showNotification(str, Clients.NOTIFICATION_TYPE_WARNING, null, "middle_center", 0, true);
+    }
+
     public static void showMsg(String msg) {
         String printMsg = msg.replaceAll(" ", System.lineSeparator());
         Clients.showNotification(printMsg, Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 5000, false);

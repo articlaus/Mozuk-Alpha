@@ -22,8 +22,6 @@ public class MainIncludeController {
     @AfterCompose
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         Selectors.wireComponents(view, this, false);
-        System.out.println("mainInclude = " + mainInclude);
         Executions.getCurrent().getSession().setAttribute("mainInclude", mainInclude);
-        System.out.println("Executions.getCurrent().getSession().getAttribute(\"mainInclude\") = " + Executions.getCurrent().getSession().getAttribute("mainInclude"));
     }
 }

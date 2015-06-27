@@ -27,7 +27,7 @@ public class EmployeeBean extends BaseEJB {
 
     public Employee save(Employee employee) {
         try {
-            employee.setCode(SequenceUtil.nextBigDecimal().toString());
+            employee.setIsActive(true);
             employee.setCreatedDate(Calendar.getInstance().getTime());
             getEm().persist(employee);
             return employee;
@@ -62,7 +62,7 @@ public class EmployeeBean extends BaseEJB {
     }
 
     public List<Employee> findByIsActive(boolean isActive) {
-        List<Employee> employees=getEm().createNamedQuery("Employee.findByIsActive", Employee.class)
+        List<Employee> employees = getEm().createNamedQuery("Employee.findByIsActive", Employee.class)
                 .setParameter("isActive", isActive)
                 .getResultList();
         for (Employee employee : employees) {
@@ -124,7 +124,6 @@ public class EmployeeBean extends BaseEJB {
 
     public EmployeePosition updateByEmployeePosition(EmployeePosition employeePosition) {
         try {
-
             employeePosition = getEm().merge(employeePosition);
             return employeePosition;
         } catch (Exception e) {
@@ -157,23 +156,20 @@ public class EmployeeBean extends BaseEJB {
 
     public List<EmployeeWorkMonth> findWorkMonthByWorkMonth(WorkMonths workMonths) {
         return getEm().createNamedQuery("EmployeeWorkMonth.findByWorkMonth", EmployeeWorkMonth.class)
-                .setParameter("workMonthsid",workMonths)
+                .setParameter("workMonthsid", workMonths)
                 .getResultList();
     }
 
-    public List<EmployeeWorkMonth> findWorkMonthByEmployeeAndWorkMonth(Employee employee,WorkMonths workMonths) {
+    public List<EmployeeWorkMonth> findWorkMonthByEmployeeAndWorkMonth(Employee employee, WorkMonths workMonths) {
         return getEm().createNamedQuery("EmployeeWorkMonth.findByEmployeeAndWorkMonth", EmployeeWorkMonth.class)
-                .setParameter("employeeCode",employee)
-                .setParameter("workMonthsid",workMonths)
+                .setParameter("employeeCode", employee)
+                .setParameter("workMonthsid", workMonths)
                 .getResultList();
     }
 
     public EmployeeWorkMonth findByEmployeeWorkMonthId(BigDecimal employeeWorkMonthId) {
         return getEm().find(EmployeeWorkMonth.class, employeeWorkMonthId);
     }
-
-
-
 
 
 }

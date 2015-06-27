@@ -5,10 +5,14 @@
             <tabbox>
                 <tabs>
                     <tab id="employeeDetails" label="Ерөнхий Мэдээлэл" iconSclass="z-icon-user" selected="true"/>
+                    <tab id="employeePosition" label="Албан Тушаал" iconSclass="z-icon-file"/>
                 </tabs>
                 <tabpanels>
                     <tabpanel>
                         <include src="/main/employee/employeeDetails.zul"/>
+                    </tabpanel>
+                    <tabpanel>
+                        <include src="/main/position/EmployeePositionListPanel.zul"/>
                     </tabpanel>
                 </tabpanels>
             </tabbox>

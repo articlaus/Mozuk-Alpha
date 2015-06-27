@@ -11,9 +11,9 @@
                             <navbar orient="vertical" width="100%">
                                 <navitem label="Нүүр" iconSclass="z-icon-home" onClick="@command('home')"/>
                                 <nav label="Ажилтанууд" iconSclass="z-icon-users">
-                                    <navitem label="Жагсаалт" iconSclass="z-icon-th-list"
+                                    <navitem label="Жагсаалт" iconSclass="z-icon-group"
                                              onClick="@command('employeeList')"/>
-                                    <navitem label=""/>
+                                    <navitem label="Чөлөө" iconSclass="z-icon-life-ring" onClick="@command('leaveList')"/>
                                 </nav>
                                 <nav label="Get Started" iconSclass="z-icon-th-list">
                                     <navitem label="Step One"/>

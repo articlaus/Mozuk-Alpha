@@ -8,46 +8,56 @@
                     <caption label="Ерөнхий Мэдээлэл"/>
                     <grid>
                         <columns>
-                            <column/>
-                            <column/>
+                            <column width="30%"/>
+                            <column width="70%"/>
                         </columns>
                         <rows>
                             <row>
-                                <label value="Ажилтаны Код -"/>
+                                <label value="Ажилтаны Код :"/>
                                 <textbox value="@bind(edp.employee.code)" width="100%" placeholder="Ажилтаны Код"
                                          constraint="no empty"/>
                             </row>
                             <row>
-                                <label value="Регистрийн Дугаар -"/>
+                                <label value="Цээж зураг :"/>
+                                <cell id="imageCell">
+                                    <button label="Оруулах" iconSclass="z-icon-upload" upload="true"
+                                            onUpload="@command('uploadFile')"/>
+                                    <button label="Үзэх" onClick="@command('viewImage')" id="imageBtn"
+                                            iconSclass="z-icon-image"/>
+                                </cell>
+                            </row>
+                            <row>
+                                <label value="Регистрийн Дугаар :"/>
                                 <textbox value="@bind(edp.employee.socialSecurityNumber)" width="100%"
                                          placeholder="Регистрийн Дугаар" constraint=""/>
                             </row>
                             <row>
-                                <label value="Ургийн овог -"/>
+                                <label value="Ургийн овог :"/>
                                 <textbox value="@bind(edp.employee.surname)" width="100%" placeholder="Ургийн овог"/>
                             </row>
                             <row>
-                                <label value="Нэр -"/>
-                                <cell>
-                                    <textbox value="@bind(edp.employee.lastname)" width="100%" placeholder="Овог"
-                                             constraint="no empty"/>
-                                    <textbox value="@bind(edp.employee.firstname)" width="100%" placeholder="Нэр"
-                                             constraint="no empty"/>
-                                </cell>
+                                <label value="Овог :"/>
+                                <textbox value="@bind(edp.employee.lastname)" width="100%" placeholder="Овог"
+                                         constraint="no empty"/>
                             </row>
                             <row>
-                                <label value="Утасны Дугаар -"/>
+                                <label value="Нэр :"/>
+                                <textbox value="@bind(edp.employee.firstname)" width="100%" placeholder="Нэр"
+                                         constraint="no empty"/>
+                            </row>
+                            <row>
+                                <label value="Утасны Дугаар :"/>
                                 <intbox value="@bind(edp.employee.cellNumber)" width="100%" placeholder="Утасны Дугаар"
                                         constraint="no empty"/>
                             </row>
                             <row>
-                                <label value="Төрсөн өдөр -"/>
+                                <label value="Төрсөн өдөр :"/>
                                 <datebox value="@bind(edp.employee.dob)" width="100%" format="yyyy/MM/dd"
                                          placeholder="Төрсөн өдөр"
                                          constraint="no empty"/>
                             </row>
                             <row>
-                                <label value="Гэр бүлийн байдал -"/>
+                                <label value="Гэр бүлийн байдал :"/>
                                 <combobox id="maritalBox" model="@load(edp.maritalStatuses)"
                                           selectedItem="@bind(edp.maritalStatus)"
                                           width="100%">
@@ -57,22 +67,21 @@
                                 </combobox>
                             </row>
                             <row>
-                                <label value="Гэр бүлийн xэмжээ -"/>
+                                <label value="Гэр бүлийн xэмжээ :"/>
                                 <intbox value="@bind(edp.employee.familySize)" width="100%"
                                         placeholder="Гэр бүлийн Хэмжээ"
                                         constraint="no empty"/>
                             </row>
 
                             <row>
-                                <label value="Хаяг -"/>
+                                <label value="Хаяг :"/>
                                 <textbox value="@bind(edp.employee.address)" width="100%" rows="6" placeholder="Хаяг"
                                          constraint="no empty"/>
                             </row>
                             <row>
-                                <label/>
-                                <cell>
+                                <cell align="right" colspan="2">
                                     <button label="Хадгалах" onClick="@command('save')" iconSclass="z-icon-save"/>
-                                    <button label="Хаах" onClick="@command('close')"/>
+                                    <button label="Хаах" onClick="@command('back')" iconSclass="z-icon-step-backward"/>
                                 </cell>
                             </row>
 
@@ -83,21 +92,22 @@
                     <caption label="Онцгой үед холбоо барих хүний мэдээлэл"/>
                     <grid>
                         <columns>
-                            <column/>
-                            <column/>
+                            <column width="30%"/>
+                            <column width="70%"/>
                         </columns>
                         <rows>
                             <row>
-                                <label value="Нэр -"/>
+                                <label value="Нэр :"/>
                                 <textbox value="@bind(edp.emergency.name)" placeholder="Нэр" width="100%"/>
                             </row>
                             <row>
-                                <label value="Харилцаа -"/>
+                                <label value="Харилцаа :"/>
                                 <textbox value="@bind(edp.emergency.relationship)" placeholder="Харилцаа" width="100%"/>
                             </row>
                             <row>
-                                <label value="Утасны Дугаар -"/>
-                                <intbox value="@bind(edp.emergency.cellNumber)" placeholder="Утасны Дугаар" width="100%"/>
+                                <label value="Утасны Дугаар :"/>
+                                <intbox value="@bind(edp.emergency.cellNumber)" placeholder="Утасны Дугаар"
+                                        width="100%"/>
                             </row>
                         </rows>
                     </grid>

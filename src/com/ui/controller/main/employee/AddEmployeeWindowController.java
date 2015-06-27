@@ -1,19 +1,36 @@
 package com.ui.controller.main.employee;
 
+import com.model.bean.EmployeeBean;
 import com.model.entity.Employee;
+import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
+import com.ui.util.NotificationUtils;
+import org.zkoss.bind.BindContext;
 import org.zkoss.bind.annotation.*;
+import org.zkoss.io.Files;
+import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Combobox;
+import org.zkoss.zul.*;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by Articlaus on 6/24/15.
  */
 public class AddEmployeeWindowController extends MainComponent {
+    EmployeeBean employeeBean;
     Employee employee;
     List<String> maritalStatuses;
     String maritalStatus;
@@ -22,10 +39,14 @@ public class AddEmployeeWindowController extends MainComponent {
     @Wire
     Combobox maritalBox;
 
+    @Wire
+    Cell imageCell;
+
     @Init(superclass = true)
     @Override
     public void init() {
-
+        super.init();
+        employeeBean = EBeanUtils.getBean(EmployeeBean.class);
     }
 
     @AfterCompose(superclass = true)
@@ -50,8 +71,42 @@ public class AddEmployeeWindowController extends MainComponent {
 
     @Command
     public void save() {
-        //todo
-        employeeListPanelController.refreshValues();
+        employee.setMaritalStatus(maritalStatus);
+        if (employeeBean.save(employee) != null) {
+            NotificationUtils.showSuccess();
+            employeeListPanelController.refreshValues();
+            getCurrentWindow().detach();
+        } else
+            NotificationUtils.showFailure();
+
+    }
+
+    @Command
+    public void uploadPortrait() {
+        //Make use of ZK Fileupload component to read the media...
+        Media media = Fileupload.get();
+        //If user selects a real file...
+        System.out.println("media = " + Arrays.toString(media.getByteData()));
+        if (media != null) {
+            employee.setPortrait(media.getByteData());
+        }
+    }
+
+    @Command
+    public void uploadFile(BindContext ctx) {
+        UploadEvent event = (UploadEvent) ctx.getTriggerEvent();
+        Media media = event.getMedia();
+        employee.setPortrait(media.getByteData());
+        Button imageBtn = new Button("Үзэх");
+        imageBtn.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                getWindowMap().put("image", media.getByteData());
+                Executions.createComponents("/main/other/PortraitWindow.zul", null, getWindowMap());
+            }
+        });
+        imageBtn.setIconSclass("z-icon-image");
+        imageCell.appendChild(imageBtn);
     }
 
     public List<String> getMaritalStatuses() {

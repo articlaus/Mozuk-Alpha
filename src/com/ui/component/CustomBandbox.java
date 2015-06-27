@@ -242,13 +242,13 @@ public class CustomBandbox<T> extends Bandbox {
         Bandpopup bandpopup = new Bandpopup();
         Toolbar toolbar = new Toolbar();
         newButton = new Button("Нэмэх");
-        newButton.setSclass("btn btn-default btn-xs");
+        newButton.setIconSclass("z-icon-plus");
         toolbar.appendChild(newButton);
         if (newWindowUrl == null) {
             newButton.setVisible(false);
         }
         refreshButton = new Button();
-        refreshButton.setSclass("fa fa-refresh btn btn-info btn-xs");
+        refreshButton.setIconSclass("z-icon-refresh");
         toolbar.appendChild(refreshButton);
 
         bandpopup.setParent(this);

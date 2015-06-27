@@ -35,11 +35,11 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "LeaveAbsence.findByNumberOfDays", query = "SELECT l FROM LeaveAbsence l WHERE l.numberOfDays = :numberOfDays"),
         @NamedQuery(name = "LeaveAbsence.findByIsPaid", query = "SELECT l FROM LeaveAbsence l WHERE l.isPaid = :isPaid"),
         @NamedQuery(name = "LeaveAbsence.findByCreatedDate", query = "SELECT l FROM LeaveAbsence l WHERE l.createdDate = :createdDate"),
-        @NamedQuery(name = "LeaveAbsence.findByEmployee", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeId = :employeeId"),
+        @NamedQuery(name = "LeaveAbsence.findByEmployee", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeCode = :employeeId"),
         @NamedQuery(name = "LeaveAbsence.findByLeaveType", query = "SELECT l FROM LeaveAbsence l WHERE l.leaveTypeId = :leaveTypeId"),
         @NamedQuery(name = "LeaveAbsence.findByWorkMonths", query = "SELECT l FROM LeaveAbsence l WHERE l.workMonthsid = :workMonthsid"),
-        @NamedQuery(name = "LeaveAbsence.findByEmployeeAndLeaveType", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeId=:employeeId AND l.leaveTypeId = :leaveTypeId"),
-        @NamedQuery(name = "LeaveAbsence.findByEmployeeAndWorkMonths", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeId=:employeeId AND l.workMonthsid = :workMonthsid"),
+        @NamedQuery(name = "LeaveAbsence.findByEmployeeAndLeaveType", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeCode=:employeeId AND l.leaveTypeId = :leaveTypeId"),
+        @NamedQuery(name = "LeaveAbsence.findByEmployeeAndWorkMonths", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeCode=:employeeId AND l.workMonthsid = :workMonthsid"),
         @NamedQuery(name = "LeaveAbsence.findByStartDateAndEndDate", query = "SELECT l FROM LeaveAbsence l WHERE l.startDate=:startDate AND l.endDate = :endDate"),
 
 })
@@ -60,6 +60,9 @@ public class LeaveAbsence implements Serializable {
     @Basic(optional = false)
     @Column(name = "isPaid")
     private boolean isPaid;
+    @Basic(optional = true)
+    @Column(name = "description")
+    private String description;
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
@@ -69,9 +72,9 @@ public class LeaveAbsence implements Serializable {
     @JoinColumn(name = "Work_Monthsid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private WorkMonths workMonthsid;
-    @JoinColumn(name = "employee_id", referencedColumnName = "code")
+    @JoinColumn(name = "employee_code", referencedColumnName = "code")
     @ManyToOne(optional = false)
-    private Employee employeeId;
+    private Employee employeeCode;
 
     public LeaveAbsence() {
     }
@@ -153,12 +156,20 @@ public class LeaveAbsence implements Serializable {
         this.workMonthsid = workMonthsid;
     }
 
-    public Employee getEmployeeId() {
-        return employeeId;
+    public Employee getEmployeeCode() {
+        return employeeCode;
     }
 
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeeCode(Employee employeeCode) {
+        this.employeeCode = employeeCode;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

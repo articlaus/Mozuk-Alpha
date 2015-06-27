@@ -30,7 +30,7 @@ public class OtherBean extends BaseEJB {
 
     public Department saveByDepartment(Department department) {
         try {
-            department.setCode(SequenceUtil.nextBigDecimal().toString());
+//            department.setCode(SequenceUtil.nextBigDecimal().toString());
             department.setCreatedDate(Calendar.getInstance().getTime());
             getEm().persist(department);
             return department;

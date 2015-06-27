@@ -87,7 +87,7 @@ public class Employee implements Serializable {
     private List<EmployeePosition> employeePositionList;
     @OneToMany(mappedBy = "employeeId")
     private List<Resolution> resolutionList;
-    @OneToMany( mappedBy = "employeeId")
+    @OneToMany( mappedBy = "employeeCode")
     private List<LeaveAbsence> leaveAbsenceList;
     @OneToMany( mappedBy = "employeeId")
     private List<Overtime> overtimeList;

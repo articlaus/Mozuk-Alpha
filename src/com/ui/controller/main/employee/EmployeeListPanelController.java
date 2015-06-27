@@ -20,7 +20,7 @@ public class EmployeeListPanelController extends MainComponent {
 
 
     EmployeeBean employeeBean;
-    List<EmployeePosition> employeeList;
+    List<Employee> employeeList;
 
     Employee selectedEmployee;
     @Wire
@@ -48,22 +48,26 @@ public class EmployeeListPanelController extends MainComponent {
     }
 
     @Command
-    public void editEmployee(@BindingParam("btnEdit") Employee employee) {
-        getMainInclude().setDynamicProperty("employee", selectedEmployee);
-        getMainInclude().setSrc("/main/employee/EmployeeDetails.zul");
-        //todo
+    public void editEmployee(@BindingParam("employee") Employee employee) {
+        getMainInclude().setDynamicProperty("employee", employee);
+        getMainInclude().setSrc("/main/employee/employeeTab.zul");
     }
+
+
 
     public void refreshValues() {
         employeeList = employeeBean.findByIsActive(true);
+        for (Employee employee : employeeList) {
+            System.out.println("employee.getFirstname() = " + employee.getFirstname());
+        }
         getBinder().loadComponent(employeeListBox, true);
     }
 
-    public List<EmployeePosition> getEmployeeList() {
+    public List<Employee> getEmployeeList() {
         return employeeList;
     }
 
-    public void setEmployeeList(List<EmployeePosition> employeeList) {
+    public void setEmployeeList(List<Employee> employeeList) {
         this.employeeList = employeeList;
     }
 
