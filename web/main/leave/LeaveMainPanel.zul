@@ -1,0 +1,88 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel id="leaveMainPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('lmp') @init('com.ui.controller.main.leave.LeaveMainPanelController')">
+        <panelchildren>
+            <vbox>
+                <hbox>
+                    <grid style="border: none">
+                        <columns>
+                            <column width="30%"/>
+                            <column width="70%"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <label value="Ажилтан"/>
+                                <cell id="employeeCell"/>
+                            </row>
+                            <row>
+                                <label value="Чөлөөний Төрөл"/>
+                                <cell id="leaveTypeCell"/>
+                            </row>
+                            <row>
+                                <label value="Эхлэх Огноо"/>
+                                <datebox value="@bind(lmp.leaveAbsence.startDate)" width="100%" format="yyyy/MM/dd"
+                                         placeholder="Эхлэх Огноо"
+                                         constraint="no empty"/>
+                            </row>
+                            <row>
+                                <label value="Дуусах Өдөр"/>
+                                <datebox value="@bind(lmp.leaveAbsence.endDate)" width="100%" format="yyyy/MM/dd"
+                                         placeholder="Дуусах Өдөр"
+                                         constraint="no empty"/>
+                            </row>
+                            <row>
+                                <label value=""/>
+                                <checkbox id="chkActive" value="@bind(lmp.leaveAbsence.isPaid)" label="Цалинтай"/>
+                            </row>
+                        </rows>
+                    </grid>
+                    <grid style="border: none">
+                        <columns>
+                            <column width="30%"/>
+                            <column width="70%"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <label value="Тайлбар :"/>
+                                <textbox value="@bind(lmp.leaveAbsence.description)" rows="6" width="100%"/>
+                            </row>
+                            <row>
+                                <cell colspan="2" align="right">
+                                    <button label="Хадгалах" onClick="@command('save')"/>
+                                </cell>
+                            </row>
+                        </rows>
+                    </grid>
+
+                </hbox>
+                <groupbox closable="false">
+                    <caption label="Энэ сарын чөлөө болон амралтын жагсаалт"/>
+                    <listbox id="leaveMainListBox" height="400px" model="@bind(lmp.leaveList)"
+                             selectedItem="@bind(lmp.leaveAbsence)" mold="paging" pagingPosition="bottom">
+                        <listhead menupopup="auto">
+                            <listheader label="Ажилтан" sort="auto(employeeCode.firstname)"/>
+                            <listheader label="Төрөл" sort="auto(leaveTypeId.leaveType)"/>
+                            <listheader label="Эхлэсэн Өдөр" sort="auto(startDate)"/>
+                            <listheader label="Дууссан Өдөр" sort="auto(endDate)"/>
+                            <listheader/>
+                        </listhead>
+                        <template name="model">
+                            <listitem>
+                                <listcell label="@bind(each.employeeCode.firstname)"/>
+                                <listcell label="@bind(each.leaveTypeId.leaveType)"/>
+                                <listcell label="@bind(each.startDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
+                                <listcell label="@bind(each.endDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
+                                <listcell>
+                                    <button label="Засах" onClick="@command('editLeave', leave=each)"/>
+                                </listcell>
+                            </listitem>
+                        </template>
+                    </listbox>
+                </groupbox>
+            </vbox>
+
+        </panelchildren>
+    </panel>
+
+</zk>

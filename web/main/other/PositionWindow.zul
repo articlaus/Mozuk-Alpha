@@ -1,0 +1,35 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <window id="positionWindow" title="Албан Тушаал нэмэх" width="400px" height="400px"
+            mode="modal" border="normal" apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('pw') @init('com.ui.controller.other.PositionWindowController')">
+        <grid>
+            <columns>
+                <column width="30%"/>
+                <column width="70%"/>
+            </columns>
+            <rows>
+                <row>
+                    <label value="Код :"/>
+                    <textbox id="codeTxt" value="@bind(pw.position.code)" width="100%"/>
+                </row>
+                <row>
+                    <label value="Албан Тушаал :"/>
+                    <textbox id="titleTxt" value="@bind(pw.position.positionTitle)" width="100%"/>
+                </row>
+                <row>
+                    <label value="Тайлбар :"/>
+                    <textbox id="descriptionTxt" value="@bind(pw.position.positionDescription)" rows="6" width="100%"/>
+                </row>
+                <row>
+                    <cell align="right" colspan="2">
+                        <button label="Хадгалах" onClick="@command('save')" iconSclass="z-icon-save"/>
+                        <button label="Хаах" onClick="@global-command('windowCancelBtn',xWindow=positionWindow)"/>
+                    </cell>
+                </row>
+
+            </rows>
+        </grid>
+
+    </window>
+</zk>

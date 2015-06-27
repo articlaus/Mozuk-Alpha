@@ -1,0 +1,55 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <window title="Албан Тушаал" mode="modal" width="600px" border="normal" id="employeePositionWindow"
+            closable="true"
+            position="center" apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('epw') @init('com.ui.controller.main.position.EmployeePositionWindowController')">
+        <grid>
+            <columns>
+                <column width="30%"/>
+                <column width="70%"/>
+            </columns>
+            <rows>
+                <row>
+                    <label value="Албан Тушаал"/>
+                    <cell id="positionCell"/>
+                </row>
+                <row>
+                    <label value="Хэлтэс :"/>
+                    <cell id="departmentCell"/>
+                </row>
+                <row>
+                    <label value="Цалин :"/>
+                    <doublebox format="#,##0.00" value="@bind(epw.employeePosition.salary)" placeholder="Цалин"
+                               constraint="no empty" width="100%"/>
+                </row>
+                <row>
+                    <label value="Эхэлсэн Огноо :"/>
+                    <datebox value="@bind(epw.employeePosition.startDate)" width="100%" format="yyyy/MM/dd"
+                             placeholder="Эхэлсэн Огноо"
+                             constraint="no empty"
+                            />
+                </row>
+                <row>
+                    <label value="Дууссан Огноо :"/>
+                    <datebox value="@bind(epw.employeePosition.endDate)" width="100%" format="yyyy/MM/dd"
+                             placeholder="Дууссан Огноо"/>
+                </row>
+                <row>
+                    <label value=""/>
+                    <checkbox id="chkActive" value="@bind(epw.employeePosition.isActive)"
+                              onCheck="@command('check',checked=self.checked)" label="Идэвхитэй"/>
+                </row>
+                <row>
+                    <label/>
+                    <cell>
+                        <button label="Хадгалах" onClick="@command('save')" iconSclass="z-icon-save"/>
+                        <button label="Хаах"
+                                onClick="@global-command('windowCancelBtn',xWindow=employeePositionWindow)"/>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+    </window>
+
+</zk>

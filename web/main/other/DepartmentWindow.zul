@@ -1,0 +1,36 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <window id="departmentWindow" title="Хэлтэс" width="400px" height="400px"
+            mode="modal" border="normal" apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('dw') @init('com.ui.controller.other.DepartmentWindowController')">
+        <grid>
+            <columns>
+                <column width="30%"/>
+                <column width="70%"/>
+            </columns>
+            <rows>
+                <row>
+                    <label value="Код :"/>
+                    <textbox id="codeTxt" value="@bind(dw.department.code)" width="100%"/>
+                </row>
+                <row>
+                    <label value="Хэлтэс :"/>
+                    <textbox id="titleTxt" value="@bind(dw.department.departmentTitle)" width="100%"/>
+                </row>
+                <row>
+                    <label value="Тайлбар :"/>
+                    <textbox id="descriptionTxt" value="@bind(dw.department.departmentDescription)" rows="6"
+                             width="100%"/>
+                </row>
+                <row>
+                    <cell align="right" colspan="2">
+                        <button label="Хадгалах" onClick="@command('save')" iconSclass="z-icon-save"/>
+                        <button label="Хаах" onClick="@global-command('windowCancelBtn',xWindow=departmentWindow)"/>
+                    </cell>
+                </row>
+
+            </rows>
+        </grid>
+
+    </window>
+</zk>

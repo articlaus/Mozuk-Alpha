@@ -1,0 +1,8 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <window id="portraitWindow" width="600px" height="600px" border="normal" title="Цээж Зураг" closable="true"
+            apply="org.zkoss.bind.BindComposer" mode="modal" position="center"
+            viewModel="@id('pw') @init('com.ui.controller.other.PortraitWindowController')">
+        <image id="portraitImage" width="100%" height="100%"/>
+    </window>
+</zk>

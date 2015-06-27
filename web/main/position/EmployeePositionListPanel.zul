@@ -1,0 +1,37 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel id="positionListPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('plp') @init('com.ui.controller.main.position.EmployeePositionListPanelController')">
+        <toolbar>
+            <cell>
+                <button label="Нэмэх" onClick="@command('addPosition')"/>
+                <button label="Засах" onClick="@command('editPosition')"/>
+                <button label="Цалин Нэмэх" onClick="@command('editSalary')"/>
+                <div id="searchField"/>
+            </cell>
+        </toolbar>
+        <panelchildren>
+            <listbox id="employeePositionListBox" height="800px" model="@bind(plp.employeePositions)"
+                     selectedItem="@bind(plp.employeePosition)" mold="paging" pagingPosition="bottom">
+                <listhead menupopup="auto">
+                    <listheader label="Албан Тушаал" sort="auto(positionCode.positionTitle)"/>
+                    <listheader label="Хэлтэс" sort="auto(departmentCode.departmentTitle)"/>
+                    <listheader label="Цалин" sort="auto(salary)"/>
+                    <listheader label="Эхэлсэн Огноо" sort="auto(startDate)"/>
+                    <listheader label="Төгссөн Огноо" sort="auto(endDate)"/>
+                </listhead>
+                <template name="model">
+                    <listitem onDoubleClick="@command('editPosition')">
+                        <listcell label="@bind(each.positionCode.positionTitle)"/>
+                        <listcell label="@bind(each.departmentCode.departmentTitle)"/>
+                        <listcell label="@bind(each.salary) @converter('formatedNumber', format='###,##0.00₮')"/>
+                        <listcell label="@bind(each.startDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
+                        <listcell label="@bind(each.endDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
+                    </listitem>
+                </template>
+
+            </listbox>
+        </panelchildren>
+    </panel>
+
+</zk>
