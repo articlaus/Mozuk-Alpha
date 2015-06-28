@@ -1,9 +1,11 @@
 package com.model.other;
 
+import java.io.Serializable;
+
 /**
  * Created by Arti on 6/28/2015.
  */
-public class CalendarPojo {
+public class CalendarPojo implements Serializable {
     /**
      * Ажилтаны Нэр болон Object-ын төрөл - амралт илуу цаг чөлөө гэх мэт
      */

@@ -43,7 +43,7 @@ public class EmployeeWorkMonth implements Serializable {
     private Integer workedHours;
     @Basic(optional = false)
     @Column(name = "final_salary")
-    private int finalSalary;
+    private double finalSalary;
     @JoinColumn(name = "Work_Monthsid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private WorkMonths workMonthsid;
@@ -58,7 +58,7 @@ public class EmployeeWorkMonth implements Serializable {
         this.id = id;
     }
 
-    public EmployeeWorkMonth(BigDecimal id, int finalSalary) {
+    public EmployeeWorkMonth(BigDecimal id, double finalSalary) {
         this.id = id;
         this.finalSalary = finalSalary;
     }
@@ -79,11 +79,11 @@ public class EmployeeWorkMonth implements Serializable {
         this.workedHours = workedHours;
     }
 
-    public int getFinalSalary() {
+    public double getFinalSalary() {
         return finalSalary;
     }
 
-    public void setFinalSalary(int finalSalary) {
+    public void setFinalSalary(double finalSalary) {
         this.finalSalary = finalSalary;
     }
 

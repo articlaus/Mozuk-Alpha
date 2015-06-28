@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Probation.findByStartDate", query = "SELECT p FROM Probation p WHERE p.startDate = :startDate"),
     @NamedQuery(name = "Probation.findByEndDate", query = "SELECT p FROM Probation p WHERE p.endDate = :endDate"),
     @NamedQuery(name = "Probation.findByIsActive", query = "SELECT p FROM Probation p WHERE p.isActive = :isActive"),
-    @NamedQuery(name = "Probation.findByCreatedDate", query = "SELECT p FROM Probation p WHERE p.createdDate = :createdDate")})
+    @NamedQuery(name = "Probation.findByCreatedDate", query = "SELECT p FROM Probation p WHERE p.createdDate = :createdDate"),
+})
 public class Probation implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -64,9 +65,9 @@ public class Probation implements Serializable {
     @JoinColumn(name = "employee_code", referencedColumnName = "code")
     @ManyToOne(optional = false)
     private Employee employeeCode;
-    @JoinColumn(name = "department_id", referencedColumnName = "code")
+    @JoinColumn(name = "department_code", referencedColumnName = "code")
     @ManyToOne(optional = false)
-    private Department departmentId;
+    private Department departmentCode;
 
     public Probation() {
     }
@@ -140,12 +141,12 @@ public class Probation implements Serializable {
         this.employeeCode = employeeCode;
     }
 
-    public Department getDepartmentId() {
-        return departmentId;
+    public Department getDepartmentCode() {
+        return departmentCode;
     }
 
-    public void setDepartmentId(Department departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartmentCode(Department departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
     @Override

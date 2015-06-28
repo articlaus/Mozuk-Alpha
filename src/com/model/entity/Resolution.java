@@ -24,18 +24,17 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author tseegii
  */
 @Entity
 @Table(name = "RESOLUTION")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Resolution.findAll", query = "SELECT r FROM Resolution r"),
-    @NamedQuery(name = "Resolution.findByCode", query = "SELECT r FROM Resolution r WHERE r.code = :code"),
-    @NamedQuery(name = "Resolution.findByCreatedDate", query = "SELECT r FROM Resolution r WHERE r.createdDate = :createdDate"),
-    @NamedQuery(name = "Resolution.findByIsDepartment", query = "SELECT r FROM Resolution r WHERE r.isDepartment = :isDepartment"),
-    @NamedQuery(name = "Resolution.findByResolutionType", query = "SELECT r FROM Resolution r WHERE r.resolutionType = :resolutionType")})
+        @NamedQuery(name = "Resolution.findAll", query = "SELECT r FROM Resolution r"),
+        @NamedQuery(name = "Resolution.findByCode", query = "SELECT r FROM Resolution r WHERE r.code = :code"),
+        @NamedQuery(name = "Resolution.findByCreatedDate", query = "SELECT r FROM Resolution r WHERE r.createdDate = :createdDate"),
+        @NamedQuery(name = "Resolution.findByIsDepartment", query = "SELECT r FROM Resolution r WHERE r.isDepartment = :isDepartment"),
+        @NamedQuery(name = "Resolution.findByResolutionType", query = "SELECT r FROM Resolution r WHERE r.resolutionType = :resolutionType")})
 public class Resolution implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,12 +54,12 @@ public class Resolution implements Serializable {
     @Basic(optional = false)
     @Column(name = "resolution_type")
     private String resolutionType;
-    @JoinColumn(name = "department_id", referencedColumnName = "code")
+    @JoinColumn(name = "department_code", referencedColumnName = "code")
     @ManyToOne(optional = false)
-    private Department departmentId;
-    @JoinColumn(name = "employee_id", referencedColumnName = "code")
+    private Department departmentCode;
+    @JoinColumn(name = "employee_code", referencedColumnName = "code")
     @ManyToOne
-    private Employee employeeId;
+    private Employee employeeCode;
 
     public Resolution() {
     }
@@ -117,20 +116,20 @@ public class Resolution implements Serializable {
         this.resolutionType = resolutionType;
     }
 
-    public Department getDepartmentId() {
-        return departmentId;
+    public Department getDepartmentCode() {
+        return departmentCode;
     }
 
-    public void setDepartmentId(Department departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartmentCode(Department departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
-    public Employee getEmployeeId() {
-        return employeeId;
+    public Employee getEmployeeCode() {
+        return employeeCode;
     }
 
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeeCode(Employee employeeCode) {
+        this.employeeCode = employeeCode;
     }
 
     @Override
@@ -157,5 +156,5 @@ public class Resolution implements Serializable {
     public String toString() {
         return "com.model.entity.Resolution[ code=" + code + " ]";
     }
-    
+
 }

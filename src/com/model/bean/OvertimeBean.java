@@ -32,7 +32,7 @@ public class OvertimeBean extends BaseEJB {
 
     public List<Overtime> findByEmployee(Employee employee) {
         return getEm().createNamedQuery("Overtime.findByEmployee", Overtime.class)
-                .setParameter("employeeId", employee)
+                .setParameter("employeeCode", employee)
                 .getResultList();
     }
 
@@ -44,7 +44,7 @@ public class OvertimeBean extends BaseEJB {
 
     public List<Overtime> findByEmployeeAndWorkMonths(Employee employee,WorkMonths workMonths) {
         return getEm().createNamedQuery("Overtime.findByEmployeeAndWorkMonthsId", Overtime.class)
-                .setParameter("employeeId", employee)
+                .setParameter("employeeCode", employee)
                 .setParameter("workMonthsid",workMonths)
                 .getResultList();
     }

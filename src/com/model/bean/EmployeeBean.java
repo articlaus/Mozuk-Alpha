@@ -30,11 +30,20 @@ public class EmployeeBean extends BaseEJB {
             employee.setIsActive(true);
             employee.setCreatedDate(Calendar.getInstance().getTime());
             getEm().persist(employee);
+            createWorkMonth(employee);
             return employee;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Inject
+    private OtherBean otherBean;
+
+    private void createWorkMonth(Employee employee) {
+        EmployeeWorkMonth employeeWorkMonth = new EmployeeWorkMonth();
+
     }
 
     public Employee update(Employee employee) {

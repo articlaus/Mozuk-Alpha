@@ -6,6 +6,7 @@ import com.model.util.SequenceUtil;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
@@ -185,6 +186,9 @@ public class OtherBean extends BaseEJB {
 
 //------------------------------------------------------------------------
 
+    @Inject
+    private EmployeeBean employeeBean;
+
     public WorkMonths findByWorkMonthsId(BigDecimal workMonthsId) {
         return getEm().find(WorkMonths.class, workMonthsId);
     }
@@ -198,10 +202,28 @@ public class OtherBean extends BaseEJB {
             workMonths.setId(SequenceUtil.nextBigDecimal());
             workMonths.setCreatedDate(Calendar.getInstance().getTime());
             getEm().persist(workMonths);
+            createEmployeeWorkMonth(workMonths);
             return workMonths;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void saveByWorkMonths(Employee employee, WorkMonths workMonths) {
+        EmployeeWorkMonth employeeWorkMonth = new EmployeeWorkMonth();
+        employeeWorkMonth.setId(SequenceUtil.nextBigDecimal());
+        employeeWorkMonth.setWorkMonthsid(workMonths);
+        employeeWorkMonth.setWorkedHours(0);
+        employeeWorkMonth.setFinalSalary(0d);
+        employeeWorkMonth.setEmployeeCode(employee);
+        getEm().persist(employeeWorkMonth);
+    }
+
+    private void createEmployeeWorkMonth(WorkMonths workMonths) {
+        List<Employee> employees = employeeBean.findByIsActive(true);
+        for (Employee employee : employees) {
+            saveByWorkMonths(employee,workMonths);
         }
     }
 
@@ -297,6 +319,9 @@ public class OtherBean extends BaseEJB {
             return false;
         }
     }
+
+
+//----------------------Calendar POJO-----------------------------
 
 
 }

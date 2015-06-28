@@ -34,9 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Overtime.findAll", query = "SELECT o FROM Overtime o"),
     @NamedQuery(name = "Overtime.findById", query = "SELECT o FROM Overtime o WHERE o.id = :id"),
     @NamedQuery(name = "Overtime.findByIsHoliday", query = "SELECT o FROM Overtime o WHERE o.isHoliday = :isHoliday"),
-    @NamedQuery(name = "Overtime.findByEmployee", query = "SELECT o FROM Overtime o WHERE o.employeeId = :employeeId"),
+    @NamedQuery(name = "Overtime.findByEmployee", query = "SELECT o FROM Overtime o WHERE o.employeeCode = :employeeCode"),
     @NamedQuery(name = "Overtime.findByWorkMonthsId", query = "SELECT o FROM Overtime o WHERE o.workMonthsid = :workMonthsid"),
-    @NamedQuery(name = "Overtime.findByEmployeeAndWorkMonthsId", query = "SELECT o FROM Overtime o WHERE o.employeeId=:employeeId AND o.workMonthsid = :workMonthsid"),
+    @NamedQuery(name = "Overtime.findByEmployeeAndWorkMonthsId", query = "SELECT o FROM Overtime o WHERE o.employeeCode=:employeeCode AND o.workMonthsid = :workMonthsid"),
 })
 public class Overtime implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -54,9 +54,9 @@ public class Overtime implements Serializable {
     @JoinColumn(name = "Work_Monthsid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private WorkMonths workMonthsid;
-    @JoinColumn(name = "employee_id", referencedColumnName = "code")
+    @JoinColumn(name = "employee_code", referencedColumnName = "code")
     @ManyToOne(optional = false)
-    private Employee employeeId;
+    private Employee employeeCode;
 
     public Overtime() {
     }
@@ -111,12 +111,12 @@ public class Overtime implements Serializable {
         this.workMonthsid = workMonthsid;
     }
 
-    public Employee getEmployeeId() {
-        return employeeId;
+    public Employee getEmployeeCode() {
+        return employeeCode;
     }
 
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeeCode(Employee employeeCode) {
+        this.employeeCode = employeeCode;
     }
 
     @Override
