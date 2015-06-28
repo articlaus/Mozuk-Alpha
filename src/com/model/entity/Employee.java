@@ -13,26 +13,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author tseegii
  */
 @Entity
 @Table(name = "EMPLOYEE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
-    @NamedQuery(name = "Employee.findByCode", query = "SELECT e FROM Employee e WHERE e.code = :code"),
-    @NamedQuery(name = "Employee.findByFirstname", query = "SELECT e FROM Employee e WHERE e.firstname = :firstname"),
-    @NamedQuery(name = "Employee.findByLastname", query = "SELECT e FROM Employee e WHERE e.lastname = :lastname"),
-    @NamedQuery(name = "Employee.findBySurname", query = "SELECT e FROM Employee e WHERE e.surname = :surname"),
-    @NamedQuery(name = "Employee.findByCellNumber", query = "SELECT e FROM Employee e WHERE e.cellNumber = :cellNumber"),
-    @NamedQuery(name = "Employee.findByGender", query = "SELECT e FROM Employee e WHERE e.gender = :gender"),
-    @NamedQuery(name = "Employee.findByDob", query = "SELECT e FROM Employee e WHERE e.dob = :dob"),
-    @NamedQuery(name = "Employee.findByMaritalStatus", query = "SELECT e FROM Employee e WHERE e.maritalStatus = :maritalStatus"),
-    @NamedQuery(name = "Employee.findByFamilySize", query = "SELECT e FROM Employee e WHERE e.familySize = :familySize"),
-    @NamedQuery(name = "Employee.findBySocialSecurityNumber", query = "SELECT e FROM Employee e WHERE e.socialSecurityNumber = :socialSecurityNumber"),
-    @NamedQuery(name = "Employee.findByCreatedDate", query = "SELECT e FROM Employee e WHERE e.createdDate = :createdDate"),
-    @NamedQuery(name = "Employee.findByIsActive", query = "SELECT e FROM Employee e WHERE e.isActive = :isActive"),
+        @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
+        @NamedQuery(name = "Employee.findByCode", query = "SELECT e FROM Employee e WHERE e.code = :code"),
+        @NamedQuery(name = "Employee.findByFirstname", query = "SELECT e FROM Employee e WHERE e.firstname = :firstname"),
+        @NamedQuery(name = "Employee.findByLastname", query = "SELECT e FROM Employee e WHERE e.lastname = :lastname"),
+        @NamedQuery(name = "Employee.findBySurname", query = "SELECT e FROM Employee e WHERE e.surname = :surname"),
+        @NamedQuery(name = "Employee.findByCellNumber", query = "SELECT e FROM Employee e WHERE e.cellNumber = :cellNumber"),
+        @NamedQuery(name = "Employee.findByGender", query = "SELECT e FROM Employee e WHERE e.gender = :gender"),
+        @NamedQuery(name = "Employee.findByDob", query = "SELECT e FROM Employee e WHERE e.dob = :dob"),
+        @NamedQuery(name = "Employee.findByMaritalStatus", query = "SELECT e FROM Employee e WHERE e.maritalStatus = :maritalStatus"),
+        @NamedQuery(name = "Employee.findByFamilySize", query = "SELECT e FROM Employee e WHERE e.familySize = :familySize"),
+        @NamedQuery(name = "Employee.findBySocialSecurityNumber", query = "SELECT e FROM Employee e WHERE e.socialSecurityNumber = :socialSecurityNumber"),
+        @NamedQuery(name = "Employee.findByCreatedDate", query = "SELECT e FROM Employee e WHERE e.createdDate = :createdDate"),
+        @NamedQuery(name = "Employee.findByIsActive", query = "SELECT e FROM Employee e WHERE e.isActive = :isActive"),
 })
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -77,23 +76,23 @@ public class Employee implements Serializable {
     @Basic
     @Column(name = "ISACTIVE")
     private boolean isActive;
-    @OneToOne( mappedBy = "employeeCode")
+    @OneToOne(mappedBy = "employeeCode")
     private DepartmentHeads departmentHeads;
-    @OneToMany( mappedBy = "employeeCode")
+    @OneToMany(mappedBy = "employeeCode")
     private List<EmployeeWorkMonth> employeeWorkMonthList;
-    @OneToMany( mappedBy = "employeeCode")
+    @OneToMany(mappedBy = "employeeCode")
     private List<Emergency> emergencyList;
-    @OneToMany( mappedBy = "employeeCode")
+    @OneToMany(mappedBy = "employeeCode")
     private List<EmployeePosition> employeePositionList;
-    @OneToMany(mappedBy = "employeeId")
+    @OneToMany(mappedBy = "employeeCode")
     private List<Resolution> resolutionList;
-    @OneToMany( mappedBy = "employeeCode")
+    @OneToMany(mappedBy = "employeeCode")
     private List<LeaveAbsence> leaveAbsenceList;
-    @OneToMany( mappedBy = "employeeId")
+    @OneToMany(mappedBy = "employeeCode")
     private List<Overtime> overtimeList;
-    @OneToMany( mappedBy = "employeeCode")
+    @OneToMany(mappedBy = "employeeCode")
     private List<Probation> probationList;
-    @OneToMany( mappedBy = "employeeCode")
+    @OneToMany(mappedBy = "employeeCode")
     private List<Users> usersList;
 
     public Employee() {
@@ -341,5 +340,31 @@ public class Employee implements Serializable {
 
     public void setEmployeePosition(EmployeePosition employeePosition) {
         this.employeePosition = employeePosition;
+    }
+
+    @Transient
+    private String fullName;
+
+    public String getFullName() {
+        fullName = getLastname() + " " + getFirstname();
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    @Transient
+    private Emergency emergency;
+
+    public Emergency getEmergency() {
+        if (getEmergencyList().size() > 0) {
+            return getEmergencyList().get(0);
+        }
+        return null;
+    }
+
+    public void setEmergency(Emergency emergency) {
+        this.emergency = emergency;
     }
 }

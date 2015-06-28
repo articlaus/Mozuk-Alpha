@@ -54,9 +54,9 @@ public class Department implements Serializable {
     private DepartmentHeads departmentHeads;
     @OneToMany(mappedBy = "departmentCode")
     private List<EmployeePosition> employeePositionList;
-    @OneToMany(mappedBy = "departmentId")
+    @OneToMany(mappedBy = "departmentCode")
     private List<Resolution> resolutionList;
-    @OneToMany(mappedBy = "departmentId")
+    @OneToMany(mappedBy = "departmentCode")
     private List<Probation> probationList;
 
     public Department() {

@@ -1,14 +1,19 @@
 package com.model.bean;
 
 import com.model.entity.*;
+import com.model.other.CalendarPojo;
 import com.model.util.BaseEJB;
+import com.model.util.DataTypeUtils;
 import com.model.util.SequenceUtil;
+import org.joda.time.DateTime;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +22,14 @@ import java.util.List;
 @LocalBean
 @Stateless
 public class OtherBean extends BaseEJB {
+
+
+    @Inject
+    private LeaveAbsenceBean leaveAbsenceBean;
+
+    @Inject
+    private OvertimeBean overtimeBean;
+
     /**
      * Ene bean jijeg heregtseet zvilvvdiig bichne
      */
@@ -186,9 +199,6 @@ public class OtherBean extends BaseEJB {
 
 //------------------------------------------------------------------------
 
-    @Inject
-    private EmployeeBean employeeBean;
-
     public WorkMonths findByWorkMonthsId(BigDecimal workMonthsId) {
         return getEm().find(WorkMonths.class, workMonthsId);
     }
@@ -210,7 +220,15 @@ public class OtherBean extends BaseEJB {
         }
     }
 
-    public void saveByWorkMonths(Employee employee, WorkMonths workMonths) {
+    private void createEmployeeWorkMonth(WorkMonths workMonths) {
+        List<Employee> employees = getEm().createNamedQuery("Employee.findByIsActive", Employee.class)
+                .setParameter("isActive", true).getResultList();
+        for (Employee employee : employees) {
+            saveByWorkMonths(employee, workMonths);
+        }
+    }
+
+    private void saveByWorkMonths(Employee employee, WorkMonths workMonths) {
         EmployeeWorkMonth employeeWorkMonth = new EmployeeWorkMonth();
         employeeWorkMonth.setId(SequenceUtil.nextBigDecimal());
         employeeWorkMonth.setWorkMonthsid(workMonths);
@@ -218,13 +236,6 @@ public class OtherBean extends BaseEJB {
         employeeWorkMonth.setFinalSalary(0d);
         employeeWorkMonth.setEmployeeCode(employee);
         getEm().persist(employeeWorkMonth);
-    }
-
-    private void createEmployeeWorkMonth(WorkMonths workMonths) {
-        List<Employee> employees = employeeBean.findByIsActive(true);
-        for (Employee employee : employees) {
-            saveByWorkMonths(employee,workMonths);
-        }
     }
 
     public WorkMonths updateByWorkMonths(WorkMonths workMonths) {
@@ -254,6 +265,21 @@ public class OtherBean extends BaseEJB {
     }
 
     public WorkMonths findByYearAndMonth(int year, int month) {
+        try {
+            return getEm().createNamedQuery("WorkMonths.findByYearAndMonth", WorkMonths.class)
+                    .setParameter("year", year)
+                    .setParameter("month", month)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public WorkMonths findByYearAndMonth() {
+        DateTime dateTime = new DateTime();
+        int year = dateTime.getYear();
+        int month = dateTime.getMonthOfYear();
         try {
             return getEm().createNamedQuery("WorkMonths.findByYearAndMonth", WorkMonths.class)
                     .setParameter("year", year)
@@ -320,8 +346,76 @@ public class OtherBean extends BaseEJB {
         }
     }
 
-
 //----------------------Calendar POJO-----------------------------
+
+
+    public List<CalendarPojo> getCalendarPojos() {
+        WorkMonths workMonth = findByYearAndMonth();
+        List<LeaveAbsence> leaveAbsences = leaveAbsenceBean.findByWorkMonths(workMonth);
+        List<Overtime> overtimes = overtimeBean.findByWorkMonthsId(workMonth);
+
+        List<CalendarPojo> calendarPojos = new ArrayList<>();
+
+        for (LeaveAbsence leaveAbsence : leaveAbsences) {
+            calendarPojos.add(
+                    new CalendarPojo(
+                            leaveAbsence.getEmployeeCode().getFirstname()
+                                    + leaveAbsence.getLeaveTypeId().getLeaveType()
+                            , DataTypeUtils.convertToDateString(leaveAbsence.getStartDate())
+                            , DataTypeUtils.convertToDateString(leaveAbsence.getEndDate()))
+            );
+        }
+
+        for (Overtime overtime : overtimes) {
+            for (OvertimeDates overtimeDates : overtime.getOvertimeDatesList()) {
+                String workDate = DataTypeUtils.convertToDateString(overtimeDates.getWorkDate());
+
+                calendarPojos.add(
+                        new CalendarPojo(
+                                overtime.getEmployeeCode().getFullName() +
+                                        overtime.getReason()
+                                , workDate + overtimeDates.getStartTime()
+                                , workDate + overtimeDates.getEndTime()
+                        )
+                );
+            }
+        }
+
+        return calendarPojos;
+
+    }
+
+    public List<CalendarPojo> getCalendarPojos(WorkMonths workMonth) {
+        List<LeaveAbsence> leaveAbsences = leaveAbsenceBean.findByWorkMonths(workMonth);
+        List<Overtime> overtimes = overtimeBean.findByWorkMonthsId(workMonth);
+        List<CalendarPojo> calendarPojos = new ArrayList<>();
+        for (LeaveAbsence leaveAbsence : leaveAbsences) {
+            calendarPojos.add(
+                    new CalendarPojo(
+                            leaveAbsence.getEmployeeCode().getFirstname()
+                                    + leaveAbsence.getLeaveTypeId().getLeaveType()
+                            , DataTypeUtils.convertToDateString(leaveAbsence.getStartDate())
+                            , DataTypeUtils.convertToDateString(leaveAbsence.getEndDate()))
+            );
+        }
+
+        for (Overtime overtime : overtimes) {
+            for (OvertimeDates overtimeDates : overtime.getOvertimeDatesList()) {
+                String workDate = DataTypeUtils.convertToDateString(overtimeDates.getWorkDate());
+
+                calendarPojos.add(
+                        new CalendarPojo(
+                                overtime.getEmployeeCode().getFullName() +
+                                        overtime.getReason()
+                                , workDate + overtimeDates.getStartTime()
+                                , workDate + overtimeDates.getEndTime()
+                        )
+                );
+            }
+        }
+
+        return calendarPojos;
+    }
 
 
 }

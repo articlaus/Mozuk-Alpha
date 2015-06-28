@@ -49,14 +49,13 @@ public class OvertimeDates implements Serializable {
     @Column(name = "work_date")
     @Temporal(TemporalType.DATE)
     private Date workDate;
+    @Basic
     @Column(name = "start_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+    private String startTime;
+    @Basic
     @Column(name = "end_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    private String endTime;
     @Basic(optional = false)
-
     @Column(name = "hours")
     private int hours;
     @Basic(optional = false)
@@ -97,19 +96,19 @@ public class OvertimeDates implements Serializable {
         this.workDate = workDate;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 

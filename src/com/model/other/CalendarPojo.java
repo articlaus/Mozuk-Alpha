@@ -19,6 +19,13 @@ public class CalendarPojo implements Serializable {
      */
     private String endDate;
 
+
+    public CalendarPojo(String title, String startDate, String endDate) {
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public String getTitle() {
         return title;
     }

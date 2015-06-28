@@ -9,17 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -171,5 +161,17 @@ public class WorkMonths implements Serializable {
     public String toString() {
         return "com.model.entity.WorkMonths[ id=" + id + " ]";
     }
-    
+
+
+    @Transient
+    private String yearAndMonth;
+
+    public String getYearAndMonth() {
+        yearAndMonth = year + "-" + month;
+        return yearAndMonth;
+    }
+
+    public void setYearAndMonth(String yearAndMonth) {
+        this.yearAndMonth = yearAndMonth;
+    }
 }

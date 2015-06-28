@@ -6,12 +6,14 @@ import com.model.entity.EmployeeWorkMonth;
 import com.model.entity.WorkMonths;
 import com.model.util.BaseEJB;
 import com.model.util.SequenceUtil;
+import org.joda.time.DateTime;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,7 +45,8 @@ public class EmployeeBean extends BaseEJB {
 
     private void createWorkMonth(Employee employee) {
         EmployeeWorkMonth employeeWorkMonth = new EmployeeWorkMonth();
-
+        WorkMonths workMonths=otherBean.findByYearAndMonth();
+        saveByEmployeeWorkMonth(employee, workMonths);
     }
 
     public Employee update(Employee employee) {
@@ -179,6 +182,54 @@ public class EmployeeBean extends BaseEJB {
     public EmployeeWorkMonth findByEmployeeWorkMonthId(BigDecimal employeeWorkMonthId) {
         return getEm().find(EmployeeWorkMonth.class, employeeWorkMonthId);
     }
+
+    public EmployeeWorkMonth saveByEmployeeWorkMonth(EmployeeWorkMonth employeeWorkMonth) {
+        try {
+            employeeWorkMonth.setId(SequenceUtil.nextBigDecimal());
+            getEm().persist(employeeWorkMonth);
+            return employeeWorkMonth;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public EmployeeWorkMonth saveByEmployeeWorkMonth(Employee employee,WorkMonths workMonths) {
+        try {
+            EmployeeWorkMonth ewm = new EmployeeWorkMonth();
+            ewm.setId(SequenceUtil.nextBigDecimal());
+            ewm.setWorkedHours(0);
+            ewm.setFinalSalary(0);
+            ewm.setEmployeeCode(employee);
+            ewm.setWorkMonthsid(workMonths);
+            getEm().persist(ewm);
+            return ewm;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public EmployeeWorkMonth updateByEmployeeWorkMonth(EmployeeWorkMonth employeeWorkMonth) {
+        try {
+            employeeWorkMonth=getEm().merge(employeeWorkMonth);
+            return employeeWorkMonth;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean deleteByEmployeeWorkMonth(BigDecimal employeeWorkMonthId) {
+        try {
+            getEm().remove(getEm().getReference(EmployeeWorkMonth.class, employeeWorkMonthId));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 
 }

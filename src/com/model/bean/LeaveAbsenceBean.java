@@ -48,6 +48,13 @@ public class LeaveAbsenceBean extends BaseEJB {
                 .getResultList();
     }
 
+    public List<LeaveAbsence> findByWorkMonths(WorkMonths workMonths,boolean isActive) {
+        return getEm().createNamedQuery("LeaveAbsence.findByWorkMonthsAndIsActive", LeaveAbsence.class)
+                .setParameter("workMonthsid", workMonths)
+                .setParameter("isActive", isActive)
+                .getResultList();
+    }
+
     public List<LeaveAbsence> findByIsPaid(boolean isPaid) {
         return getEm().createNamedQuery("LeaveAbsence.findByIsPaid", LeaveAbsence.class)
                 .setParameter("isPaid", isPaid)
@@ -96,7 +103,7 @@ public class LeaveAbsenceBean extends BaseEJB {
         }
     }
 
-    public boolean save(BigDecimal leaveAbsenceId) {
+    public boolean delete(BigDecimal leaveAbsenceId) {
         try {
             getEm().remove(getEm().getReference(LeaveAbsence.class, leaveAbsenceId));
             return true;

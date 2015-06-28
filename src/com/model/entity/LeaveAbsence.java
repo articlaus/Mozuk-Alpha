@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "LeaveAbsence.findByEmployee", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeCode = :employeeId"),
         @NamedQuery(name = "LeaveAbsence.findByLeaveType", query = "SELECT l FROM LeaveAbsence l WHERE l.leaveTypeId = :leaveTypeId"),
         @NamedQuery(name = "LeaveAbsence.findByWorkMonths", query = "SELECT l FROM LeaveAbsence l WHERE l.workMonthsid = :workMonthsid"),
+        @NamedQuery(name = "LeaveAbsence.findByWorkMonthsAndIsActive", query = "SELECT l FROM LeaveAbsence l WHERE l.workMonthsid = :workMonthsid AND l.employeeCode.isActive=:isActive"),
         @NamedQuery(name = "LeaveAbsence.findByEmployeeAndLeaveType", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeCode=:employeeId AND l.leaveTypeId = :leaveTypeId"),
         @NamedQuery(name = "LeaveAbsence.findByEmployeeAndWorkMonths", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeCode=:employeeId AND l.workMonthsid = :workMonthsid"),
         @NamedQuery(name = "LeaveAbsence.findByStartDateAndEndDate", query = "SELECT l FROM LeaveAbsence l WHERE l.startDate=:startDate AND l.endDate = :endDate"),
