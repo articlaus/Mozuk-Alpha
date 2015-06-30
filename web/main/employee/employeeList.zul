@@ -14,22 +14,22 @@
             <listbox id="employeeListBox" height="800px" model="@bind(elp.employeeList)"
                      selectedItem="@bind(elp.selectedEmployee)" mold="paging" pagingPosition="bottom">
                 <listhead menupopup="auto">
-                    <listheader label="Код" sort="auto(employee.code)"/>
-                    <listheader label="Овог Нэр" sort="auto(employee.fullname)"/>
-                    <listheader label="Албан Тушаал" sort="auto(position.positionTitle)"/>
-                    <listheader label="Хэлтэс" sort="auto(departmentCode.departmentTitle)"/>
-                    <listheader label="Цалин" sort="auto(salary)"/>
+                    <listheader label="Код" sort="auto(code)"/>
+                    <listheader label="Овог Нэр" sort="auto(firstname)"/>
+                    <listheader label="Албан Тушаал" sort="auto(employeePosition.position.positionTitle)"/>
+                    <listheader label="Хэлтэс" sort="auto(employeePosition.departmentCode.departmentTitle)"/>
+                    <listheader label="Цалин" sort="auto(employeePosition.salary)"/>
                     <listheader/>
                 </listhead>
                 <template name="model">
-                    <listitem onDoubleClick="@command('editEmployee')">
-                        <listcell label="@bind(each.employee.code)"/>
-                        <listcell label="@bind(each.employee.fullname)"/>
-                        <listcell label="@bind(each.position.positionTitle)"/>
-                        <listcell label="@bind(each.departmentCode.departmentTitle)"/>
-                        <listcell label="@bind(each.salary)"/>
+                    <listitem onDoubleClick="@command('editEmployee',employee=each)">
+                        <listcell label="@bind(each.code)"/>
+                        <listcell label="@bind(each.firstname)"/>
+                        <listcell label="@bind(each.employeePosition.positionCode.positionTitle)"/>
+                        <listcell label="@bind(each.employeePosition.departmentCode.departmentTitle)"/>
+                        <listcell label="@bind(each.employeePosition.salary) @converter('formatedNumber', format='###,##0.00₮')"/>
                         <listcell>
-                            <button label="Дэлгэрэнгүй" onClick="@command('editEmployee',employee=each.employee)"/>
+                            <button label="Дэлгэрэнгүй" onClick="@command('editEmployee',employee=each)"/>
                         </listcell>
                     </listitem>
                 </template>

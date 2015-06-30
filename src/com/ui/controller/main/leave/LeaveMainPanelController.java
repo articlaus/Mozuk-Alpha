@@ -1,14 +1,14 @@
 package com.ui.controller.main.leave;
 
+import com.model.bean.LeaveAbsenceBean;
+import com.model.bean.OtherBean;
 import com.model.entity.Employee;
 import com.model.entity.LeaveAbsence;
 import com.model.entity.LeaveType;
 import com.ui.component.CustomBandbox;
+import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
-import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Cell;
@@ -21,6 +21,8 @@ import java.util.List;
 public class LeaveMainPanelController extends MainComponent {
     List<LeaveAbsence> leaveList;
     LeaveAbsence leaveAbsence;
+    LeaveAbsenceBean leaveAbsenceBean;
+    OtherBean otherBean;
 
     @Wire
     Cell employeeCell, leaveTypeCell;
@@ -32,6 +34,8 @@ public class LeaveMainPanelController extends MainComponent {
     @Override
     public void init() {
         super.init();
+        leaveAbsenceBean= EBeanUtils.getBean(LeaveAbsenceBean.class);
+        otherBean=EBeanUtils.getBean(OtherBean.class);
     }
 
     @AfterCompose(superclass = true)
@@ -45,6 +49,15 @@ public class LeaveMainPanelController extends MainComponent {
         leaveTypeCustomBandbox = new CustomBandbox<LeaveType>(LeaveType.class, "LeaveType.findAll", new String[]{"leaveType"});
         leaveTypeCustomBandbox.setWidth("100%");
         leaveTypeCell.appendChild(leaveTypeCustomBandbox);
+    }
+
+    @Command
+    public void save() {
+        if (leaveAbsence.getId() != null) {
+            leaveAbsence.setEmployeeCode(employeeCustomBandbox.getSelectedT());
+            leaveAbsence.setLeaveTypeId(leaveTypeCustomBandbox.getSelectedT());
+
+        }
     }
 
     public List<LeaveAbsence> getLeaveList() {

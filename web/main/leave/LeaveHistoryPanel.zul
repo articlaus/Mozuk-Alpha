@@ -1,0 +1,37 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel id="leaveHistoryTab" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('lht') @init('com.ui.controller.main.leave.LeaveHistoryPanelController')">
+        <toolbar>
+            <hbox>
+                <label value="Сар :"/>
+                <cell id="workCell"/>
+                <cell id="searchCell"/>
+            </hbox>
+        </toolbar>
+        <panelchildren>
+            <listbox id="leaveHistoryListBox" height="600px" model="@bind(lht.leaveList)"
+                     selectedItem="@bind(lht.leaveAbsence)" mold="paging" pagingPosition="bottom">
+                <listhead menupopup="auto">
+                    <listheader label="Ажилтан" sort="auto(employeeCode.firstname)"/>
+                    <listheader label="Төрөл" sort="auto(leaveTypeId.leaveType)"/>
+                    <listheader label="Эхлэсэн Өдөр" sort="auto(startDate)"/>
+                    <listheader label="Дууссан Өдөр" sort="auto(endDate)"/>
+                    <listheader/>
+                </listhead>
+                <template name="model">
+                    <listitem>
+                        <listcell label="@bind(each.employeeCode.firstname)"/>
+                        <listcell label="@bind(each.leaveTypeId.leaveType)"/>
+                        <listcell label="@bind(each.startDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
+                        <listcell label="@bind(each.endDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
+                        <listcell>
+                            <button label="Засах" onClick="@command('editLeave', leave=each)"/>
+                        </listcell>
+                    </listitem>
+                </template>
+            </listbox>
+        </panelchildren>
+    </panel>
+
+</zk>

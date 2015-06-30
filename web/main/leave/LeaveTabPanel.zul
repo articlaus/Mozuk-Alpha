@@ -12,7 +12,7 @@
                         <include src="/main/leave/LeaveMainPanel.zul"/>
                     </tabpanel>
                     <tabpanel>
-                        <!--<include src="/main/position/EmployeePositionListPanel.zul"/>-->
+                        <include src="/main/leave/LeaveHistoryPanel.zul"/>
                     </tabpanel>
                 </tabpanels>
             </tabbox>

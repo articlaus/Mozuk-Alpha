@@ -1,0 +1,12 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel id="timesheetPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('tp') @init('com.ui.controller.main.timesheet.TimesheetPanelController')">
+        <toolbar>
+
+        </toolbar>
+        <panelchildren>
+
+        </panelchildren>
+    </panel>
+</zk>

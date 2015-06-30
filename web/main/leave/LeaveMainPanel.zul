@@ -12,21 +12,21 @@
                         </columns>
                         <rows>
                             <row>
-                                <label value="Ажилтан"/>
+                                <label value="Ажилтан :"/>
                                 <cell id="employeeCell"/>
                             </row>
                             <row>
-                                <label value="Чөлөөний Төрөл"/>
+                                <label value="Чөлөөний Төрөл :"/>
                                 <cell id="leaveTypeCell"/>
                             </row>
                             <row>
-                                <label value="Эхлэх Огноо"/>
+                                <label value="Эхлэх Огноо :"/>
                                 <datebox value="@bind(lmp.leaveAbsence.startDate)" width="100%" format="yyyy/MM/dd"
                                          placeholder="Эхлэх Огноо"
                                          constraint="no empty"/>
                             </row>
                             <row>
-                                <label value="Дуусах Өдөр"/>
+                                <label value="Дуусах Өдөр :"/>
                                 <datebox value="@bind(lmp.leaveAbsence.endDate)" width="100%" format="yyyy/MM/dd"
                                          placeholder="Дуусах Өдөр"
                                          constraint="no empty"/>
