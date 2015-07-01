@@ -13,7 +13,7 @@
             <listbox id="leaveHistoryListBox" height="600px" model="@bind(lht.leaveList)"
                      selectedItem="@bind(lht.leaveAbsence)" mold="paging" pagingPosition="bottom">
                 <listhead menupopup="auto">
-                    <listheader label="Ажилтан" sort="auto(employeeCode.firstname)"/>
+                    <listheader label="Ажилтан" sort="auto(employeeCode.fullName)"/>
                     <listheader label="Төрөл" sort="auto(leaveTypeId.leaveType)"/>
                     <listheader label="Эхлэсэн Өдөр" sort="auto(startDate)"/>
                     <listheader label="Дууссан Өдөр" sort="auto(endDate)"/>
@@ -21,12 +21,12 @@
                 </listhead>
                 <template name="model">
                     <listitem>
-                        <listcell label="@bind(each.employeeCode.firstname)"/>
+                        <listcell label="@bind(each.employeeCode.fullName)"/>
                         <listcell label="@bind(each.leaveTypeId.leaveType)"/>
                         <listcell label="@bind(each.startDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
                         <listcell label="@bind(each.endDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
                         <listcell>
-                            <button label="Засах" onClick="@command('editLeave', leave=each)"/>
+                            <button label="Дэлгэрэнгүй" onClick="@command('editLeave', leave=each)"/>
                         </listcell>
                     </listitem>
                 </template>

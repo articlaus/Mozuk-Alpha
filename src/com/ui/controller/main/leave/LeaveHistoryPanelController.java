@@ -1,16 +1,20 @@
 package com.ui.controller.main.leave;
 
+import com.model.bean.LeaveAbsenceBean;
 import com.model.entity.LeaveAbsence;
 import com.model.entity.WorkMonths;
 import com.ui.component.CustomBandbox;
+import com.ui.component.SearchBox;
+import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
-import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Cell;
+import org.zkoss.zul.Listbox;
 
 import java.util.List;
 
@@ -20,23 +24,40 @@ import java.util.List;
 public class LeaveHistoryPanelController extends MainComponent {
     List<LeaveAbsence> leaveList;
     LeaveAbsence leaveAbsence;
+    LeaveAbsenceBean leaveAbsenceBean;
     private CustomBandbox<WorkMonths> workMonthsCustomBandbox;
     @Wire
-    Cell workCell;
+    Cell workCell, searchCell;
+
+    @Wire
+    Listbox leaveHistoryListBox;
 
     @Init(superclass = true)
     @Override
     public void init() {
         super.init();
+        leaveAbsenceBean = EBeanUtils.getBean(LeaveAbsenceBean.class);
     }
 
     @AfterCompose(superclass = true)
     @Override
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
-        workMonthsCustomBandbox = new CustomBandbox<WorkMonths>(WorkMonths.class, "WorkMonths.findAll", new String[]{"month"});
+        leaveList = leaveAbsenceBean.findAll();
+        workMonthsCustomBandbox = new CustomBandbox<WorkMonths>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
+        workMonthsCustomBandbox.addEventListener(Events.ON_CHANGING, event -> {
+            leaveList = leaveAbsenceBean.findByWorkMonths(workMonthsCustomBandbox.getSelectedT());
+            System.out.println("workMonthsCustomBandbox.getSelectedT() = " + workMonthsCustomBandbox.getSelectedT().getYearAndMonth());
+            getBinder().loadComponent(leaveHistoryListBox, true);
+        });
         workCell.appendChild(workMonthsCustomBandbox);
+        SearchBox<LeaveAbsence> searchBox = new SearchBox<>(leaveList, new String[]{"startDate", "endDate", "employeeCode.fullName", "workMonthsId.month"}, leaveHistoryListBox, getBinder());
+        searchCell.appendChild(searchBox);
+    }
 
+    @Command
+    public void editLeave(@BindingParam("leave") LeaveAbsence leaveAbsence){
+        //todo Jasper report oor haruulah
     }
 
     public List<LeaveAbsence> getLeaveList() {

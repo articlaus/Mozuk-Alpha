@@ -3,10 +3,35 @@
     <panel id="timesheetPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
            viewModel="@id('tp') @init('com.ui.controller.main.timesheet.TimesheetPanelController')">
         <toolbar>
-
+            <cell>
+                <button label="Хадгалах" onClick="@command('save')"/>
+                <button label="Excel Татах" onClick="@command('dlExcel')"/>
+                <button label="Excel Оруулах" onClick="@command('ulExcel')"/>
+            </cell>
         </toolbar>
         <panelchildren>
-
+            <groupbox closable="false">
+                <caption label="Энэ Сарын Ажилчдын цаг оруулах"/>
+                <listbox id="employeeTimesheetListbox" height="600px" model="@bind(tp.employeeWorkMonthList)"
+                         selectedItem="@bind(tp.employeeWorkMonth)" mold="paging" pagingPosition="bottom">
+                    <listhead menupopup="auto">
+                        <listheader label="Ажилтан" sort="auto(employeeCode.fullName)"/>
+                        <listheader label="Ажиллах ёстой цаг" sort="auto(leaveTypeId.leaveType)"/>
+                        <listheader label="Ажилласан цаг" sort="auto(startDate)"/>
+                        <!--<listheader label="Дууссан Өдөр" sort="auto(endDate)"/>-->
+                        <listheader/>
+                    </listhead>
+                    <template name="model">
+                        <listitem>
+                            <listcell label="@bind(each.employeeCode.firstname)"/>
+                            <listcell label="@bind(each.workMonth.totalWorkHours)"/>
+                            <listcell>
+                                <textbox value="@bind(each.workedHours)" width="100%" placeholder="Ажилласан цаг"/>
+                            </listcell>
+                        </listitem>
+                    </template>
+                </listbox>
+            </groupbox>
         </panelchildren>
     </panel>
 </zk>

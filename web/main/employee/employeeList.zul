@@ -15,7 +15,7 @@
                      selectedItem="@bind(elp.selectedEmployee)" mold="paging" pagingPosition="bottom">
                 <listhead menupopup="auto">
                     <listheader label="Код" sort="auto(code)"/>
-                    <listheader label="Овог Нэр" sort="auto(firstname)"/>
+                    <listheader label="Овог Нэр" sort="auto(fullName)"/>
                     <listheader label="Албан Тушаал" sort="auto(employeePosition.position.positionTitle)"/>
                     <listheader label="Хэлтэс" sort="auto(employeePosition.departmentCode.departmentTitle)"/>
                     <listheader label="Цалин" sort="auto(employeePosition.salary)"/>
@@ -24,7 +24,7 @@
                 <template name="model">
                     <listitem onDoubleClick="@command('editEmployee',employee=each)">
                         <listcell label="@bind(each.code)"/>
-                        <listcell label="@bind(each.firstname)"/>
+                        <listcell label="@bind(each.fullName)"/>
                         <listcell label="@bind(each.employeePosition.positionCode.positionTitle)"/>
                         <listcell label="@bind(each.employeePosition.departmentCode.departmentTitle)"/>
                         <listcell label="@bind(each.employeePosition.salary) @converter('formatedNumber', format='###,##0.00₮')"/>

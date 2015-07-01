@@ -44,12 +44,17 @@
                         </columns>
                         <rows>
                             <row>
+                                <label value="Ажлын Сар :"/>
+                                <cell id="workCell"/>
+                            </row>
+                            <row>
                                 <label value="Тайлбар :"/>
                                 <textbox value="@bind(lmp.leaveAbsence.description)" rows="6" width="100%"/>
                             </row>
                             <row>
                                 <cell colspan="2" align="right">
                                     <button label="Хадгалах" onClick="@command('save')"/>
+                                    <button label="Цэвэрлэх" onClick="@command('clearValues')"/>
                                 </cell>
                             </row>
                         </rows>
@@ -61,7 +66,7 @@
                     <listbox id="leaveMainListBox" height="400px" model="@bind(lmp.leaveList)"
                              selectedItem="@bind(lmp.leaveAbsence)" mold="paging" pagingPosition="bottom">
                         <listhead menupopup="auto">
-                            <listheader label="Ажилтан" sort="auto(employeeCode.firstname)"/>
+                            <listheader label="Ажилтан" sort="auto(employeeCode.fullName)"/>
                             <listheader label="Төрөл" sort="auto(leaveTypeId.leaveType)"/>
                             <listheader label="Эхлэсэн Өдөр" sort="auto(startDate)"/>
                             <listheader label="Дууссан Өдөр" sort="auto(endDate)"/>
@@ -69,12 +74,16 @@
                         </listhead>
                         <template name="model">
                             <listitem>
-                                <listcell label="@bind(each.employeeCode.firstname)"/>
+                                <listcell label="@bind(each.employeeCode.fullName)"/>
                                 <listcell label="@bind(each.leaveTypeId.leaveType)"/>
                                 <listcell label="@bind(each.startDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
                                 <listcell label="@bind(each.endDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
                                 <listcell>
-                                    <button label="Засах" onClick="@command('editLeave', leave=each)"/>
+                                    <button label="Засах" onClick="@command('editLeave', leave=each)"
+                                            iconSclass="z-icon-save"/>
+                                    <button label="Устгах" onClick="@command('deleteLeave', leave=each)"
+                                            iconSclass="z-icon-minus-circle"/>
+
                                 </listcell>
                             </listitem>
                         </template>

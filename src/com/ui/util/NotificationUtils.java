@@ -30,6 +30,12 @@ public class NotificationUtils {
         Clients.showNotification(str, Clients.NOTIFICATION_TYPE_WARNING, null, "middle_center", 0, true);
     }
 
+    public static void showDeletion() {
+        String str = "Амжилттай Устгагдлаа!";
+        str.replaceAll(" ", System.lineSeparator());
+        Clients.showNotification(str, Clients.NOTIFICATION_TYPE_WARNING, null, "middle_center", 0, true);
+    }
+
     public static void showMsg(String msg) {
         String printMsg = msg.replaceAll(" ", System.lineSeparator());
         Clients.showNotification(printMsg, Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 5000, false);
