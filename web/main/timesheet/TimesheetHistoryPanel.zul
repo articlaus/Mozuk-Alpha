@@ -1,33 +1,34 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <panel id="timesheetPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
-           viewModel="@id('tp') @init('com.ui.controller.main.timesheet.TimesheetPanelController')">
+    <panel id="timesheetHistoryPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('thp') @init('com.ui.controller.main.timesheet.TimesheetHistoryPanelController')">
         <toolbar>
             <cell>
-                <button label="Хадгалах" onClick="@command('save')" iconSclass="z-icon-save"/>
-                <button label="Excel Татах" onClick="@command('dlExcel')" iconSclass="z-icon-download"/>
-                <button label="Excel Оруулах" onClick="@command('ulExcel')" iconSclass="z-icon-upload"/>
+                <label value="Сар :"/>
+                <cell id="workCell"/>
+                <cell id="searchCell"/>
             </cell>
         </toolbar>
         <panelchildren>
             <groupbox closable="false">
                 <caption label="Энэ Сарын Ажилчдын цаг оруулах"/>
-                <listbox id="employeeTimesheetListbox" height="600px" model="@bind(tp.employeeWorkMonthList)"
-                         selectedItem="@bind(tp.employeeWorkMonth)" mold="paging" pagingPosition="bottom">
+                <listbox id="employeeTimesheetHistoryListbox" height="600px" model="@bind(thp.employeeWorkMonthList)"
+                         mold="paging" pagingPosition="bottom">
                     <listhead menupopup="auto">
                         <listheader label="Ажилтан" sort="auto(employeeCode.fullName)"/>
+                        <listheader label="Ажлын сар" sort="auto(workMonthsid.yearAndMonth)"/>
                         <listheader label="Ажиллах ёстой цаг" sort="auto(leaveTypeId.leaveType)"/>
                         <listheader label="Ажилласан цаг" sort="auto(startDate)"/>
-                        <!--<listheader label="Дууссан Өдөр" sort="auto(endDate)"/>-->
+                        <listheader label="Дууссан Өдөр" sort="auto(endDate)"/>
                     </listhead>
                     <template name="model">
                         <listitem>
                             <listcell label="@bind(each.employeeCode.firstname)"/>
+                            <listcell label="@bind(each.workMonthsid.yearAndMonth)"/>
                             <listcell label="@bind(each.workMonth.totalWorkHours)"/>
-                            <listcell>
-                                <intbox value="@bind(each.workedHours)" width="100%" placeholder="Ажилласан цаг"
-                                        maxlength="4"/>
-                            </listcell>
+                            <listcell label="@bind(each.workedHours)"/>
+                            <listcell
+                                    label="@bind(each.finalSalary) @converter('formatedNumber', format='###,##0.00₮')"/>
                         </listitem>
                     </template>
                 </listbox>

@@ -2,7 +2,7 @@
     xmlns:n="http://www.w3.org/1999/xhtml">
     <panel width="100%" height="800px">
         <panelchildren>
-            <borderlayout >
+            <borderlayout>
                 <west width="20%" border="none">
                     <panel id="manuPanel" border="none" height="100%" width="100%"
                            apply="org.zkoss.bind.BindComposer"
@@ -11,9 +11,12 @@
                             <navbar orient="vertical" width="100%">
                                 <navitem label="Нүүр" iconSclass="z-icon-home" onClick="@command('home')"/>
                                 <nav label="Ажилтанууд" iconSclass="z-icon-users">
-                                    <navitem label="Жагсаалт" iconSclass="z-icon-group"
+                                    <navitem label="Жагсаалт" iconSclass="z-icon-th-list"
                                              onClick="@command('employeeList')"/>
-                                    <navitem label="Чөлөө" iconSclass="z-icon-life-ring" onClick="@command('leaveList')"/>
+                                    <navitem label="Цаг Бүртгэл" iconSclass="z-icon-clock-o"
+                                             onClick="@command('timesheet')"/>
+                                    <navitem label="Чөлөө" iconSclass="z-icon-life-ring"
+                                             onClick="@command('leaveList')"/>
                                 </nav>
                                 <nav label="Get Started" iconSclass="z-icon-th-list">
                                     <navitem label="Step One"/>
@@ -28,10 +31,10 @@
                 </west>
 
                 <center border="none">
-                    <panel id="mainComponentPanel" width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
-                            viewModel="@id('mcp') @init('com.ui.controller.MainIncludeController')">
+                    <panel id="mainComponentPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+                           viewModel="@id('mcp') @init('com.ui.controller.MainIncludeController')">
                         <panelchildren>
-                            <include id="mainInclude" src="calendar.zul" width="100%" height="100%"/>
+                            <include id="mainInclude" src="calendar.zul" width="100%" height="800px"/>
                         </panelchildren>
                     </panel>
                 </center>

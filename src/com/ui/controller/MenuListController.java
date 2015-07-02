@@ -33,6 +33,11 @@ public class MenuListController extends MainComponent {
     }
 
     @Command
+    public void timesheet() {
+        getMainInclude().setSrc("/main/timesheet/TimesheetTab.zul");
+    }
+
+    @Command
     public void leaveList() {
         getMainInclude().setSrc("main/leave/LeaveTabPanel.zul");
     }

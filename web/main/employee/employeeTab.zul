@@ -6,6 +6,7 @@
                 <tabs>
                     <tab id="employeeDetails" label="Ерөнхий Мэдээлэл" iconSclass="z-icon-user" selected="true"/>
                     <tab id="employeePosition" label="Албан Тушаал" iconSclass="z-icon-file"/>
+                    <tab id="employeeWorkHistory" label="Албан Тушаал" iconSclass="z-icon-history"/>
                 </tabs>
                 <tabpanels>
                     <tabpanel>
@@ -13,6 +14,9 @@
                     </tabpanel>
                     <tabpanel>
                         <include src="/main/position/EmployeePositionListPanel.zul"/>
+                    </tabpanel>
+                    <tabpanel>
+                        <include src="/main/employee/EmployeeWorkHistoryPanel.zul"/>
                     </tabpanel>
                 </tabpanels>
             </tabbox>

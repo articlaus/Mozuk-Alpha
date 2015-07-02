@@ -1,0 +1,21 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel width="100%" height="800px">
+        <panelchildren>
+            <tabbox>
+                <tabs>
+                    <tab id="leaveMainTab" label="Энэ сард" iconSclass="z-icon-calendar" selected="true"/>
+                    <tab id="leaveHistory" label="Түүх" iconSclass="z-icon-history"/>
+                </tabs>
+                <tabpanels>
+                    <tabpanel>
+                        <include src="/main/timesheet/TimesheetPanel.zul"/>
+                    </tabpanel>
+                    <tabpanel>
+                        <include src="/main/timesheet/TimesheetHistoryPanel.zul"/>
+                    </tabpanel>
+                </tabpanels>
+            </tabbox>
+        </panelchildren>
+    </panel>
+</zk>
