@@ -38,6 +38,11 @@ public class MenuListController extends MainComponent {
     }
 
     @Command
+    public void overtime() {
+        getMainInclude().setSrc("/main/overtime/OvertimeTab.zul");
+    }
+
+    @Command
     public void leaveList() {
         getMainInclude().setSrc("main/leave/LeaveTabPanel.zul");
     }

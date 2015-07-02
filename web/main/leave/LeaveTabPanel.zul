@@ -1,6 +1,6 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <panel>
+    <panel width="100%" height="700px">
         <panelchildren>
             <tabbox>
                 <tabs>

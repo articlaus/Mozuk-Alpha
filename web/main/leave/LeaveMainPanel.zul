@@ -1,6 +1,6 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <panel id="leaveMainPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+    <panel id="leaveMainPanel" width="100%" height="700px" apply="org.zkoss.bind.BindComposer"
            viewModel="@id('lmp') @init('com.ui.controller.main.leave.LeaveMainPanelController')">
         <panelchildren>
             <vbox>
@@ -53,8 +53,9 @@
                             </row>
                             <row>
                                 <cell colspan="2" align="right">
-                                    <button label="Хадгалах" onClick="@command('save')"/>
-                                    <button label="Цэвэрлэх" onClick="@command('clearValues')"/>
+                                    <button label="Хадгалах" onClick="@command('save')" iconSclass="z-icon-save"/>
+                                    <button label="Цэвэрлэх" onClick="@command('clearValues')"
+                                            iconSclass="z-icon-refresh"/>
                                 </cell>
                             </row>
                         </rows>
@@ -63,7 +64,7 @@
                 </hbox>
                 <groupbox closable="false">
                     <caption label="Энэ сарын чөлөө болон амралтын жагсаалт"/>
-                    <listbox id="leaveMainListBox" height="400px" model="@bind(lmp.leaveList)"
+                    <listbox id="leaveMainListBox" height="300px" model="@bind(lmp.leaveList)"
                              selectedItem="@bind(lmp.leaveAbsence)" mold="paging" pagingPosition="bottom">
                         <listhead menupopup="auto">
                             <listheader label="Ажилтан" sort="auto(employeeCode.fullName)"/>

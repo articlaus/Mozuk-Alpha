@@ -1,6 +1,6 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <panel width="100%" height="800px">
+    <panel width="100%" height="900px">
         <panelchildren>
             <borderlayout>
                 <west width="20%" border="none">
@@ -17,6 +17,8 @@
                                              onClick="@command('timesheet')"/>
                                     <navitem label="Чөлөө" iconSclass="z-icon-life-ring"
                                              onClick="@command('leaveList')"/>
+                                    <navitem label="Илүү Цаг" iconSclass="z-icon-user-plus"
+                                             onClick="@command('overtime')"/>
                                 </nav>
                                 <nav label="Get Started" iconSclass="z-icon-th-list">
                                     <navitem label="Step One"/>
@@ -31,7 +33,7 @@
                 </west>
 
                 <center border="none">
-                    <panel id="mainComponentPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+                    <panel id="mainComponentPanel" width="100%" height="900px" apply="org.zkoss.bind.BindComposer"
                            viewModel="@id('mcp') @init('com.ui.controller.MainIncludeController')">
                         <panelchildren>
                             <include id="mainInclude" src="calendar.zul" width="100%" height="800px"/>

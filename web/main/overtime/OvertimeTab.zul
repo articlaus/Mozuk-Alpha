@@ -4,15 +4,15 @@
         <panelchildren>
             <tabbox>
                 <tabs>
-                    <tab id="leaveMainTab" label="Энэ сард" iconSclass="z-icon-calendar" selected="true"/>
-                    <tab id="leaveHistory" label="Түүх" iconSclass="z-icon-history"/>
+                    <tab id="overtimeList" label="Энэ сард" iconSclass="z-icon-calendar" selected="true"/>
+                    <tab id="overtimeHistory" label="Түүх" iconSclass="z-icon-history"/>
                 </tabs>
                 <tabpanels>
                     <tabpanel>
-                        <include src="/main/timesheet/TimesheetPanel.zul"/>
+                        <include src="/main/overtime/OvertimeList.zul"/>
                     </tabpanel>
                     <tabpanel>
-                        <include src="/main/timesheet/TimesheetHistoryPanel.zul"/>
+                        <include src="/main/leave/LeaveHistoryPanel.zul"/>
                     </tabpanel>
                 </tabpanels>
             </tabbox>
