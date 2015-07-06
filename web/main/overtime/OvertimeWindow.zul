@@ -1,0 +1,64 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <window id="overtimeWindow" width="400px" height="600px" mode="modal" border="normal" closable="true"
+            apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('ow') @init('com.ui.controller.main.overtime.OvertimeWindowController')">
+        <vlayout>
+            <grid>
+                <columns>
+                    <column width="30%"/>
+                    <column width="70#"/>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="Ажилтан :"/>
+                        <cell id="employeeCell"/>
+                    </row>
+                    <row>
+                        <label value="Шалтгаан :"/>
+                        <textbox id="reasonTxt" width="100%" rows="6"
+                                 value="@bind('ow.overtime.reason')"/>
+                    </row>
+                    <row>
+                        <cell colspan="2" align="right">
+                            <button label="Хадгалах" iconSclass="z-icon-save" onClick="@command('save')"/>
+                            <button label="Цаг Нэмэх" iconSclass="z-icon-plus" onClick="@command('addTime')"/>
+                            <button label="Хаах" iconSclass="z-icon-close"
+                                    onClick="@global-command('windowCancelBtn',xWindow=overtimeWindow)"/>
+                        </cell>
+                    </row>
+                </rows>
+            </grid>
+            <groupbox>
+                <caption label="Илүү ажиллах цагын жагсаалт"/>
+                <listbox id="overtimeTimeListBox" height="400px" model="@bind(ow.overtimeDateList)"
+                         mold="pagging" pagingPosition="bottom">
+                    <listhead menupopup="auto">
+                        <listheader value="Ажиллах Өдөр" sort="auto(workDate)"/>
+                        <listheader value="Эхлэх Цаг" sort="auto(startTime)"/>
+                        <listheader value="Дуусах Цаг" sort="auto(endTime)"/>
+                        <listheader value="Ажиллах Цаг" sort="auto(hours)"/>
+                        <listheader value="Амралтын Өдөр" sort="auto(isHoliday)"/>
+                    </listhead>
+                    <template name="model">
+                        <listitem>
+                            <listcell>
+                                <datebox format="yyyy/MM/dd" value="@bind(each.workDate)"/>
+                            </listcell>
+                            <listcell>
+                                <timebox id="startBox" value="@bind(each.startTime)"/>
+                            </listcell>
+                            <listcell>
+                                <timebox value="@bind(each.endTime)"/>
+                            </listcell>
+                            <listcell label="@bind(each.hours)"/>
+                            <listcell>
+                                <checkbox value="@bind(each.isHoliday)"/>
+                            </listcell>
+                        </listitem>
+                    </template>
+                </listbox>
+            </groupbox>
+        </vlayout>
+    </window>
+</zk>

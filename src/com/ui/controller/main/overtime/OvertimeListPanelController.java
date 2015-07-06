@@ -7,11 +7,9 @@ import com.model.entity.OvertimeDates;
 import com.ui.component.base.BaseTreeModel;
 import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
-import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
@@ -29,6 +27,7 @@ public class OvertimeListPanelController extends MainComponent {
 
     BaseTreeModel overtimeTreeModel;
     OvertimeBean overtimeBean;
+    Overtime selectedOvertime;
     List<Overtime> overtimeList;
     OtherBean otherBean;
 
@@ -54,6 +53,13 @@ public class OvertimeListPanelController extends MainComponent {
         refresh();
         initComponents();
     }
+
+    @Command
+    public void addOvertime(){
+        getWindowMap().put("overtime",null);
+        Executions.createComponents("main/overtime/OvertimeWindow.zul", null, getWindowMap());
+    }
+
 
     public void refresh() {
         overtimeList = overtimeBean.findByWorkMonthsId(otherBean.findByYearAndMonth());
@@ -148,5 +154,13 @@ public class OvertimeListPanelController extends MainComponent {
 
     public void setOvertimeMap(HashMap<String, Listbox> overtimeMap) {
         this.overtimeMap = overtimeMap;
+    }
+
+    public Overtime getSelectedOvertime() {
+        return selectedOvertime;
+    }
+
+    public void setSelectedOvertime(Overtime selectedOvertime) {
+        this.selectedOvertime = selectedOvertime;
     }
 }
