@@ -13,6 +13,7 @@
                 <tree width="100%" id="overtimeTree"
                       model="@bind(olp.overtimeTreeModel)"
                       vflex="true"
+                      selectedItem="@bind(olp.selectedOvertime)"
                       autopaging="true" mold="paging"
                       pagingPosition="bottom">
                     <treecols>
@@ -22,6 +23,7 @@
                         <treecol label="Эхлэх цаг"/>
                         <treecol label="Дуусах цаг"/>
                         <treecol label="Амралтын өдөр үү?"/>
+                        <treecol label=""/>
                     </treecols>
                 </tree>
             </groupbox>
