@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * Created by tseegii on 6/24/15.
  */
 @LocalBean
@@ -38,14 +37,14 @@ public class OvertimeBean extends BaseEJB {
 
     public List<Overtime> findByWorkMonthsId(WorkMonths workMonths) {
         return getEm().createNamedQuery("Overtime.findByWorkMonthsId", Overtime.class)
-                .setParameter("workMonthsid",workMonths)
+                .setParameter("workMonthsid", workMonths)
                 .getResultList();
     }
 
-    public List<Overtime> findByEmployeeAndWorkMonths(Employee employee,WorkMonths workMonths) {
+    public List<Overtime> findByEmployeeAndWorkMonths(Employee employee, WorkMonths workMonths) {
         return getEm().createNamedQuery("Overtime.findByEmployeeAndWorkMonthsId", Overtime.class)
                 .setParameter("employeeCode", employee)
-                .setParameter("workMonthsid",workMonths)
+                .setParameter("workMonthsid", workMonths)
                 .getResultList();
     }
 
@@ -53,6 +52,17 @@ public class OvertimeBean extends BaseEJB {
         try {
             overtime.setId(SequenceUtil.nextBigDecimal());
             getEm().persist(overtime);
+            return overtime;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Overtime saveOvertimeAndOvertimeDates(Overtime overtime) {
+        try {
+            overtime = save(overtime);
+            saveByOvertimeDate(overtime.getOvertimeDatesList(), overtime);
             return overtime;
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +82,7 @@ public class OvertimeBean extends BaseEJB {
 
     public boolean delete(BigDecimal overtimeId) {
         try {
-            getEm().remove(getEm().getReference(Overtime.class,overtimeId));
+            getEm().remove(getEm().getReference(Overtime.class, overtimeId));
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +92,7 @@ public class OvertimeBean extends BaseEJB {
 
     public boolean deleteForChildren(BigDecimal overtimeId) {
         try {
-            Overtime overtime=getEm().getReference(Overtime.class, overtimeId);
+            Overtime overtime = getEm().getReference(Overtime.class, overtimeId);
             return deleteByOvertimeDate(findByOvertimeId(overtime));
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,7 +119,7 @@ public class OvertimeBean extends BaseEJB {
 
     public List<OvertimeDates> findByIsHoliday(boolean isHoliday) {
         return getEm().createNamedQuery("OvertimeDates.findByIsHoliday", OvertimeDates.class)
-                .setParameter("isHoliday",isHoliday)
+                .setParameter("isHoliday", isHoliday)
                 .getResultList();
     }
 
@@ -137,9 +147,23 @@ public class OvertimeBean extends BaseEJB {
         }
     }
 
+    public List<OvertimeDates> saveByOvertimeDate(List<OvertimeDates> overtimeDates, Overtime overtime) {
+        try {
+            for (OvertimeDates overtimeDate : overtimeDates) {
+                overtimeDate.setId(SequenceUtil.nextBigDecimal());
+                overtimeDate.setOvertimeid(overtime);
+                getEm().persist(overtimeDate);
+            }
+            return overtimeDates;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public OvertimeDates updateByOvertimeDate(OvertimeDates overtimeDates) {
         try {
-            overtimeDates=getEm().merge(overtimeDates);
+            overtimeDates = getEm().merge(overtimeDates);
             return overtimeDates;
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,9 +173,9 @@ public class OvertimeBean extends BaseEJB {
 
     public List<OvertimeDates> updateByOvertimeDate(List<OvertimeDates> overtimeDates) {
         try {
-            List<OvertimeDates> returnList= new ArrayList<>(overtimeDates.size());
+            List<OvertimeDates> returnList = new ArrayList<>(overtimeDates.size());
             for (OvertimeDates overtimeDate : overtimeDates) {
-                overtimeDate=getEm().merge(overtimeDate);
+                overtimeDate = getEm().merge(overtimeDate);
                 returnList.add(overtimeDate);
             }
             return returnList;
@@ -163,7 +187,7 @@ public class OvertimeBean extends BaseEJB {
 
     public boolean deleteByOvertimeDate(BigDecimal overtimeDateId) {
         try {
-            getEm().remove(getEm().getReference(OvertimeDates.class,overtimeDateId));
+            getEm().remove(getEm().getReference(OvertimeDates.class, overtimeDateId));
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -182,9 +206,6 @@ public class OvertimeBean extends BaseEJB {
             return false;
         }
     }
-
-
-
 
 
 }
