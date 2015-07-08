@@ -1,0 +1,61 @@
+.photo {
+    border: 3px dashed #e6e6e6;
+    border-radius: 10px;
+    width: 123px;
+    height: 123px;
+    position: absolute;
+    overflow: hidden;
+}
+
+.content .personDetails  {
+    padding-left: 133px;
+}
+
+.content .personDetails .z-label {
+    line-height: 1.42em;
+}
+
+.z-dropupload {
+    position: absolute !important;
+    background-color: #f2f2f2;
+    padding: 3px;
+}
+
+.z-dropupload > div{
+    top: 50%;
+    margin-top: -1em;
+    height: 2em;
+    position: absolute;
+    text-align: center;
+    color: #cccccc;
+}
+
+.attachments > .z-groupbox-header,
+.attachments > .z-groupbox-content {
+    border-color: #e6e6e6;
+}
+.attachments .z-groupbox-title-content {
+    color: #4d4d4d;
+}
+
+.attachments .z-dropupload > div {
+    width: 180px;
+    padding: 0 330px;
+}
+
+.dropzone {
+    min-height: 50px;
+}
+.attachment {
+    display: inline-block;
+    padding: 4px 7px;
+    margin-bottom: 3px;
+    background-color: #f0f0f8;
+    border-radius: 4px;
+}
+.attachment > a {
+    text-decoration: none;
+}
+.attachment > a > i {
+    margin-right: 8px;
+}

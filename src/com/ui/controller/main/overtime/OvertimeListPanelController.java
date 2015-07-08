@@ -49,15 +49,16 @@ public class OvertimeListPanelController extends MainComponent {
     @Override
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
-        overtimeMap=new HashMap<>();
+        overtimeMap = new HashMap<>();
+        
         refresh();
         initComponents();
     }
 
     @Command
-    public void addOvertime(){
-        getWindowMap().put("overtime",null);
-        Executions.createComponents("main/overtime/OvertimeWindow.zul", null, getWindowMap());
+    public void addOvertime() {
+        getWindowMap().put("overtime", null);
+        Executions.createComponents("main/overtime/OvertimeWindow.zul ", null, getWindowMap());
     }
 
 

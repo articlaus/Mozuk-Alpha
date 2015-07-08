@@ -1,0 +1,34 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel width="100%" height="800px" id="employeeFilePanel" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('efp') @init('com.ui.controller.main.employee.EmployeeFileListController')">
+        <panelchildren>
+            <groupbox closable="false">
+                <listbox id="employeeFilesListBox" height="600px" model="@bind(efp.documentList)"
+                         mold="paging" pagingPosition="bottom">
+                    <listhead menupopup="auto">
+                        <listheader label="Нэр" sort="auto(fileName)"/>
+                        <listheader label="Баримтын төрөл" sort="auto(documentTypeId.name)"/>
+                        <listheader label="Файлын төрөл" sort="auto(fileType)"/>
+                        <listheader label="Оруулсан огноо" sort="auto(createdDate)"/>
+                        <listheader label="Тайлбар" sort="auto(description)"/>
+                        <listheader/>
+                    </listhead>
+                    <template name="model">
+                        <listitem>
+                            <listcell label="@load(each.fileName)"/>
+                            <listcell label="@load(each.docuementTypeId.name)"/>
+                            <listcell label="@load(each.fileType)"/>
+                            <listcell label="@load(each.createdDate)"/>
+                            <listcell label="@load(each.description)"/>
+                            <listcell>
+                                <button label="Татах" iconSclass="z-icon-download"/>
+                                <button label="Устгах" iconSclass="z-icon-remove"/>
+                            </listcell>
+                        </listitem>
+                    </template>
+                </listbox>
+            </groupbox>
+        </panelchildren>
+    </panel>
+</zk>

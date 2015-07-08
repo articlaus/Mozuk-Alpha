@@ -1,0 +1,23 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <style src="/assets/FileUpload.css"/>
+    <window id="employeeFileUploadWindow" width="500px" height="300px"
+            apply="org.zkoss.bind.BindComposer" viewModel="@id('efuw')" closable="true">
+        <toolbar>
+            <button label="Хадгалах" onClick="@command('save')"/>
+        </toolbar>
+        <groupbox width="100%" open="true" closable="false" sclass="attachments">
+            <caption label="Оруулах Файл аа доор цөөж оруулна уу"/>
+            <div id="target" children="@load(efuw.attachments)" height="100%" width="100%" sclass="dropzone">
+                <template name="children">
+                    <span sclass="attachment">
+                        <a iconSclass="z-icon-paperclip" label="@load(each)"/>
+                    </span>
+                </template>
+            </div>
+            <dropupload maxsize="5120" detection="browser" anchor="${target}"
+                        onUpload="@command('doUpload',files=event.medias)"
+                        content="Та хуулах файл аа энд тавиа уу."/>
+        </groupbox>
+    </window>
+</zk>
