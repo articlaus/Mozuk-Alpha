@@ -63,6 +63,8 @@ public class OvertimeListPanelController extends MainComponent {
 
     public void refresh() {
         overtimeList = overtimeBean.findByWorkMonthsId(otherBean.findByYearAndMonth());
+        System.out.println("overtimeList = " + overtimeList.size());
+        overtimeTreeModel = new BaseTreeModel(overtimeList,"overtimeDatesList");
         getBinder().loadComponent(overtimeTree, true);
     }
 
@@ -123,10 +125,12 @@ public class OvertimeListPanelController extends MainComponent {
             Listbox listbox = overtimeMap.get(overtimeDates.getOvertimeid().getEmployeeCode().getCode());
             Listitem listitem = new Listitem();
             SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+//            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
             listitem.appendChild(new Listcell(format.format(overtimeDates.getWorkDate())));
-            listitem.appendChild(new Listcell(timeFormat.format(overtimeDates.getStartTime())));
-            listitem.appendChild(new Listcell(timeFormat.format(overtimeDates.getEndTime())));
+//            listitem.appendChild(new Listcell(timeFormat.format(overtimeDates.getStartTime())));
+            listitem.appendChild(new Listcell(overtimeDates.getStartTime()));
+//            listitem.appendChild(new Listcell(timeFormat.format(overtimeDates.getEndTime())));
+            listitem.appendChild(new Listcell(overtimeDates.getEndTime()));
             listbox.appendChild(listitem);
         }
         return overtimeMap.get(overtimeDates.getOvertimeid().getEmployeeCode().getCode());
