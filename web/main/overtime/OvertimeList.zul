@@ -10,9 +10,8 @@
         <panelchildren>
             <groupbox>
                 <caption label="Энэ сарын илүү цагын мэдээлэл"/>
-                <tree width="100%" id="overtimeTree"
+                <tree width="100%" id="overtimeTree" height="600px"
                       model="@bind(olp.overtimeTreeModel)"
-                      vflex="true"
                       selectedItem="@bind(olp.selectedOvertime)"
                       autopaging="true" mold="paging"
                       pagingPosition="bottom">
@@ -22,8 +21,8 @@
                         <treecol label="Ажиллах өдөр"/>
                         <treecol label="Эхлэх цаг"/>
                         <treecol label="Дуусах цаг"/>
-                        <treecol label="Амралтын өдөр үү?"/>
-                        <treecol label=""/>
+                        <treecol label="Амралтын өдөр үү?" />
+                        <treecol label="" align="center" />
                     </treecols>
                 </tree>
             </groupbox>

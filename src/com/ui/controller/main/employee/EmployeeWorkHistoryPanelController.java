@@ -51,10 +51,10 @@ public class EmployeeWorkHistoryPanelController extends MainComponent {
 
 
         workMonthsCustomBandbox = new CustomBandbox<WorkMonths>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
-        workMonthsCustomBandbox.addEventListener(Events.ON_CHANGING, event -> {
-            employeeWorkMonthList = employeeBean.findWorkMonthByWorkMonth(workMonthsCustomBandbox.getSelectedT());
-            getBinder().loadComponent(employeeTimesheetHistoryListbox, true);
-        });
+//        workMonthsCustomBandbox.addEventListener(Events.ON_CHANGING, event -> {
+//            employeeWorkMonthList = employeeBean.findWorkMonthByWorkMonth(workMonthsCustomBandbox.getSelectedT());
+//            getBinder().loadComponent(employeeTimesheetHistoryListbox, true);
+//        });
         workCell.appendChild(workMonthsCustomBandbox);
         SearchBox<EmployeeWorkMonth> searchBox = new SearchBox<>(employeeWorkMonthList, new String[]{"workMonthsid.yearAndMonth", "workMonth.totalWorkHours", "workedHours"}, employeeTimesheetHistoryListbox, getBinder());
         searchBox.setPlaceholder("Хайх");

@@ -44,12 +44,19 @@ public class LeaveHistoryPanelController extends MainComponent {
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
         leaveList = leaveAbsenceBean.findAll();
-        workMonthsCustomBandbox = new CustomBandbox<WorkMonths>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
-        workMonthsCustomBandbox.addEventListener(Events.ON_CHANGING, event -> {
-            leaveList = leaveAbsenceBean.findByWorkMonths(workMonthsCustomBandbox.getSelectedT());
-            System.out.println("workMonthsCustomBandbox.getSelectedT() = " + workMonthsCustomBandbox.getSelectedT().getYearAndMonth());
-            getBinder().loadComponent(leaveHistoryListBox, true);
+        workMonthsCustomBandbox = new CustomBandbox<>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
+        System.out.println("workMonthsCustomBandbox = " + workMonthsCustomBandbox.getListbox().getListModel().getSize());
+        System.out.println("orson = " );
+        workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_SELECT, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                System.out.println("change me = ");
+            }
         });
+
+//        leaveList = leaveAbsenceBean.findByWorkMonths(workMonthsCustomBandbox.getSelectedT());
+//        System.out.println("workMonthsCustomBandbox.getSelectedT() = " + workMonthsCustomBandbox.getSelectedT().getYearAndMonth());
+//        getBinder().loadComponent(leaveHistoryListBox, true);
         workCell.appendChild(workMonthsCustomBandbox);
         SearchBox<LeaveAbsence> searchBox = new SearchBox<>(leaveList, new String[]{"startDate", "endDate", "employeeCode.fullName", "workMonthsId.month"}, leaveHistoryListBox, getBinder());
         searchCell.appendChild(searchBox);

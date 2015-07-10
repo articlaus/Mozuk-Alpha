@@ -95,13 +95,24 @@ public class OvertimeListPanelController extends MainComponent {
                         treecell.appendChild(a);
                         treerow.appendChild(treecell);
                         treerow.appendChild(new Treecell(entity.getReason()));
+                        treecell = new Treecell();
+                        Button button = new Button("Засах");
+                        button.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+                            @Override
+                            public void onEvent(Event event) throws Exception {
+                                System.out.println("click = ");
+                            }
+                        });
+                        treecell.setSpan(5);
+                        treecell.appendChild(button);
+                        treerow.appendChild(treecell);
 
                     } else {
                         OvertimeDates entity = (OvertimeDates) data;
                         Listbox listbox = getBox(entity);
                         if (i == 0) {
                             Treecell treecell = new Treecell();
-                            treecell.setSpan(6);
+                            treecell.setSpan(7);
                             treecell.appendChild(listbox);
                             treerow.appendChild(treecell);
                         }
