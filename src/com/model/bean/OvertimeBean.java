@@ -73,6 +73,7 @@ public class OvertimeBean extends BaseEJB {
     public Overtime update(Overtime overtime) {
         try {
             overtime = getEm().merge(overtime);
+            updateByOvertimeDate(overtime.getOvertimeDatesList());
             return overtime;
         } catch (Exception e) {
             e.printStackTrace();

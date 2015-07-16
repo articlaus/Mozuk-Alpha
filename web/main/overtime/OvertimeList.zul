@@ -8,11 +8,10 @@
             </cell>
         </toolbar>
         <panelchildren>
-            <groupbox>
+            <groupbox closable="false">
                 <caption label="Энэ сарын илүү цагын мэдээлэл"/>
                 <tree width="100%" id="overtimeTree" height="600px"
                       model="@bind(olp.overtimeTreeModel)"
-                      selectedItem="@bind(olp.selectedOvertime)"
                       autopaging="true" mold="paging"
                       pagingPosition="bottom">
                     <treecols>

@@ -5,9 +5,11 @@ import com.model.bean.OvertimeBean;
 import com.model.entity.Employee;
 import com.model.entity.Overtime;
 import com.model.entity.OvertimeDates;
+import com.model.entity.WorkMonths;
 import com.ui.component.CustomBandbox;
 import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
+import com.ui.util.NotificationUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -32,8 +34,9 @@ public class OvertimeWindowController extends MainComponent {
     Listbox overtimeTimeListBox;
 
     @Wire
-    Cell employeeCell;
+    Cell employeeCell, workMonthCell;
     private CustomBandbox<Employee> employeeCustomBandbox;
+    private CustomBandbox<WorkMonths> workMonthsCustomBandbox;
 
     @Init(superclass = true)
     @Override
@@ -57,19 +60,35 @@ public class OvertimeWindowController extends MainComponent {
             isEditing = false;
         }
 
-        employeeCustomBandbox = new CustomBandbox<Employee>(Employee.class, "Employee.findByIsActive", new String[]{"fullName"});
+        employeeCustomBandbox = new CustomBandbox<Employee>(Employee.class, "Employee.findByActive", new String[]{"fullName"});
         employeeCustomBandbox.setWidth("100%");
+        employeeCustomBandbox.setPlaceholder("Ажилтаныг сонгоно уу!");
         employeeCell.appendChild(employeeCustomBandbox);
+
+        workMonthsCustomBandbox = new CustomBandbox<WorkMonths>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
+        workMonthsCustomBandbox.setWidth("100%");
+        workMonthsCustomBandbox.setPlaceholder("Хамаарагдах ажлын сарыг сонгон уу!");
+        workMonthCell.appendChild(workMonthsCustomBandbox);
+
     }
 
     @Command
     public void save() {
         overtime.setEmployeeCode(employeeCustomBandbox.getSelectedT());
         overtime.setOvertimeDatesList(overtimeDateList);
+        overtime.setWorkMonthsid(workMonthsCustomBandbox.getSelectedT());
         if (isEditing) {
-            //todo
+            if (overtimeBean.update(overtime) != null) {
+                NotificationUtils.showSuccess();
+            } else {
+                NotificationUtils.showFailure();
+            }
         } else {
-            //todo
+            if (overtimeBean.saveOvertimeAndOvertimeDates(overtime) != null) {
+                NotificationUtils.showSuccess();
+            } else {
+                NotificationUtils.showFailure();
+            }
         }
         getCurrentWindow().detach();
     }
@@ -78,6 +97,14 @@ public class OvertimeWindowController extends MainComponent {
     public void addTime() {
         overtimeDateList.add(new OvertimeDates());
         getBinder().loadComponent(overtimeTimeListBox, true);
+    }
+
+    public Overtime getOvertime() {
+        return overtime;
+    }
+
+    public void setOvertime(Overtime overtime) {
+        this.overtime = overtime;
     }
 
     public List<OvertimeDates> getOvertimeDateList() {

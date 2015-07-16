@@ -2,8 +2,12 @@ package com.ui.controller.main.overtime;
 
 import com.model.bean.OtherBean;
 import com.model.bean.OvertimeBean;
+import com.model.entity.LeaveAbsence;
 import com.model.entity.Overtime;
 import com.model.entity.OvertimeDates;
+import com.model.entity.WorkMonths;
+import com.ui.component.CustomBandbox;
+import com.ui.component.SearchBox;
 import com.ui.component.base.BaseTreeModel;
 import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
@@ -31,11 +35,15 @@ public class OvertimeHistoryPanelController extends MainComponent {
     OvertimeBean overtimeBean;
     List<Overtime> overtimeList;
     OtherBean otherBean;
+    private CustomBandbox<WorkMonths> workMonthsCustomBandbox;
 
     HashMap<String, Listbox> overtimeMap;
 
     @Wire
     Tree overtimeTree;
+
+    @Wire
+    Cell workCell, searchCell;
 
     @Init(superclass = true)
     @Override
@@ -53,6 +61,15 @@ public class OvertimeHistoryPanelController extends MainComponent {
         overtimeMap = new HashMap<>();
         refresh();
         initComponents();
+
+        workMonthsCustomBandbox = new CustomBandbox<WorkMonths>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
+        workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_CHANGING, event -> {
+            overtimeList = overtimeBean.findByWorkMonthsId(workMonthsCustomBandbox.getSelectedT());
+            getBinder().loadComponent(overtimeTree, true);
+        });
+        workCell.appendChild(workMonthsCustomBandbox);
+//        SearchBox<LeaveAbsence> searchBox = new SearchBox<>(overtimeList, new String[]{"employeeCode.fullName", "ovetimeDatesList.", "employeeCode.fullName", "workMonthsId.month"}, leaveHistoryListBox, getBinder());
+//        searchCell.appendChild(searchBox);
     }
 
     public void refresh() {
