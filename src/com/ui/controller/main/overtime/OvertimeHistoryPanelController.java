@@ -63,9 +63,12 @@ public class OvertimeHistoryPanelController extends MainComponent {
         initComponents();
 
         workMonthsCustomBandbox = new CustomBandbox<WorkMonths>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
-        workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_CHANGING, event -> {
-            overtimeList = overtimeBean.findByWorkMonthsId(workMonthsCustomBandbox.getSelectedT());
-            getBinder().loadComponent(overtimeTree, true);
+        workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_CHANGING, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                overtimeList = overtimeBean.findByWorkMonthsId(workMonthsCustomBandbox.getSelectedT());
+                getBinder().loadComponent(overtimeTree, true);
+            }
         });
         workCell.appendChild(workMonthsCustomBandbox);
 //        SearchBox<LeaveAbsence> searchBox = new SearchBox<>(overtimeList, new String[]{"employeeCode.fullName", "ovetimeDatesList.", "employeeCode.fullName", "workMonthsId.month"}, leaveHistoryListBox, getBinder());

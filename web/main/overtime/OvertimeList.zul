@@ -1,6 +1,5 @@
-<zk xmlns="http://www.zkoss.org/2005/zul"
-    xmlns:n="http://www.w3.org/1999/xhtml">
-    <panel id="overtimeListPanel" width="100%" height="700px" apply="org.zkoss.bind.BindComposer"
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <panel id="overtimeListPanel" width="100%" height="1000px" apply="org.zkoss.bind.BindComposer"
            viewModel="@id('olp') @init('com.ui.controller.main.overtime.OvertimeListPanelController')">
         <toolbar>
             <cell>
@@ -8,12 +7,10 @@
             </cell>
         </toolbar>
         <panelchildren>
-            <groupbox closable="false">
+            <groupbox closable="false" height="1000px">
                 <caption label="Энэ сарын илүү цагын мэдээлэл"/>
                 <tree width="100%" id="overtimeTree" height="600px"
-                      model="@bind(olp.overtimeTreeModel)"
-                      autopaging="true" mold="paging"
-                      pagingPosition="bottom">
+                      model="@bind(olp.overtimeTreeModel)">
                     <treecols>
                         <treecol label="Ажилтаны нэр"/>
                         <treecol label="Шалтгаан"/>

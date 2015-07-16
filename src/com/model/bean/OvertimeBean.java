@@ -153,6 +153,7 @@ public class OvertimeBean extends BaseEJB {
             for (OvertimeDates overtimeDate : overtimeDates) {
                 overtimeDate.setId(SequenceUtil.nextBigDecimal());
                 overtimeDate.setOvertimeid(overtime);
+//                hours calculate start_time(string) and end_time(string)
                 getEm().persist(overtimeDate);
             }
             return overtimeDates;

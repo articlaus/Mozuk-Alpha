@@ -12,6 +12,8 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Cell;
@@ -51,9 +53,12 @@ public class TimesheetHistoryPanelController extends MainComponent {
 //            employeeWorkMonthList = employeeBean.findWorkMonthByWorkMonth(workMonthsCustomBandbox.getSelectedT());
 //            getBinder().loadComponent(employeeTimesheetHistoryListbox, true);
 //        });
-        workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_CHANGING, event -> {
-            employeeWorkMonthList = employeeBean.findWorkMonthByWorkMonth(workMonthsCustomBandbox.getSelectedT());
-            getBinder().loadComponent(employeeTimesheetHistoryListbox, true);
+        workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_CHANGING, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                employeeWorkMonthList = employeeBean.findWorkMonthByWorkMonth(workMonthsCustomBandbox.getSelectedT());
+                getBinder().loadComponent(employeeTimesheetHistoryListbox, true);
+            }
         });
         workCell.appendChild(workMonthsCustomBandbox);
         SearchBox<EmployeeWorkMonth> searchBox = new SearchBox<>(employeeWorkMonthList, new String[]{"employeeCode.firstname", "workMonthsid.yearAndMonth", "workMonth.totalWorkHours", "workedHours"}, employeeTimesheetHistoryListbox, getBinder());

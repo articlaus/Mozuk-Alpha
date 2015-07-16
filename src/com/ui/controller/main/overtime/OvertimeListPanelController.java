@@ -58,6 +58,7 @@ public class OvertimeListPanelController extends MainComponent {
 
     @Command
     public void addOvertime() {
+        System.out.println("overtimeBean = ");
         Executions.createComponents("/main/overtime/OvertimeWindow.zul", null, null);
     }
 
@@ -84,7 +85,9 @@ public class OvertimeListPanelController extends MainComponent {
                         Treecell treecell = new Treecell();
                         treecell.appendChild(new Label(entity.getEmployeeCode().getFullName()));
                         treerow.appendChild(treecell);
-                        treerow.appendChild(new Treecell(entity.getReason()));
+                        treecell =new Treecell(entity.getReason());
+                        treecell.setSpan(5);
+                        treerow.appendChild(treecell);
                         treecell = new Treecell();
                         Button button = new Button("Засах");
                         button.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
@@ -93,7 +96,7 @@ public class OvertimeListPanelController extends MainComponent {
                                 System.out.println("click = ");
                             }
                         });
-                        treecell.setSpan(5);
+
                         treecell.appendChild(button);
                         treerow.appendChild(treecell);
 
@@ -101,9 +104,11 @@ public class OvertimeListPanelController extends MainComponent {
                         OvertimeDates entity = (OvertimeDates) data;
                         Listbox listbox = getBox(entity);
                         if (i == 0) {
+                            System.out.println("listbox = " + listbox);
                             Treecell treecell = new Treecell();
                             treecell.setSpan(7);
                             treecell.appendChild(listbox);
+                            treecell.setStyle("background-color:#FFFFFF;");
                             treerow.appendChild(treecell);
                         }
                     }
