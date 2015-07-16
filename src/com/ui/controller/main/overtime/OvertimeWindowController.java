@@ -25,10 +25,12 @@ import java.util.List;
 public class OvertimeWindowController extends MainComponent {
 
     List<OvertimeDates> overtimeDateList;
+    List<OvertimeDates> removeList;
     Boolean isEditing = false;
     EmployeeBean employeeBean;
     OvertimeBean overtimeBean;
     Overtime overtime;
+    OvertimeListPanelController listPanelController;
 
     @Wire
     Listbox overtimeTimeListBox;
@@ -59,15 +61,24 @@ public class OvertimeWindowController extends MainComponent {
             overtimeDateList = new ArrayList<>();
             isEditing = false;
         }
+        removeList = new ArrayList<>();
+
+        listPanelController = (OvertimeListPanelController) getArgument("overtimeList");
 
         employeeCustomBandbox = new CustomBandbox<Employee>(Employee.class, "Employee.findByActive", new String[]{"fullName"});
         employeeCustomBandbox.setWidth("100%");
         employeeCustomBandbox.setPlaceholder("Ажилтаныг сонгоно уу!");
+        if (overtime.getId() != null) {
+            employeeCustomBandbox.setSelectedT(overtime.getEmployeeCode());
+        }
         employeeCell.appendChild(employeeCustomBandbox);
 
         workMonthsCustomBandbox = new CustomBandbox<WorkMonths>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
         workMonthsCustomBandbox.setWidth("100%");
         workMonthsCustomBandbox.setPlaceholder("Хамаарагдах ажлын сарыг сонгон уу!");
+        if (overtime.getId() != null) {
+            workMonthsCustomBandbox.setSelectedT(overtime.getWorkMonthsid());
+        }
         workMonthCell.appendChild(workMonthsCustomBandbox);
 
     }
@@ -90,12 +101,25 @@ public class OvertimeWindowController extends MainComponent {
                 NotificationUtils.showFailure();
             }
         }
+
+        for (OvertimeDates overtimeDates : removeList) {
+            if (overtimeDates.getId() != null)
+                overtimeBean.deleteByOvertimeDate(overtimeDates.getId());
+        }
+        listPanelController.refresh();
         getCurrentWindow().detach();
     }
 
     @Command
     public void addTime() {
         overtimeDateList.add(new OvertimeDates());
+        getBinder().loadComponent(overtimeTimeListBox, true);
+    }
+
+    @Command
+    public void removeDates(@BindingParam("dates") OvertimeDates overtimeDates) {
+        overtimeDateList.remove(overtimeDates);
+        removeList.add(overtimeDates);
         getBinder().loadComponent(overtimeTimeListBox, true);
     }
 

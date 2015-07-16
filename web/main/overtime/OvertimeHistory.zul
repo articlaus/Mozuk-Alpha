@@ -6,24 +6,22 @@
             <hbox>
                 <label value="Сар :"/>
                 <cell id="workCell"/>
-                <cell id="searchCell"/>
             </hbox>
         </toolbar>
         <panelchildren>
-            <groupbox>
+            <groupbox height="600px">
                 <caption label="Илүү цагын түүх"/>
                 <tree width="100%" id="overtimeTree"
                       model="@bind(ohp.overtimeTreeModel)"
-                      vflex="true"
-                      autopaging="true" mold="paging"
-                      pagingPosition="bottom">
+                      vflex="true">
                     <treecols>
                         <treecol label="Ажилтаны нэр"/>
                         <treecol label="Шалтгаан"/>
-                        <treecol label="Ажиллах өдөр"/>
-                        <treecol label="Эхлэх цаг"/>
-                        <treecol label="Дуусах цаг"/>
-                        <treecol label="Амралтын өдөр үү?"/>
+                        <treecol label=""/>
+                        <treecol label=""/>
+                        <treecol label=""/>
+                        <treecol label=""/>
+                        <treecol label=""/>
                     </treecols>
                 </tree>
             </groupbox>

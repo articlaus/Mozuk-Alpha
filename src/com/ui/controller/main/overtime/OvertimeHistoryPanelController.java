@@ -16,12 +16,14 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.*;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +39,7 @@ public class OvertimeHistoryPanelController extends MainComponent {
     OtherBean otherBean;
     private CustomBandbox<WorkMonths> workMonthsCustomBandbox;
 
-    HashMap<String, Listbox> overtimeMap;
+    HashMap<BigDecimal, Listbox> overtimeMap;
 
     @Wire
     Tree overtimeTree;
@@ -63,20 +65,24 @@ public class OvertimeHistoryPanelController extends MainComponent {
         initComponents();
 
         workMonthsCustomBandbox = new CustomBandbox<WorkMonths>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
-        workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_CHANGING, new EventListener<Event>() {
+        workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_SELECT, new EventListener<Event>() {
             @Override
             public void onEvent(Event event) throws Exception {
-                overtimeList = overtimeBean.findByWorkMonthsId(workMonthsCustomBandbox.getSelectedT());
-                getBinder().loadComponent(overtimeTree, true);
+                loadByMonths(workMonthsCustomBandbox.getSelectedT());
             }
         });
         workCell.appendChild(workMonthsCustomBandbox);
-//        SearchBox<LeaveAbsence> searchBox = new SearchBox<>(overtimeList, new String[]{"employeeCode.fullName", "ovetimeDatesList.", "employeeCode.fullName", "workMonthsId.month"}, leaveHistoryListBox, getBinder());
-//        searchCell.appendChild(searchBox);
     }
 
     public void refresh() {
         overtimeList = overtimeBean.findAll();
+        overtimeTreeModel = new BaseTreeModel(overtimeList, "overtimeDatesList");
+        getBinder().loadComponent(overtimeTree, true);
+    }
+
+    public void loadByMonths(WorkMonths workMonths) {
+        overtimeList = overtimeBean.findByWorkMonthsId(workMonths);
+        overtimeTreeModel = new BaseTreeModel(overtimeList, "overtimeDatesList");
         getBinder().loadComponent(overtimeTree, true);
     }
 
@@ -92,28 +98,33 @@ public class OvertimeHistoryPanelController extends MainComponent {
 
                     if (data instanceof Overtime) {
                         final Overtime entity = (Overtime) data;
-                        overtimeMap.put(entity.getEmployeeCode().getCode(), null);
-                        A a = new A("*" + entity.getEmployeeCode().getFullName());
-                        a.setStyle("text-decoration: underline;");
-                        a.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+                        overtimeMap.put(entity.getId(), null);
+                        Treecell treecell = new Treecell();
+                        treecell.appendChild(new Label(entity.getEmployeeCode().getFullName()));
+                        treerow.appendChild(treecell);
+                        treecell = new Treecell(entity.getReason());
+                        treecell.setSpan(5);
+                        treerow.appendChild(treecell);
+                        treecell = new Treecell();
+                        Button button = new Button("Засах");
+                        button.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
                             @Override
                             public void onEvent(Event event) throws Exception {
-                                getMainInclude().setDynamicProperty("employee", entity.getEmployeeCode());
-
+                                editOvertime(entity);
                             }
                         });
-                        Treecell treecell = new Treecell();
-                        treecell.appendChild(a);
-                        treerow.appendChild(treecell);
-                        treerow.appendChild(new Treecell(entity.getReason()));
 
-                    } else {
+                        treecell.appendChild(button);
+                        treerow.appendChild(treecell);
+
+                    } else if (data instanceof OvertimeDates) {
                         OvertimeDates entity = (OvertimeDates) data;
                         Listbox listbox = getBox(entity);
                         if (i == 0) {
                             Treecell treecell = new Treecell();
-                            treecell.setSpan(6);
+                            treecell.setSpan(7);
                             treecell.appendChild(listbox);
+                            treecell.setStyle("background-color:#FFFFFF;");
                             treerow.appendChild(treecell);
                         }
                     }
@@ -122,28 +133,42 @@ public class OvertimeHistoryPanelController extends MainComponent {
         }
     }
 
+    public void editOvertime(Overtime overtime) {
+        getWindowMap().put("overtimeList", this);
+        getWindowMap().put("overtime", overtime);
+        Executions.createComponents("/main/overtime/OvertimeWindow.zul", null, getWindowMap());
+    }
+
     private Listbox getBox(OvertimeDates overtimeDates) {
-        if (overtimeMap.get(overtimeDates.getOvertimeid().getEmployeeCode().getCode()) == null) {
+        if (overtimeMap.get(overtimeDates.getOvertimeid().getId()) == null) {
             Listbox listbox = new Listbox();
+            listbox.setId("id-" + overtimeDates.getId());
             Listhead listhead = new Listhead();
             listhead.appendChild(new Listheader("Ажиллах өдөр", "", "40%"));
             listhead.appendChild(new Listheader("Эхлэх цаг", "", "30%"));
             listhead.appendChild(new Listheader("Дуусах цаг", "", "30%"));
+            listhead.appendChild(new Listheader("Амралтын өдөр үү?", "", "30%"));
             listbox.appendChild(listhead);
-            overtimeMap.put(overtimeDates.getOvertimeid().getEmployeeCode().getCode(), listbox);
+            overtimeMap.put(overtimeDates.getOvertimeid().getId(), listbox);
         }
 
-        if (overtimeMap.get(overtimeDates.getOvertimeid().getEmployeeCode().getCode()) != null) {
-            Listbox listbox = overtimeMap.get(overtimeDates.getOvertimeid().getEmployeeCode().getCode());
+        if (overtimeMap.get(overtimeDates.getOvertimeid().getId()) != null) {
+            Listbox listbox = overtimeMap.get(overtimeDates.getOvertimeid().getId());
             Listitem listitem = new Listitem();
             SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
             listitem.appendChild(new Listcell(format.format(overtimeDates.getWorkDate())));
-            listitem.appendChild(new Listcell(timeFormat.format(overtimeDates.getStartTime())));
-            listitem.appendChild(new Listcell(timeFormat.format(overtimeDates.getEndTime())));
+            listitem.appendChild(new Listcell(overtimeDates.getStartTime()));
+            listitem.appendChild(new Listcell(overtimeDates.getEndTime()));
+            String holiday = "";
+            if (overtimeDates.getIsHoliday()) {
+                holiday = "Тийм";
+            } else {
+                holiday = "Үгүй";
+            }
+            listitem.appendChild(new Listcell(holiday));
             listbox.appendChild(listitem);
         }
-        return overtimeMap.get(overtimeDates.getOvertimeid().getEmployeeCode().getCode());
+        return overtimeMap.get(overtimeDates.getOvertimeid().getId());
     }
 
     public BaseTreeModel getOvertimeTreeModel() {
@@ -162,11 +187,11 @@ public class OvertimeHistoryPanelController extends MainComponent {
         this.overtimeList = overtimeList;
     }
 
-    public HashMap<String, Listbox> getOvertimeMap() {
+    public HashMap<BigDecimal, Listbox> getOvertimeMap() {
         return overtimeMap;
     }
 
-    public void setOvertimeMap(HashMap<String, Listbox> overtimeMap) {
+    public void setOvertimeMap(HashMap<BigDecimal, Listbox> overtimeMap) {
         this.overtimeMap = overtimeMap;
     }
 

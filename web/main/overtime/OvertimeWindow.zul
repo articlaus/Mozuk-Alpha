@@ -58,6 +58,9 @@
                             <listcell>
                                 <checkbox checked="@bind(each.isHoliday)"/>
                             </listcell>
+                            <listcell>
+                                <button label="" iconSclass="z-icon-trash" onClick="@command('removeDates',dates=each)"/>
+                            </listcell>
                         </listitem>
                     </template>
                 </listbox>

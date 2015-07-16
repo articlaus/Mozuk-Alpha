@@ -12,7 +12,7 @@
                         <include src="/main/overtime/OvertimeList.zul"/>
                     </tabpanel>
                     <tabpanel>
-                        <include src="/main/leave/LeaveHistoryPanel.zul"/>
+                        <include src="/main/overtime/OvertimeHistory.zul"/>
                     </tabpanel>
                 </tabpanels>
             </tabbox>

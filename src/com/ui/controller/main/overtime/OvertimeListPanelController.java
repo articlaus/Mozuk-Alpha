@@ -58,8 +58,14 @@ public class OvertimeListPanelController extends MainComponent {
 
     @Command
     public void addOvertime() {
-        System.out.println("overtimeBean = ");
-        Executions.createComponents("/main/overtime/OvertimeWindow.zul", null, null);
+        getWindowMap().put("overtimeList", this);
+        Executions.createComponents("/main/overtime/OvertimeWindow.zul", null, getWindowMap());
+    }
+
+    public void editOvertime(Overtime overtime) {
+        getWindowMap().put("overtimeList", this);
+        getWindowMap().put("overtime", overtime);
+        Executions.createComponents("/main/overtime/OvertimeWindow.zul", null, getWindowMap());
     }
 
 
@@ -85,7 +91,7 @@ public class OvertimeListPanelController extends MainComponent {
                         Treecell treecell = new Treecell();
                         treecell.appendChild(new Label(entity.getEmployeeCode().getFullName()));
                         treerow.appendChild(treecell);
-                        treecell =new Treecell(entity.getReason());
+                        treecell = new Treecell(entity.getReason());
                         treecell.setSpan(5);
                         treerow.appendChild(treecell);
                         treecell = new Treecell();
@@ -93,7 +99,7 @@ public class OvertimeListPanelController extends MainComponent {
                         button.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
                             @Override
                             public void onEvent(Event event) throws Exception {
-                                System.out.println("click = ");
+                                editOvertime(entity);
                             }
                         });
 
@@ -119,26 +125,31 @@ public class OvertimeListPanelController extends MainComponent {
 
     private Listbox getBox(OvertimeDates overtimeDates) {
         if (overtimeMap.get(overtimeDates.getOvertimeid().getId()) == null) {
-            System.out.println("Creating Lsit Box");
             Listbox listbox = new Listbox();
             listbox.setId("id-" + overtimeDates.getId());
             Listhead listhead = new Listhead();
             listhead.appendChild(new Listheader("Ажиллах өдөр", "", "40%"));
             listhead.appendChild(new Listheader("Эхлэх цаг", "", "30%"));
             listhead.appendChild(new Listheader("Дуусах цаг", "", "30%"));
+            listhead.appendChild(new Listheader("Амралтын өдөр үү?", "", "30%"));
             listbox.appendChild(listhead);
-            System.out.println("listbox in head = " + listbox);
             overtimeMap.put(overtimeDates.getOvertimeid().getId(), listbox);
         }
 
         if (overtimeMap.get(overtimeDates.getOvertimeid().getId()) != null) {
             Listbox listbox = overtimeMap.get(overtimeDates.getOvertimeid().getId());
-            System.out.println("overtimeMap = " + overtimeMap.get(overtimeDates.getOvertimeid().getId()));
             Listitem listitem = new Listitem();
             SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
             listitem.appendChild(new Listcell(format.format(overtimeDates.getWorkDate())));
             listitem.appendChild(new Listcell(overtimeDates.getStartTime()));
             listitem.appendChild(new Listcell(overtimeDates.getEndTime()));
+            String holiday = "";
+            if (overtimeDates.getIsHoliday()) {
+                holiday = "Тийм";
+            } else {
+                holiday = "Үгүй";
+            }
+            listitem.appendChild(new Listcell(holiday));
             listbox.appendChild(listitem);
         }
         return overtimeMap.get(overtimeDates.getOvertimeid().getId());

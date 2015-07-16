@@ -14,10 +14,10 @@
                     <treecols>
                         <treecol label="Ажилтаны нэр"/>
                         <treecol label="Шалтгаан"/>
-                        <treecol label="Ажиллах өдөр"/>
-                        <treecol label="Эхлэх цаг"/>
-                        <treecol label="Дуусах цаг"/>
-                        <treecol label="Амралтын өдөр үү?" />
+                        <treecol label=""/>
+                        <treecol label=""/>
+                        <treecol label=""/>
+                        <treecol label="" />
                         <treecol label="" align="center" />
                     </treecols>
                 </tree>
