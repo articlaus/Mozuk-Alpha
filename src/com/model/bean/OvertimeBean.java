@@ -73,7 +73,7 @@ public class OvertimeBean extends BaseEJB {
     public Overtime update(Overtime overtime) {
         try {
             overtime = getEm().merge(overtime);
-            updateByOvertimeDate(overtime.getOvertimeDatesList());
+            updateByOvertimeDate(overtime.getOvertimeDatesList(),overtime);
             return overtime;
         } catch (Exception e) {
             e.printStackTrace();
@@ -173,11 +173,18 @@ public class OvertimeBean extends BaseEJB {
         }
     }
 
-    public List<OvertimeDates> updateByOvertimeDate(List<OvertimeDates> overtimeDates) {
+    public List<OvertimeDates> updateByOvertimeDate(List<OvertimeDates> overtimeDates,Overtime overtime) {
         try {
             List<OvertimeDates> returnList = new ArrayList<>(overtimeDates.size());
             for (OvertimeDates overtimeDate : overtimeDates) {
-                overtimeDate = getEm().merge(overtimeDate);
+                if (overtimeDate.getId() != null) {
+
+                    overtimeDate = getEm().merge(overtimeDate);
+                } else {
+                    overtimeDate.setId(SequenceUtil.nextBigDecimal());
+                    overtimeDate.setOvertimeid(overtime);
+                    getEm().persist(overtime);
+                }
                 returnList.add(overtimeDate);
             }
             return returnList;
