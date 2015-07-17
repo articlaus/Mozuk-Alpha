@@ -1,0 +1,68 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml">
+    <panel id="personalSettingsPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('psp') @init('')">
+        <toolbar>
+            <button label="Хэрэглэгч Иэмэх" iconSclass="z-icon-user" onClick="@command('addUser')"/>
+        </toolbar>
+        <panelchildren>
+            <hlayout>
+                <groupbox>
+                    <caption label="Нууц Үг Солих"/>
+                    <grid>
+                        <columns>
+                            <column width="30%"/>
+                            <column width="70%"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <label value="Хуучийн нууц үг :"/>
+                                <textbox type="password" width="100%" id="psp_oldPassTxt"/>
+                            </row>
+                            <row>
+                                <label value="Шинэ нууц үг :"/>
+                                <textbox type="password" width="100%" id="psp_newPassTxt"/>
+                            </row>
+                            <row>
+                                <label value="Дахин оруулга уу :"/>
+                                <textbox type="password" width="100%" id="psp_reTypeTxt"/>
+                            </row>
+                            <row>
+                                <cell colspan="2" align="right">
+                                    <button label="Хадгалах" iconSclass="z-icon-save" onClick="@command('savePass')"/>
+                                </cell>
+                            </row>
+                        </rows>
+                    </grid>
+                </groupbox>
+                <groupbox>
+                    <caption label="Хэрэглэгчид"/>
+                    <listbox id="usersListBox" height="700px" model="@bind(psp.usersList)" mold="paging"
+                             pagingPosition="bottom">
+                        <listhead menupopup="auto">
+                            <listheader label="Нэвтрэх нэр" sort="auto(username)"/>
+                            <listheader label="Бүтэн нэр" sort="auto(employeeCode.fullName)"/>
+                            <listheader label="Эрх" sort="auto(userRoleId.userRole)"/>
+                            <listheader label="Хаагдсан" sort="auto(isLocked)"/>
+                            <listheader label=""/>
+                        </listhead>
+                        <template name="model">
+                            <listitem>
+                                <listcell label="@bind(each.username)"/>
+                                <listcell label="@bind(each.employeeCode.fullName)"/>
+                                <listcell label="@bind(each.userRoleId.userRole)"/>
+                                <listcell>
+                                    <checkbox checked="@bind(each.isLocked)"/>
+                                </listcell>
+                                <listcell>
+                                    <button label="Засах" onClick="@command('editUser',user=each)"/>
+                                    <button label="Устгах" onClick="@command('removeUser',user=each)"/>
+                                </listcell>
+                            </listitem>
+                        </template>
+                    </listbox>
+                </groupbox>
+            </hlayout>
+        </panelchildren>
+    </panel>
+</zk>

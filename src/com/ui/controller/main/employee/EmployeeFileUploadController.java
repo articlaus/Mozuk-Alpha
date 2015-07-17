@@ -1,10 +1,8 @@
 package com.ui.controller.main.employee;
 
 import com.ui.component.base.MainComponent;
-import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.*;
+import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 
 import java.util.ArrayList;
@@ -27,6 +25,15 @@ public class EmployeeFileUploadController extends MainComponent {
     @Override
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
+    }
+
+    @Command
+    @NotifyChange("attachments")
+    public void doUpload(@BindingParam("files") Media[] files) {
+        for (Media file : files) {
+            attachments.add(file.getName());
+        }
+        System.out.println("attachments = " + attachments);
     }
 
     public List<String> getAttachments() {

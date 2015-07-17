@@ -2,7 +2,9 @@
     xmlns:n="http://www.w3.org/1999/xhtml">
     <style src="/assets/FileUpload.css"/>
     <window id="employeeFileUploadWindow" width="500px" height="300px"
-            apply="org.zkoss.bind.BindComposer" viewModel="@id('efuw')" closable="true">
+            apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('efuw') @init('com.ui.controller.main.employee.EmployeeFileUploadController')"
+            closable="true">
         <toolbar>
             <button label="Хадгалах" onClick="@command('save')"/>
         </toolbar>

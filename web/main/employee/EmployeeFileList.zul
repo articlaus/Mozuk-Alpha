@@ -2,6 +2,9 @@
     xmlns:n="http://www.w3.org/1999/xhtml">
     <panel width="100%" height="800px" id="employeeFilePanel" apply="org.zkoss.bind.BindComposer"
            viewModel="@id('efp') @init('com.ui.controller.main.employee.EmployeeFileListController')">
+        <toolbar>
+            <button iconSclass="z-icon-refresh" onClick="@command('refresh')"/>
+        </toolbar>
         <panelchildren>
             <groupbox closable="false">
                 <listbox id="employeeFilesListBox" height="600px" model="@bind(efp.documentList)"

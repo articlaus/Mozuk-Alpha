@@ -40,6 +40,8 @@
                         </panelchildren>
                     </panel>
                 </center>
+
+                <south height="0%"/>
             </borderlayout>
         </panelchildren>
     </panel>

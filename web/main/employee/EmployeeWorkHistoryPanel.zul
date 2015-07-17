@@ -1,6 +1,6 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <panel id="employeeWorkHistoryPanel" width="100%" height="700px" apply="org.zkoss.bind.BindComposer"
+    <panel id="employeeWorkHistoryPanel" width="100%" height="900px" apply="org.zkoss.bind.BindComposer"
            viewModel="@id('ewhp') @init('com.ui.controller.main.employee.EmployeeWorkHistoryPanelController')">
         <toolbar>
             <cell>
@@ -12,7 +12,7 @@
         <panelchildren>
             <groupbox closable="false">
                 <caption label="Энэ Сарын Ажилчдын цаг оруулах"/>
-                <listbox id="employeeTimesheetHistoryListbox" height="600px" model="@bind(ewhp.employeeWorkMonthList)"
+                <listbox id="employeeTimesheetHistoryListbox" height="800px" model="@bind(ewhp.employeeWorkMonthList)"
                          mold="paging" pagingPosition="bottom">
                     <listhead menupopup="auto">
                         <listheader label="Ажлын сар" sort="auto(workMonthsid.yearAndMonth)"/>
@@ -25,7 +25,8 @@
                             <listcell label="@bind(each.workMonthsid.yearAndMonth)"/>
                             <listcell label="@bind(each.workMonth.totalWorkHours)"/>
                             <listcell label="@bind(each.workedHours)"/>
-                            <listcell label="@bind(each.finalSalary) @converter('formatedNumber', format='###,##0.00₮')"/>
+                            <listcell
+                                    label="@bind(each.finalSalary) @converter('formatedNumber', format='###,##0.00₮')"/>
                         </listitem>
                     </template>
                 </listbox>

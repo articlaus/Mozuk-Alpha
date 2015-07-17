@@ -54,7 +54,6 @@ public class EmployeeListPanelController extends MainComponent {
     }
 
 
-
     public void refreshValues() {
         employeeList = employeeBean.findByIsActive(true);
         for (Employee employee : employeeList) {
@@ -62,6 +61,12 @@ public class EmployeeListPanelController extends MainComponent {
         }
         getBinder().loadComponent(employeeListBox, true);
     }
+
+    @Command
+    public void refresh() {
+        refreshValues();
+    }
+
 
     public List<Employee> getEmployeeList() {
         return employeeList;

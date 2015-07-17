@@ -1,6 +1,6 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <panel id="employeeListPanel" width="100%" height="700px" apply="org.zkoss.bind.BindComposer"
+    <panel id="employeeListPanel" width="100%" height="900px" apply="org.zkoss.bind.BindComposer"
            viewModel="@id('elp') @init('com.ui.controller.main.employee.EmployeeListPanelController')"
             >
 
@@ -8,6 +8,7 @@
             <hbox>
                 <button label="Нэмэх" onClick="@command('addEmployee')" iconSclass="z-icon-user-plus"/>
                 <div id="searchField"/>
+                <button iconSclass="z-icon-refresh" onClick="@command('refresh')"/>
             </hbox>
         </toolbar>
         <panelchildren>
@@ -27,7 +28,8 @@
                         <listcell label="@bind(each.fullName)"/>
                         <listcell label="@bind(each.employeePosition.positionCode.positionTitle)"/>
                         <listcell label="@bind(each.employeePosition.departmentCode.departmentTitle)"/>
-                        <listcell label="@bind(each.employeePosition.salary) @converter('formatedNumber', format='###,##0.00₮')"/>
+                        <listcell
+                                label="@bind(each.employeePosition.salary) @converter('formatedNumber', format='###,##0.00₮')"/>
                         <listcell>
                             <button label="Дэлгэрэнгүй" onClick="@command('editEmployee',employee=each)"/>
                         </listcell>
