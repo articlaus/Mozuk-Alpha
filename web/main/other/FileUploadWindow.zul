@@ -1,0 +1,37 @@
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="fileUploadWindow" title="Excel файл оруулах"
+            height="auto" width="600px" mode="modal" position="center" border="normal"
+            apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('fuw') @init('com.ui.controller.other.FileUploadWindow')">
+
+        <grid sclass="table ">
+            <columns>
+                <column width="150px"/>
+                <column/>
+            </columns>
+            <rows>
+                <row >
+                    <label value="Файл сонгох : "/>
+                    <button id="btnUpload" label="Файл сонгох" upload="true" onUpload="@command('uploadFile')" />
+                </row>
+                <row >
+                    <label value="Файлийн нэр : "/>
+                    <textbox readonly="true" sclass="form-control input-sm" value="@bind(fuw.fileName)"
+                             placeholder="Файлийн нэр : "/>
+                </row>
+                <row>
+                    <label value="Ажлын сар : "/>
+                    <cell id="activeMonthCell"/>
+                </row>
+                <row spans="2" align="right" style="background: #FFFFFF">
+                    <div>
+                        <button id="btnSave" mold="trendy" sclass="btn btn-default btn-small" label="Хадгалах"
+                                onClick="@command('btnSave')"/>
+                        <button id="btnCancel" mold="trendy" sclass="btn btn-default btn-small" label="Гарах"
+                                onClick="@global-command('windowCancelBtn')"/>
+                    </div>
+                </row>
+            </rows>
+        </grid>
+    </window>
+</zk>

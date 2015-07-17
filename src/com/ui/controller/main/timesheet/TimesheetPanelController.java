@@ -1,15 +1,20 @@
 package com.ui.controller.main.timesheet;
 
 import com.model.bean.EmployeeBean;
+import com.model.bean.FileUploadBean;
 import com.model.bean.OtherBean;
 import com.model.entity.EmployeeWorkMonth;
 import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Listbox;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -24,6 +29,7 @@ public class TimesheetPanelController extends MainComponent {
 
     @Wire
     Listbox employeeTimesheetListbox;
+    private FileUploadBean fileUploadBean;
 
     @Init(superclass = true)
     @Override
@@ -31,6 +37,7 @@ public class TimesheetPanelController extends MainComponent {
         super.init();
         employeeBean = EBeanUtils.getBean(EmployeeBean.class);
         otherBean = EBeanUtils.getBean(OtherBean.class);
+        fileUploadBean = EBeanUtils.getBean(FileUploadBean.class);
     }
 
     @AfterCompose(superclass = true)
@@ -53,10 +60,16 @@ public class TimesheetPanelController extends MainComponent {
     @Command
     public void dlExcel() {
         //todo
+        try {
+            Filedownload.save(fileUploadBean.downloadXlsTemplate(), "xlsx");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Command
     public void ulExcel() {
+        Executions.createComponents("/main/other/FileUploadWindow.zul", null, null);
         //todo
     }
 

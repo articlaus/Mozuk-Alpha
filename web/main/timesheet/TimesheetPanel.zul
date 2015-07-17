@@ -15,15 +15,15 @@
                 <listbox id="employeeTimesheetListbox" height="600px" model="@bind(tp.employeeWorkMonthList)"
                          selectedItem="@bind(tp.employeeWorkMonth)" mold="paging" pagingPosition="bottom">
                     <listhead menupopup="auto">
-                        <listheader label="Ажилтан" sort="auto(employeeCode.fullName)"/>
-                        <listheader label="Ажиллах ёстой цаг" sort="auto(leaveTypeId.leaveType)"/>
-                        <listheader label="Ажилласан цаг" sort="auto(startDate)"/>
+                        <listheader label="Ажилтан" sort=""/>
+                        <listheader label="Ажиллах ёстой цаг" sort=""/>
+                        <listheader label="Ажилласан цаг" sort=""/>
                         <!--<listheader label="Дууссан Өдөр" sort="auto(endDate)"/>-->
                     </listhead>
                     <template name="model">
                         <listitem>
                             <listcell label="@bind(each.employeeCode.firstname)"/>
-                            <listcell label="@bind(each.workMonth.totalWorkHours)"/>
+                            <listcell label="@bind(each.workMonthsid.totalWorkHours)"/>
                             <listcell>
                                 <intbox value="@bind(each.workedHours)" width="100%" placeholder="Ажилласан цаг"
                                         maxlength="4"/>

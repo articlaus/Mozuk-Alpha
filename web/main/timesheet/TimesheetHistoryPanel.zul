@@ -25,7 +25,7 @@
                         <listitem>
                             <listcell label="@bind(each.employeeCode.firstname)"/>
                             <listcell label="@bind(each.workMonthsid.yearAndMonth)"/>
-                            <listcell label="@bind(each.workMonth.totalWorkHours)"/>
+                            <listcell label="@bind(each.workMonthsid.totalWorkHours)"/>
                             <listcell label="@bind(each.workedHours)"/>
                             <listcell
                                     label="@bind(each.finalSalary) @converter('formatedNumber', format='###,##0.00₮')"/>
