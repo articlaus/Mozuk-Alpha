@@ -42,9 +42,23 @@ public class PersonalSettingPanelController extends MainComponent {
         loadValues();
     }
 
+    @Command
+    public void refresh() {
+        loadValues();
+    }
+
     public void loadValues() {
         usersList = userBean.findAll();
+        System.out.println("usersList = " + usersList.size());
         getBinder().loadComponent(usersListBox, true);
+    }
+
+    public List<Users> getUsersList() {
+        return usersList;
+    }
+
+    public void setUsersList(List<Users> usersList) {
+        this.usersList = usersList;
     }
 
     @Command
@@ -57,7 +71,7 @@ public class PersonalSettingPanelController extends MainComponent {
     }
 
     @Command
-    public void editUser(@BindingParam("user") Users users){
+    public void editUser(@BindingParam("user") Users users) {
 
     }
 }

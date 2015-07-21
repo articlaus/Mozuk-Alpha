@@ -1,0 +1,37 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <window title="Хэрэглэгчийн Мэдээлэл" id="userWindow" width="500px" height="500px" mode="modal" border="normal"
+            apply="org.zkoss.bind.BindComposer" viewModel="@id('uw') @init('')">
+        <grid>
+            <columns>
+                <column width="25%"/>
+                <column width="75%"/>
+            </columns>
+            <rows>
+                <row>
+                    <label value="Имайл Хаяг :"/>
+                    <textbox value="@bind(uw.user.username)" width="100%"/>
+                </row>
+                <row>
+                    <label value="Роль :"/>
+                    <cell id="userTypeCell"/>
+                </row>
+                <row>
+                    <label value="Нууц Үг :"/>
+                    <textbox type="password" value="@bind(uw.user.password)" id="passTxt1" width="100%"/>
+                </row>
+                <row>
+                    <label value="Дахин Оруулна уу :"/>
+                    <textbox type="password" id="passTxt2" width="100%"/>
+                </row>
+                <row>
+                    <cell colspan="2" align="right">
+                        <button label="Хадгалах" onClick="@command('save')" iconSclass="z-icon-save"/>
+                        <button label="Цуцлах" onClick="@global-command()" iconSclass="z-icon-cross"/>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+    </window>
+
+</zk>

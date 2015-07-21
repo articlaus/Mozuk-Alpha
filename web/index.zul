@@ -20,12 +20,7 @@
                                     <navitem label="Илүү Цаг" iconSclass="z-icon-user-plus"
                                              onClick="@command('overtime')"/>
                                 </nav>
-                                <nav label="Get Started" iconSclass="z-icon-th-list">
-                                    <navitem label="Step One"/>
-                                    <navitem label="Step Two"/>
-                                    <navitem label="Step Three"/>
-                                </nav>
-                                <navitem label="About" iconSclass="z-icon-flag"/>
+                                <navitem label="Тохиргоо" iconSclass="z-icon-gear" onClick="@command('settings')"/>
                                 <navitem label="Contact" iconSclass="z-icon-envelope"/>
                             </navbar>
                         </panelchildren>

@@ -4,13 +4,13 @@
         <panelchildren>
             <tabbox>
                 <tabs>
-                    <tab id="personalSettings" label="Энэ сард" iconSclass="z-icon-calendar" selected="true"/>
+                    <tab id="personalSettings" label="Хувийн Тохиргоо" iconSclass="z-icon-user" selected="true"/>
                     <tab id="departmentTab" label="Түүх" iconSclass="z-icon-history"/>
                     <tab id="positionTab" label="Түүх" iconSclass="z-icon-history"/>
                 </tabs>
                 <tabpanels>
                     <tabpanel>
-                        <include src="/main/overtime/OvertimeList.zul"/>
+                        <include src="/main/other/PersonalSettingPanel.zul"/>
                     </tabpanel>
                     <tabpanel>
                         <include src="/main/overtime/OvertimeHistory.zul"/>
