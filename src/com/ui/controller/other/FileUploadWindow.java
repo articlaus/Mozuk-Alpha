@@ -54,16 +54,24 @@ public class FileUploadWindow extends MainComponent {
         UploadEvent event = (UploadEvent) ctx.getTriggerEvent();
         file = event.getMedia();
         fileName = file.getName();
+        if (file.getFormat().equals("xlsx") || file.getFormat().equals("xls")) {
+        } else {
+            NotificationUtils.showMsgWarning("Файл зөвхөн Microsoft Excel байх ёстой !");
+            file = null;
+            fileName = null;
+        }
     }
 
 
     @Command
     public void btnSave() {
         if (isValid() && monthsCustomBandbox.getSelectedT() !=null) {
-            fileUploadBean.uploadXlsx(file.getStreamData(), file.getFormat(), monthsCustomBandbox.getSelectedT());
-//            refresh();
-            getCurrentWindow().detach();
-            NotificationUtils.showMsg("Амжилттай хадгалагдлаа.");
+            if (fileUploadBean.uploadXlsx(file.getStreamData(), file.getFormat(), monthsCustomBandbox.getSelectedT())) {
+
+//                refresh();
+                getCurrentWindow().detach();
+                NotificationUtils.showSuccess();
+            }
         }
     }
 

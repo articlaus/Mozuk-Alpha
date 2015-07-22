@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EmployeeWorkMonth.findByFinalSalary", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.finalSalary = :finalSalary"),
     @NamedQuery(name = "EmployeeWorkMonth.findByEmployee", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.employeeCode = :employeeCode"),
     @NamedQuery(name = "EmployeeWorkMonth.findByWorkMonth", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.workMonthsid = :workMonthsid"),
+    @NamedQuery(name = "EmployeeWorkMonth.findByIsActive", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.employeeCode.isActive = :isActive"),
     @NamedQuery(name = "EmployeeWorkMonth.findByEmployeeAndWorkMonth", query = "SELECT e FROM EmployeeWorkMonth e WHERE e.employeeCode=:employeeCode AND e.workMonthsid = :workMonthsid"),
 })
 public class EmployeeWorkMonth implements Serializable {

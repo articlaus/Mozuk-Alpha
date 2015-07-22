@@ -61,7 +61,11 @@ public class TimesheetPanelController extends MainComponent {
     public void dlExcel() {
         //todo
         try {
-            Filedownload.save(fileUploadBean.downloadXlsTemplate(), "xlsx");
+            File file=fileUploadBean.downloadXlsTemplate();
+            if (file!=null){
+                Filedownload.save(file, "xlsx");
+//                fileUploadBean.deleteXlsTemplate();
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

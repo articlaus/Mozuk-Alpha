@@ -159,6 +159,11 @@ public class EmployeeBean extends BaseEJB {
     public List<EmployeeWorkMonth> findAllEmployeeWorkMonth() {
         return getEm().createNamedQuery("EmployeeWorkMonth.findAll", EmployeeWorkMonth.class).getResultList();
     }
+    public List<EmployeeWorkMonth> findEmployeeWorkMonthByIsActive(boolean isActive) {
+        return getEm().createNamedQuery("EmployeeWorkMonth.findByIsActive", EmployeeWorkMonth.class)
+                .setParameter("isActive",isActive)
+                .getResultList();
+    }
 
     public List<EmployeeWorkMonth> findWorkMonthByEmployee(Employee employee) {
         return getEm().createNamedQuery("EmployeeWorkMonth.findByEmployee", EmployeeWorkMonth.class)

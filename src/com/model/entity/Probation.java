@@ -69,6 +69,9 @@ public class Probation implements Serializable {
     @ManyToOne(optional = false)
     private Department departmentCode;
 
+    @Column(name = "deduction_percent")
+    private Double deductionPercent;
+
     public Probation() {
     }
 
@@ -147,6 +150,14 @@ public class Probation implements Serializable {
 
     public void setDepartmentCode(Department departmentCode) {
         this.departmentCode = departmentCode;
+    }
+
+    public Double getDeductionPercent() {
+        return deductionPercent;
+    }
+
+    public void setDeductionPercent(Double deductionPercent) {
+        this.deductionPercent = deductionPercent;
     }
 
     @Override

@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Document.findByForeignKey", query = "SELECT d FROM Document d WHERE d.foreignKey = :foreignKey"),
     @NamedQuery(name = "Document.findByDescription", query = "SELECT d FROM Document d WHERE d.description = :description"),
     @NamedQuery(name = "Document.findByFileName", query = "SELECT d FROM Document d WHERE d.fileName = :fileName"),
-    @NamedQuery(name = "Document.findByFileType", query = "SELECT d FROM Document d WHERE d.fileType = :fileType"),
+    @NamedQuery(name = "Document.findByFileType", query = "SELECT d FROM Document d WHERE d.fileExtension = :fileExtension"),
     @NamedQuery(name = "Document.findByCreatedDate", query = "SELECT d FROM Document d WHERE d.createdDate = :createdDate"),
     @NamedQuery(name = "Document.findByDocumentType", query = "SELECT d FROM Document d WHERE d.documentTypeId = :documentTypeId"),
 })
@@ -51,17 +51,22 @@ public class Document implements Serializable {
     @Basic(optional = false)
     @Column(name = "file_name")
     private String fileName;
-    @Column(name = "file_type")
-    private String fileType;
+    @Column(name = "file_extension")
+    private String fileExtension;
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
-    @Basic
-    @Column(name = "url")
-    private String url;
+    @Column(name = "file_path")
+    private String filePath;
     @JoinColumn(name = "document_type_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private DocumentType documentTypeId;
+    @JoinColumn(name = "employee_code",referencedColumnName = "code")
+    @ManyToOne
+    private Employee employeeeCode;
+    @JoinColumn(name = "username",referencedColumnName = "username")
+    @ManyToOne
+    private Users users;
 
     public Document() {
     }
@@ -108,12 +113,12 @@ public class Document implements Serializable {
         this.fileName = fileName;
     }
 
-    public String getFileType() {
-        return fileType;
+    public String getFileExtension() {
+        return fileExtension;
     }
 
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
     }
 
     public Date getCreatedDate() {
@@ -124,12 +129,12 @@ public class Document implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getUrl() {
-        return url;
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     public DocumentType getDocumentTypeId() {
@@ -138,6 +143,22 @@ public class Document implements Serializable {
 
     public void setDocumentTypeId(DocumentType documentTypeId) {
         this.documentTypeId = documentTypeId;
+    }
+
+    public Employee getEmployeeeCode() {
+        return employeeeCode;
+    }
+
+    public void setEmployeeeCode(Employee employeeeCode) {
+        this.employeeeCode = employeeeCode;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class FileUploadBean extends BaseEJB {
     private void readAndWriteXls(String extension) {
         getFileInputStream();
         try {
-            Workbook workbook = ExcelUtil.getExcelWorkbook(is,extension);
+            Workbook workbook = ExcelUtil.getExcelWorkbook(is, extension);
             Sheet sheet = workbook.getSheetAt(0);
             Iterator<Row> o = sheet.rowIterator();
             int rowNumNumber = 0;
@@ -82,17 +82,21 @@ public class FileUploadBean extends BaseEJB {
 //            style.setBorderRight(HSSFCellStyle.BORDER_THIN);
 //            style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 
-            WorkMonths workMonths = otherBean.findByYearAndMonth();
-            if (workMonths == null) {
-                workMonths = otherBean.findByPreviosYearAndMonth();
-            }
 
-            List<EmployeeWorkMonth> employeeWorkMonthList = employeeBean.findWorkMonthByWorkMonth(workMonths);
+//            WorkMonths workMonths = otherBean.findByYearAndMonth();
+//            if (workMonths == null) {
+//                workMonths = otherBean.findByPreviosYearAndMonth();
+//            }
+
+//            List<EmployeeWorkMonth> employeeWorkMonthList = employeeBean.findWorkMonthByWorkMonth(workMonths);
+
+            List<EmployeeWorkMonth> employeeWorkMonthList = employeeBean.findEmployeeWorkMonthByIsActive(true);
             for (int i = 0; i < employeeWorkMonthList.size(); i++) {
                 Employee employee = employeeWorkMonthList.get(i).getEmployeeCode();
                 Row row = sheet.createRow(rowNumNumber + i + 1);
                 Cell numbering = row.createCell(NUMBERING);
                 numbering.setCellValue(i + 1);
+                numbering.setCellType(0);
                 Cell employee_code = row.createCell(EMPLOYEE_CODE);
                 employee_code.setCellValue(employee.getCode());
                 Cell employee_register = row.createCell(EMPLOYEE_REGISTER);
@@ -103,6 +107,7 @@ public class FileUploadBean extends BaseEJB {
                 EmployeePosition employeePosition = employeeBean.findByEmployeeCodeAndIsActive(employee, true);
                 employee_position.setCellValue(employeePosition.getPositionCode().getPositionTitle());
                 Cell work_hours = row.createCell(WORK_HOURS);
+                work_hours.setCellType(0);
                 work_hours.setCellValue(employeeWorkMonthList.get(i).getWorkedHours());
             }
             is.close();
@@ -115,7 +120,7 @@ public class FileUploadBean extends BaseEJB {
         }
     }
 
-    private void readXls(String extension,WorkMonths workMonths) {
+    private void readXls(String extension, WorkMonths workMonths) {
         try {
             Workbook workbook = ExcelUtil.getExcelWorkbook(is, extension);
             Sheet sheet = workbook.getSheetAt(0);
@@ -134,22 +139,42 @@ public class FileUploadBean extends BaseEJB {
                 if (numbering.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                     rowList.add(row);
                 }
-                System.out.println("cell.getStringCellValue() = " + numbering.getNumericCellValue());
+                System.out.println("rowList = " + rowList.size());
+//                System.out.println("cell.getStringCellValue() = " + numbering.getStringCellValue());
 //                System.out.println("cell.getStringCellValue() = " + secondCell.getStringCellValue());
 //                System.out.println("cell.getStringCellValue() = " + thirdCell.getStringCellValue());
             }
+            saveEmployeeWorkMonth(rowList, workMonths);
 
-            for (Row row : rowList) {
-                Cell numbering = row.getCell(NUMBERING);
-                Cell employee_code = row.getCell(EMPLOYEE_CODE);
-                Cell employee_register = row.getCell(EMPLOYEE_REGISTER);
-                Cell employee_name = row.getCell(EMPLOYEE_NAME);
-                Cell employee_position = row.getCell(EMPLOYEE_POSITION);
-                Cell work_hours = row.getCell(WORK_HOURS);
-            }
         } catch (CommonFault commonFault) {
             commonFault.printStackTrace();
         }
+    }
+
+    private void saveEmployeeWorkMonth(List<Row> rowList, WorkMonths workMonths) {
+        List<EmployeeWorkMonth> employeeWorkMonths = employeeBean.findWorkMonthByWorkMonth(workMonths);
+        for (Row row : rowList) {
+//            Cell numbering = row.getCell(NUMBERING);
+            Cell employee_code = row.getCell(EMPLOYEE_CODE);
+            Cell employee_register = row.getCell(EMPLOYEE_REGISTER);
+            Cell employee_name = row.getCell(EMPLOYEE_NAME);
+//            Cell employee_position = row.getCell(EMPLOYEE_POSITION);
+            Cell work_hours = row.getCell(WORK_HOURS);
+            System.out.println("employee_register = " + employee_register.getStringCellValue());
+            System.out.println("employee_name = " + employee_name.getStringCellValue());
+            System.out.println("work_hours.getNumericCellValue() = " + work_hours.getNumericCellValue());
+            for (EmployeeWorkMonth employeeWorkMonth : employeeWorkMonths) {
+                Employee employee = employeeWorkMonth.getEmployeeCode();
+                if (employee.getCode().equals(employee_code.getStringCellValue())
+                        && employee.getSocialSecurityNumber().equals(employee_register.getStringCellValue())) {
+                    employeeWorkMonth.setWorkedHours((int) work_hours.getNumericCellValue());
+                    getEm().merge(employeeWorkMonth);
+                    System.out.println("employee = " + employee.getFullName());
+                    System.out.println("employeeWorkMonth.getWorkedHours() = " + employeeWorkMonth.getWorkedHours());
+                }
+            }
+        }
+
     }
 
 
@@ -162,13 +187,13 @@ public class FileUploadBean extends BaseEJB {
         return new File(filePath + "employee_list.xlsx");
     }
 
-    public boolean uploadXlsx(InputStream is, String extension,WorkMonths workMonths) {
+    public boolean uploadXlsx(InputStream is, String extension, WorkMonths workMonths) {
         this.is = is;
-        readXls(extension,workMonths);
+        readXls(extension, workMonths);
         return true;
     }
 
-    public void deleteEmployeeList() {
+    public void deleteXlsTemplate() {
         File file = new File(getFilePath() + "employee_list.xlsx");
         file.delete();
     }

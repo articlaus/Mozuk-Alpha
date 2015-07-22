@@ -33,24 +33,16 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "Resolution.findAll", query = "SELECT r FROM Resolution r"),
         @NamedQuery(name = "Resolution.findByCode", query = "SELECT r FROM Resolution r WHERE r.code = :code"),
         @NamedQuery(name = "Resolution.findByCreatedDate", query = "SELECT r FROM Resolution r WHERE r.createdDate = :createdDate"),
-        @NamedQuery(name = "Resolution.findByIsDepartment", query = "SELECT r FROM Resolution r WHERE r.isDepartment = :isDepartment"),
-        @NamedQuery(name = "Resolution.findByResolutionType", query = "SELECT r FROM Resolution r WHERE r.resolutionType = :resolutionType")})
+        @NamedQuery(name = "Resolution.findByResolutionType", query = "SELECT r FROM Resolution r WHERE r.resolutionType = :resolutionType"),
+})
 public class Resolution implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "code")
     private String code;
-    @Basic(optional = false)
-
-    @Lob
-    @Column(name = "resolution_file")
-    private byte[] resolutionFile;
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
-    @Basic(optional = false)
-    @Column(name = "isDepartment")
-    private boolean isDepartment;
     @Basic(optional = false)
     @Column(name = "resolution_type")
     private String resolutionType;
@@ -60,6 +52,9 @@ public class Resolution implements Serializable {
     @JoinColumn(name = "employee_code", referencedColumnName = "code")
     @ManyToOne
     private Employee employeeCode;
+    @Column(name = "resolution_range")
+    private int resolutionRange;
+
 
     public Resolution() {
     }
@@ -68,11 +63,9 @@ public class Resolution implements Serializable {
         this.code = code;
     }
 
-    public Resolution(String code, byte[] resolutionFile, Date createdDate, boolean isDepartment, String resolutionType) {
+    public Resolution(String code, Date createdDate, String resolutionType) {
         this.code = code;
-        this.resolutionFile = resolutionFile;
         this.createdDate = createdDate;
-        this.isDepartment = isDepartment;
         this.resolutionType = resolutionType;
     }
 
@@ -84,13 +77,6 @@ public class Resolution implements Serializable {
         this.code = code;
     }
 
-    public byte[] getResolutionFile() {
-        return resolutionFile;
-    }
-
-    public void setResolutionFile(byte[] resolutionFile) {
-        this.resolutionFile = resolutionFile;
-    }
 
     public Date getCreatedDate() {
         return createdDate;
@@ -100,13 +86,6 @@ public class Resolution implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public boolean getIsDepartment() {
-        return isDepartment;
-    }
-
-    public void setIsDepartment(boolean isDepartment) {
-        this.isDepartment = isDepartment;
-    }
 
     public String getResolutionType() {
         return resolutionType;
@@ -130,6 +109,14 @@ public class Resolution implements Serializable {
 
     public void setEmployeeCode(Employee employeeCode) {
         this.employeeCode = employeeCode;
+    }
+
+    public int getResolutionRange() {
+        return resolutionRange;
+    }
+
+    public void setResolutionRange(int resolutionRange) {
+        this.resolutionRange = resolutionRange;
     }
 
     @Override

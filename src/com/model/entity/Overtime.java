@@ -24,19 +24,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author tseegii
  */
 @Entity
 @Table(name = "OVERTIME")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Overtime.findAll", query = "SELECT o FROM Overtime o"),
-    @NamedQuery(name = "Overtime.findById", query = "SELECT o FROM Overtime o WHERE o.id = :id"),
-    @NamedQuery(name = "Overtime.findByIsHoliday", query = "SELECT o FROM Overtime o WHERE o.isHoliday = :isHoliday"),
-    @NamedQuery(name = "Overtime.findByEmployee", query = "SELECT o FROM Overtime o WHERE o.employeeCode = :employeeCode"),
-    @NamedQuery(name = "Overtime.findByWorkMonthsId", query = "SELECT o FROM Overtime o WHERE o.workMonthsid = :workMonthsid"),
-    @NamedQuery(name = "Overtime.findByEmployeeAndWorkMonthsId", query = "SELECT o FROM Overtime o WHERE o.employeeCode=:employeeCode AND o.workMonthsid = :workMonthsid"),
+        @NamedQuery(name = "Overtime.findAll", query = "SELECT o FROM Overtime o"),
+        @NamedQuery(name = "Overtime.findById", query = "SELECT o FROM Overtime o WHERE o.id = :id"),
+        @NamedQuery(name = "Overtime.findByIsHoliday", query = "SELECT o FROM Overtime o WHERE o.isHoliday = :isHoliday"),
+        @NamedQuery(name = "Overtime.findByEmployee", query = "SELECT o FROM Overtime o WHERE o.employeeCode = :employeeCode"),
+        @NamedQuery(name = "Overtime.findByWorkMonthsId", query = "SELECT o FROM Overtime o WHERE o.workMonthsid = :workMonthsid"),
+        @NamedQuery(name = "Overtime.findByEmployeeAndWorkMonthsId", query = "SELECT o FROM Overtime o WHERE o.employeeCode=:employeeCode AND o.workMonthsid = :workMonthsid"),
 })
 public class Overtime implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -49,7 +48,7 @@ public class Overtime implements Serializable {
     @Lob
     @Column(name = "reason")
     private String reason;
-    @OneToMany( mappedBy = "overtimeid")
+    @OneToMany(mappedBy = "overtimeid")
     private List<OvertimeDates> overtimeDatesList;
     @JoinColumn(name = "Work_Monthsid", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -57,6 +56,8 @@ public class Overtime implements Serializable {
     @JoinColumn(name = "employee_code", referencedColumnName = "code")
     @ManyToOne(optional = false)
     private Employee employeeCode;
+    @Column(name = "multiplier")
+    private Double multiplier;
 
     public Overtime() {
     }
@@ -119,6 +120,14 @@ public class Overtime implements Serializable {
         this.employeeCode = employeeCode;
     }
 
+    public Double getMultiplier() {
+        return multiplier;
+    }
+
+    public void setMultiplier(Double multiplier) {
+        this.multiplier = multiplier;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -143,5 +152,5 @@ public class Overtime implements Serializable {
     public String toString() {
         return "com.model.entity.Overtime[ id=" + id + " ]";
     }
-    
+
 }

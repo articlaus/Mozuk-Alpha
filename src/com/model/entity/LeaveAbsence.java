@@ -76,6 +76,8 @@ public class LeaveAbsence implements Serializable {
     @JoinColumn(name = "employee_code", referencedColumnName = "code")
     @ManyToOne(optional = false)
     private Employee employeeCode;
+    @Column(name = "salary_received")
+    private Double salaryReceived;
 
     public LeaveAbsence() {
     }
@@ -171,6 +173,14 @@ public class LeaveAbsence implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Double getSalaryReceived() {
+        return salaryReceived;
+    }
+
+    public void setSalaryReceived(Double salaryReceived) {
+        this.salaryReceived = salaryReceived;
     }
 
     @Override
