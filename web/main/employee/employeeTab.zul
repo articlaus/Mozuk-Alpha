@@ -6,7 +6,8 @@
                 <tabs>
                     <tab id="employeeDetails" label="Ерөнхий Мэдээлэл" iconSclass="z-icon-user" selected="true"/>
                     <tab id="employeePosition" label="Албан Тушаал" iconSclass="z-icon-file"/>
-                    <tab id="employeeWorkHistory" label="Албан Тушаал" iconSclass="z-icon-history"/>
+                    <tab id="employeeWorkHistory" label="Ажлын Түүх" iconSclass="z-icon-history"/>
+                    <tab id="employeeFileUploadTab" label="Баримт" iconSclass="z-icon-file"/>
                 </tabs>
                 <tabpanels>
                     <tabpanel>
@@ -17,6 +18,9 @@
                     </tabpanel>
                     <tabpanel>
                         <include src="/main/employee/EmployeeWorkHistoryPanel.zul"/>
+                    </tabpanel>
+                    <tabpanel>
+                        <include src="/main/employee/EmployeeFileList.zul"/>
                     </tabpanel>
                 </tabpanels>
             </tabbox>

@@ -20,8 +20,9 @@
                                     <navitem label="Илүү Цаг" iconSclass="z-icon-user-plus"
                                              onClick="@command('overtime')"/>
                                 </nav>
+                                <navitem label="Цалин Бодох" iconSclass="z-icon-money"/>
                                 <navitem label="Тохиргоо" iconSclass="z-icon-gear" onClick="@command('settings')"/>
-                                <navitem label="Contact" iconSclass="z-icon-envelope"/>
+
                             </navbar>
                         </panelchildren>
                     </panel>

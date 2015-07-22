@@ -3,6 +3,7 @@
     <panel width="100%" height="800px" id="employeeFilePanel" apply="org.zkoss.bind.BindComposer"
            viewModel="@id('efp') @init('com.ui.controller.main.employee.EmployeeFileListController')">
         <toolbar>
+            <button iconSclass="z-icon-upload" label="Баримт Оруулах" onClick="@command('upload')"/>
             <button iconSclass="z-icon-refresh" onClick="@command('refresh')"/>
         </toolbar>
         <panelchildren>

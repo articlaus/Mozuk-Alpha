@@ -8,6 +8,7 @@ import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,5 +57,11 @@ public class EmployeeFileListController extends MainComponent {
     @Command
     public void refresh() {
 
+    }
+
+    @Command
+    public void upload() {
+        getWindowMap().put("employeeController", this);
+        Executions.createComponents("main/employee/EmployeeFileUploadWindow.zul", null, getWindowMap());
     }
 }

@@ -1,11 +1,11 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <panel width="100%" height="700px">
+    <panel width="100%" height="1000px">
         <panelchildren>
             <tabbox>
                 <tabs>
-                    <tab id="personalSettings" label="Хувийн Тохиргоо" iconSclass="z-icon-user" selected="true"/>
-                    <tab id="departmentTab" label="Түүх" iconSclass="z-icon-history"/>
+                    <tab id="personalSettings" label="Хувийн тохиргоо" iconSclass="z-icon-user" selected="true"/>
+                    <tab id="departmentTab" label="Байгуулгын тохиргоо" iconSclass="z-icon-building"/>
                     <tab id="positionTab" label="Түүх" iconSclass="z-icon-history"/>
                 </tabs>
                 <tabpanels>
@@ -13,7 +13,7 @@
                         <include src="/main/other/PersonalSettingPanel.zul"/>
                     </tabpanel>
                     <tabpanel>
-                        <include src="/main/overtime/OvertimeHistory.zul"/>
+                        <include src="/main/other/CompanySettingsPanel.zul"/>
                     </tabpanel>
                 </tabpanels>
             </tabbox>

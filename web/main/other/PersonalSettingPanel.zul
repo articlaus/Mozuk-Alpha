@@ -38,8 +38,7 @@
                 </groupbox>
                 <groupbox>
                     <caption label="Хэрэглэгчид"/>
-                    <listbox id="usersListBox" height="700px" model="@bind(psp.usersList)" mold="paging"
-                             pagingPosition="bottom">
+                    <listbox id="usersListBox" height="700px" model="@bind(psp.usersList)">
                         <listhead menupopup="auto">
                             <listheader label="Нэвтрэх нэр" sort="auto(username)"/>
                             <listheader label="Бүтэн нэр" sort="auto(employeeCode.fullName)"/>

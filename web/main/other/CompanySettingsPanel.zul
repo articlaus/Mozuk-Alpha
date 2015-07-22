@@ -1,0 +1,69 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel id="companySettingspanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('csp') @init('com.ui.controller.other.CompanySettingsPanelController')">
+        <toolbar>
+            <button label="Хэлтэс нэмэх" onClick="@command('addDepartment')"/>
+            <button label="Албан тушаал нэмэх" onClick="@command('addPosition')"/>
+            <button iconSclass="z-icon-refresh" onClick="@command('refresh')"/>
+        </toolbar>
+        <panelchildren>
+            <vlayout>
+                <groupbox height="350px" closable="false">
+                    <caption label="Албан тушаалын жагсаалт"/>
+                    <listbox id="positionListBox" height="300px" model="@bind(csp.positionList)">
+                        <listhead menupopup="auto">
+                            <listheader label="Албан тушаал" sort="auto(positionTitle)"/>
+                            <listheader label="Тайлбар" sort="auto(positionDescription)"/>
+                            <listheader/>
+                            <listheader/>
+                            <listheader/>
+                            <listheader label="Үссэн огноо"/>
+                            <listheader/>
+                        </listhead>
+                        <template name="model">
+                            <listitem>
+                                <listcell label="@bind(each.positionTitle)"/>
+                                <listcell label="@bind(each.positionDescription)" span="4"/>
+                                <listcell label="@bind(each.createdDate)"/>
+                                <listcell>
+                                    <button iconSclass="z-icon-remove"
+                                            onClick="@command('deletePosition',entity=each)"/>
+                                </listcell>
+                            </listitem>
+                        </template>
+                    </listbox>
+                </groupbox>
+
+
+                <groupbox closable="false">
+                    <caption label="Хэлтэсийн жагсаалт"/>
+                    <listbox id="departmentListBox" height="300px" model="@bind(csp.departmentList)">
+                        <listhead menupopup="auto">
+                            <listheader label="Хэлтэсын нэр" sort="auto(departmentTitle)"/>
+                            <listheader label="Дарга" sort="auto(departmentHeads.employeeCode.fullName)"/>
+                            <listheader label="Тайлбар" sort="auto(departmentDescription)"/>
+                            <listheader/>
+                            <listheader/>
+                            <listheader label="Үүссэн огноо" sort="auto(createdDate)"/>
+                            <listheader/>
+                        </listhead>
+                        <template name="model">
+                            <listitem>
+                                <listcell label="@load(each.departmentTitle)"/>
+                                <listcell label="@load(each.departmentHeads.employeeCode.fullName)"/>
+                                <listcell label="@load(each.departmentDescription)" span="3"/>
+                                <listcell label="@load(each.createdDate)"/>
+                                <listcell>
+                                    <button iconSclass="z-icon-remove"
+                                            onClick="@command('deleteDepartment',entity=each)"/>
+                                </listcell>
+                            </listitem>
+                        </template>
+
+                    </listbox>
+                </groupbox>
+            </vlayout>
+        </panelchildren>
+    </panel>
+</zk>

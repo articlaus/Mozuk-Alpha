@@ -31,7 +31,7 @@ public class EmployeeWorkHistoryPanelController extends MainComponent {
     private CustomBandbox<WorkMonths> workMonthsCustomBandbox;
 
     @Wire
-    Cell workCell, searchCell;
+    Cell workCell;
 
     @Wire
     Listbox employeeTimesheetHistoryListbox;
@@ -56,9 +56,9 @@ public class EmployeeWorkHistoryPanelController extends MainComponent {
 //            getBinder().loadComponent(employeeTimesheetHistoryListbox, true);
 //        });
         workCell.appendChild(workMonthsCustomBandbox);
-        SearchBox<EmployeeWorkMonth> searchBox = new SearchBox<>(employeeWorkMonthList, new String[]{"workMonthsid.yearAndMonth", "workMonth.totalWorkHours", "workedHours"}, employeeTimesheetHistoryListbox, getBinder());
-        searchBox.setPlaceholder("Хайх");
-        searchCell.appendChild(searchBox);
+//        SearchBox<EmployeeWorkMonth> searchBox = new SearchBox<>(employeeWorkMonthList, new String[]{"workMonthsid.yearAndMonth", "workMonth.totalWorkHours", "workedHours"}, employeeTimesheetHistoryListbox, getBinder());
+//        searchBox.setPlaceholder("Хайх");
+//        searchCell.appendChild(searchBox);
     }
 
     public void refresh() {
