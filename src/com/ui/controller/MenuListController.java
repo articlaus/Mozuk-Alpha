@@ -39,7 +39,12 @@ public class MenuListController extends MainComponent {
 
     @Command
     public void settings() {
-        getMainInclude().setSrc("/main/other/SettingTab.zul");
+        getMainInclude().setSrc("/main/settings/SettingTab.zul");
+    }
+
+    @Command
+    public void finalTime() {
+        getMainInclude().setSrc("/main/other/TimesheetFinalizePanel.zul");
     }
 
     @Command

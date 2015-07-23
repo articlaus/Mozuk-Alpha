@@ -1,0 +1,56 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel id="finalizeTimesheetPanel" width="100%" height="900px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('ftp') @init('com.ui.controller.other.TimesheetFinalizePanelController')">
+        <toolbar>
+            <grid>
+                <columns>
+                    <column/>
+                    <column/>
+                    <column/>
+                </columns>
+                <rows>
+                    <row style="background: #FFFFFF">
+                        <cell align="left">
+                            <button iconSclass="z-icon-arrow-left" onClick="@command('getPrevious')" id="btnPrev"/>
+                            <button iconSclass="z-icon-arrow-right" onClick="@command('getNext')" id="btnNext"/>
+                        </cell>
+                        <cell align="center">
+                            <button iconSclass="z-icon-save" onClick="@command('finalize')" label="Эцэслэх"/>
+                        </cell>
+                        <cell/>
+                    </row>
+                </rows>
+            </grid>
+        </toolbar>
+        <panelchildren>
+            <listbox id="employeeTimeListbox" height="600px" model="@bind(ftp.employeeTimesheetList)">
+                <listhead menupopup="auto">
+                    <listheader label="Ажилтан" sort="auto(employee.fullName)"/>
+                    <listheader label="Албан тушаал" sort="auto(position.positionTitle)"/>
+                    <listheader label="Үндсэн цалин" sort="auto(mainSalary)"/>
+                    <listheader label="Ажиллах цаг" sort="auto(workHours)"/>
+                    <listheader label="Ажилласан цаг" sort="auto(workedHours)"/>
+                    <listheader label="Чөлөөтэй цаг" sort="auto(totalLeaveHours)"/>
+                    <listheader label="Илүү цаг" sort="auto(totalOvertimeHours)"/>
+                    <listheader label="Шимтгэл" sort="auto(deduction)"/>
+                    <listheader label="Эцсийн цалин" sort="auto(finalSalary)"/>
+                </listhead>
+                <template name="model">
+                    <listitem>
+                        <listcell label="@load(each.employee.fullName)"/>
+                        <listcell label="@load(each.position.positionTitle)"/>
+                        <listcell label="@load(each.mainSalary) @converter('formatedNumber', format='###,##0.00₮')"/>
+                        <listcell label="@load(each.workHours)"/>
+                        <listcell label="@load(each.workedHours)"/>
+                        <listcell label="@load(each.totalLeaveHours)"/>
+                        <listcell label="@load(each.totalOvertimeHours)"/>
+                        <listcell label="@load(each.deduction)"/>
+                        <listcell label="@load(each.finalSalary)"/>
+                    </listitem>
+                </template>
+            </listbox>
+        </panelchildren>
+    </panel>
+
+</zk>

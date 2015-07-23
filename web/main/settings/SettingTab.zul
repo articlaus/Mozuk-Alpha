@@ -10,10 +10,10 @@
                 </tabs>
                 <tabpanels>
                     <tabpanel>
-                        <include src="/main/other/PersonalSettingPanel.zul"/>
+                        <include src="/main/settings/PersonalSettingPanel.zul"/>
                     </tabpanel>
                     <tabpanel>
-                        <include src="/main/other/CompanySettingsPanel.zul"/>
+                        <include src="/main/settings/CompanySettingsPanel.zul"/>
                     </tabpanel>
                 </tabpanels>
             </tabbox>

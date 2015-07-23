@@ -14,6 +14,8 @@ import org.zkoss.zk.ui.Component;
 public class PositionWindowController extends MainComponent {
     Position position;
     OtherBean otherBean;
+    Boolean isEditing;
+    private CompanySettingsPanelController panelController;
 
     @Init(superclass = true)
     @Override
@@ -26,16 +28,34 @@ public class PositionWindowController extends MainComponent {
     @Override
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
-        position = new Position();
+
+        if (getArgument("position") != null) {
+            position = (Position) getArgument("position");
+            isEditing = true;
+        } else {
+            position = new Position();
+            isEditing = false;
+        }
+        panelController = (CompanySettingsPanelController) getArgument("listPanel");
     }
 
     @Command
     public void save() {
-        if (otherBean.saveByPosition(position) != null) {
-            NotificationUtils.showSuccess();
-        } else
-            NotificationUtils.showFailure();
-
+        if (isEditing) {
+            if (otherBean.updateByPosition(position) != null) {
+                NotificationUtils.showSuccess();
+                panelController.loadValues();
+                getCurrentWindow().detach();
+            } else
+                NotificationUtils.showFailure();
+        } else {
+            if (otherBean.saveByPosition(position) != null) {
+                NotificationUtils.showSuccess();
+                panelController.loadValues();
+                getCurrentWindow().detach();
+            } else
+                NotificationUtils.showFailure();
+        }
     }
 
     public Position getPosition() {

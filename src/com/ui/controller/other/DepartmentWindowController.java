@@ -15,6 +15,9 @@ public class DepartmentWindowController extends MainComponent {
     Department department;
     OtherBean otherBean;
 
+    Boolean isEditing;
+    private CompanySettingsPanelController panelController;
+
     @Init(superclass = true)
     @Override
     public void init() {
@@ -26,15 +29,35 @@ public class DepartmentWindowController extends MainComponent {
     @Override
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
-        department = new Department();
+
+        if (getArgument("department") != null) {
+            department = (Department) getArgument("department");
+            isEditing = true;
+        } else {
+            department = new Department();
+            isEditing = false;
+        }
+        panelController = (CompanySettingsPanelController) getArgument("listPanel");
     }
 
     @Command
     public void save() {
-        if (otherBean.saveByDepartment(department) != null) {
-            NotificationUtils.showSuccess();
+        if (isEditing) {
+            if (otherBean.updateByDepartment(department) != null) {
+                NotificationUtils.showSuccess();
+                panelController.loadValues();
+                getCurrentWindow().detach();
+            } else {
+                NotificationUtils.showFailure();
+            }
         } else {
-            NotificationUtils.showFailure();
+            if (otherBean.saveByDepartment(department) != null) {
+                NotificationUtils.showSuccess();
+                panelController.loadValues();
+                getCurrentWindow().detach();
+            } else {
+                NotificationUtils.showFailure();
+            }
         }
     }
 
