@@ -1,6 +1,6 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <window id="departmentWindow" title="Хэлтэс" width="400px" height="350px"
+    <window id="departmentWindow" title="Хэлтэс" width="400px" height="400px" closable="true"
             mode="modal" border="normal" apply="org.zkoss.bind.BindComposer"
             viewModel="@id('dw') @init('com.ui.controller.other.DepartmentWindowController')">
         <grid>
@@ -16,6 +16,11 @@
                 <row>
                     <label value="Хэлтэс :"/>
                     <textbox id="titleTxt" value="@bind(dw.department.departmentTitle)" width="100%"/>
+                </row>
+                <row>
+                    <label value="Хэлтэсийн дарга :"/>
+                    <cell id="headCell"/>
+
                 </row>
                 <row>
                     <label value="Тайлбар :"/>

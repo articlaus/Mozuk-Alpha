@@ -77,6 +77,21 @@ public class CompanySettingsPanelController extends MainComponent {
     }
 
     @Command
+    public void editPosition(@BindingParam("entity") Position position) {
+        getWindowMap().put("listPanel", this);
+        getWindowMap().put("position", position);
+        Executions.createComponents("main/settings/PositionWindow.zul", null, getWindowMap());
+    }
+
+
+    @Command
+    public void editDepartment(@BindingParam("entity") Department department) {
+        getWindowMap().put("listPanel", this);
+        getWindowMap().put("department", department);
+        Executions.createComponents("main/settings/DepartmentWindow.zul", null, getWindowMap());
+    }
+
+    @Command
     public void addPosition() {
         getWindowMap().put("listPanel", this);
         Executions.createComponents("main/settings/PositionWindow.zul", null, getWindowMap());

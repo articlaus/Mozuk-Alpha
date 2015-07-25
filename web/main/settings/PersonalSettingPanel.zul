@@ -1,6 +1,6 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:h="http://www.w3.org/1999/xhtml">
-    <panel id="personalSettingsPanel" width="100%" height="800px" apply="org.zkoss.bind.BindComposer"
+    <panel id="personalSettingsPanel" width="100%" height="1000px" apply="org.zkoss.bind.BindComposer"
            viewModel="@id('psp') @init('com.ui.controller.other.PersonalSettingPanelController')">
         <toolbar>
             <button label="Хэрэглэгч Иэмэх" iconSclass="z-icon-user" onClick="@command('addUser')"/>
@@ -55,8 +55,8 @@
                                     <checkbox checked="@bind(each.isLocked)"/>
                                 </listcell>
                                 <listcell>
-                                    <button label="Засах" onClick="@command('editUser',user=each)"/>
-                                    <button label="Устгах" onClick="@command('removeUser',user=each)"/>
+                                    <button iconSclass="z-icon-edit" onClick="@command('editUser',user=each)"/>
+                                    <button iconSclass="z-icon-remove" onClick="@command('removeUser',user=each)"/>
                                 </listcell>
                             </listitem>
                         </template>

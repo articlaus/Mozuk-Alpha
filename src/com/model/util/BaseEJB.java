@@ -9,6 +9,12 @@ import javax.persistence.PersistenceContext;
  * Created by tseegii on 6/23/15.
  */
 public class BaseEJB {
+    /**
+     * Албан тушаалийн хамрах хүрээ
+     */
+    public static int RES_PERSON = 1;
+    public static int RES_DEPARTMENT = 2;
+    public static int RES_COMPANY = 3;
 
 
     @PersistenceContext(unitName = "mozukUnit")

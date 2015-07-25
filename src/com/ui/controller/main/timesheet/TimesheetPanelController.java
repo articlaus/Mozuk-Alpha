@@ -59,10 +59,9 @@ public class TimesheetPanelController extends MainComponent {
 
     @Command
     public void dlExcel() {
-        //todo
         try {
-            File file=fileUploadBean.downloadXlsTemplate();
-            if (file!=null){
+            File file = fileUploadBean.downloadXlsTemplate();
+            if (file != null) {
                 Filedownload.save(file, "xlsx");
 //                fileUploadBean.deleteXlsTemplate();
             }
@@ -74,7 +73,6 @@ public class TimesheetPanelController extends MainComponent {
     @Command
     public void ulExcel() {
         Executions.createComponents("/main/other/FileUploadWindow.zul", null, null);
-        //todo
     }
 
     public List<EmployeeWorkMonth> getEmployeeWorkMonthList() {

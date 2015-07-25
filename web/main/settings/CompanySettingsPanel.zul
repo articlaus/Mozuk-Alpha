@@ -27,6 +27,7 @@
                                 <listcell label="@bind(each.positionDescription)" span="4"/>
                                 <listcell label="@bind(each.createdDate)"/>
                                 <listcell>
+                                    <button iconSclass="z-icon-edit" onClick="@command('editPosition',entity=each)"/>
                                     <button iconSclass="z-icon-remove"
                                             onClick="@command('deletePosition',entity=each)"/>
                                 </listcell>
@@ -55,6 +56,7 @@
                                 <listcell label="@load(each.departmentDescription)" span="3"/>
                                 <listcell label="@load(each.createdDate)"/>
                                 <listcell>
+                                    <button iconSclass="z-icon-edit" onClick="@command('editDepartment',entity=each)"/>
                                     <button iconSclass="z-icon-remove"
                                             onClick="@command('deleteDepartment',entity=each)"/>
                                 </listcell>
