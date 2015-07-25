@@ -77,8 +77,9 @@ public class Employee implements Serializable {
     @Basic
     @Column(name = "ISACTIVE")
     private boolean isActive;
-    @OneToOne(mappedBy = "employeeCode")
+    @Transient
     private DepartmentHeads departmentHeads;
+
     @OneToMany(mappedBy = "employeeCode")
     private List<EmployeeWorkMonth> employeeWorkMonthList;
     @OneToMany(mappedBy = "employeeCode")

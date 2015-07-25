@@ -33,13 +33,20 @@ public class OtherBean extends BaseEJB {
     /**
      * Ene bean jijeg heregtseet zvilvvdiig bichne
      */
-
     public Department findByDepartmentCode(String departmentCode) {
         return getEm().find(Department.class, departmentCode);
     }
 
     public List<Department> findAllDepartment() {
-        return getEm().createNamedQuery("Department.findAll", Department.class).getResultList();
+        List<Department> departments = getEm().createNamedQuery("Department.findAll", Department.class).getResultList();
+        for (Department department : departments) {
+            DepartmentHeads heads = getEm().createNamedQuery("DepartmentHeads.findByDepartmentCodeAndIsActive", DepartmentHeads.class)
+                    .setParameter("departmentCode", department.getCode())
+                    .setParameter("isActive", true)
+                    .getSingleResult();
+            department.setEmployeeCode(getEm().find(Employee.class, heads.getEmployeeCode()));
+        }
+        return departments;
     }
 
     public Department saveByDepartment(Department department) {
@@ -47,6 +54,14 @@ public class OtherBean extends BaseEJB {
 //            department.setCode(SequenceUtil.nextBigDecimal().toString());
             department.setCreatedDate(Calendar.getInstance().getTime());
             getEm().persist(department);
+            if (department.getEmployeeCode() != null) {
+                DepartmentHeads heads = new DepartmentHeads();
+                heads.setId(SequenceUtil.nextBigDecimal());
+                heads.setDepartmentCode(heads.getDepartmentCode());
+                heads.setEmployeeCode(department.getEmployeeCode().getCode());
+                heads.setIsActive(true);
+                getEm().persist(heads);
+            }
             return department;
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,6 +72,28 @@ public class OtherBean extends BaseEJB {
     public Department updateByDepartment(Department department) {
         try {
             department = getEm().merge(department);
+            if (department.getEmployeeCode() != null) {
+                try {
+                    DepartmentHeads head = getEm().createNamedQuery("DepartmentHeads.findByDepartmentCodeAndEmployeeCodeAndIsActive", DepartmentHeads.class)
+                            .setParameter("departmentCode", department.getCode())
+                            .setParameter("employeeCode", department.getEmployeeCode().getCode())
+                            .setParameter("isActive", true)
+                            .getSingleResult();
+                } catch (Exception e) {
+                    DepartmentHeads heads = getEm().createNamedQuery("DepartmentHeads.findByDepartmentCodeAndIsActive", DepartmentHeads.class)
+                            .setParameter("departmentCode", department.getCode())
+                            .setParameter("isActive", true)
+                            .getSingleResult();
+                    heads.setIsActive(false);
+                    getEm().merge(heads);
+                    DepartmentHeads newHead = new DepartmentHeads();
+                    newHead.setId(SequenceUtil.nextBigDecimal());
+                    newHead.setDepartmentCode(heads.getDepartmentCode());
+                    newHead.setEmployeeCode(department.getEmployeeCode().getCode());
+                    newHead.setIsActive(true);
+                    getEm().persist(newHead);
+                }
+            }
             return department;
         } catch (Exception e) {
             e.printStackTrace();
@@ -294,7 +331,7 @@ public class OtherBean extends BaseEJB {
     public WorkMonths findByPreviosYearAndMonth() {
         DateTime dateTime = new DateTime();
         int year = dateTime.getYear();
-        int month = dateTime.getMonthOfYear()-1;
+        int month = dateTime.getMonthOfYear() - 1;
         try {
             return getEm().createNamedQuery("WorkMonths.findByYearAndMonth", WorkMonths.class)
                     .setParameter("year", year)

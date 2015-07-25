@@ -2,23 +2,32 @@ package com.model.other;
 
 import com.model.entity.Employee;
 import com.model.entity.Position;
+import com.model.entity.WorkMonths;
 
 /**
  * Ажилтаны сарын цалин бодож дэлгэрэнгүйгээр харуулах POJO
+ * Ерөнхийдөө энд байгаа Entity утгуудийг дан String/Double/Int
+ * төрлөөр хадгалан харин буцааж авахдаа Entity хэлбэрээр авбал сайн байна
+ * <p>
  * Created by Arti on 7/22/2015.
  */
 public class EmployeeTimesheetPojo {
     /**
      * Тухайн Ажилтан
+     * Эннээс Регистрийн дугаарыг авч хадгалан
+     * Ажилтанг олж өгнө
+     * Регистр ээр хайна
      */
     Employee employee;
 
     /**
      * Түүний Албан Тушаал
+     * гаргаж өгнө
      */
     Position position;
     /**
      * Үндсэн цалин
+     *
      */
     double mainSalary;
 
@@ -41,6 +50,14 @@ public class EmployeeTimesheetPojo {
     double totalOvertime;
     /**
      * Хэрэв шийтгэлтэй байгаа бол шийтгэлээр хасагдаж буй цалин
+     * <p>
+     * Энэ Доорхи 3 нь утга болох @probationAmount / @sitAmount / @vatAmount
+     * <p>
+     * нийлж Transient deduction string үүсгэн
+     * Жич
+     * ХАОАТ: 1,000,НДТ: 1,000
+     * <p>
+     * гэх мэт
      */
     double probationAmount;
     /**
@@ -56,6 +73,11 @@ public class EmployeeTimesheetPojo {
      * database-d employee_work_month table final_salary баган
      */
     double finalSalary;
+    /**
+     * Энэ цаг бүртгэлийн мэдээлэл али ажлын сард хамрагдах вэ гэх мэдээлэл
+     * чи эндээс жил сарын салгаж авж хадгалан шүү
+     */
+    private WorkMonths workMonths;
 
 
     public Employee getEmployee() {

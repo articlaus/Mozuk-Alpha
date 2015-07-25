@@ -29,7 +29,7 @@ public class MenuListController extends MainComponent {
 
     @Command
     public void employeeList() {
-        getMainInclude().setSrc("/main/employee/EmployeeList.zul");
+        getMainInclude().setSrc("/main/employee/employeeList.zul");
     }
 
     @Command

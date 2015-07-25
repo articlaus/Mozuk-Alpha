@@ -1,6 +1,9 @@
 package com.model.entity;
 
 
+import javax.persistence.*;
+import java.math.BigDecimal;
+
 /**
  * Ажилтаны сарын цалин бодож дэлгэрэнгүйгээр харуулах POJO
  * Ерөнхийдөө энд байгаа Entity утгуудийг дан String/Double/Int
@@ -8,34 +11,49 @@ package com.model.entity;
  * <p>
  * Created by Arti on 7/22/2015.
  */
+@Entity
+@Table(name = "EMPLOYEE_TIMESHEET", schema = "", catalog = "avocado")
 public class EmployeeTimesheet {
     /**
      * Тухайн Ажилтан
      * Эннээс Регистрийн дугаарыг авч хадгалан
+     * Ажилтанг олж өгнө
+     * Регистр ээр хайна
      */
+    @Transient
     Employee employee;
 
     /**
      * Түүний Албан Тушаал
+     * гаргаж өгнө
      */
+    @Transient
     Position position;
     /**
      * Үндсэн цалин
+     *
      */
     double mainSalary;
 
     /**
      * Ажиллах ёстой цаг
      */
+    @Basic
+    @Column(name = "work_hours")
     int workHours;
     /**
      * Ажилласан цаг
      * double байгаан учир нь тал цаг ажиллаж болож учир
      */
+
+    @Basic
+    @Column(name = "worked_hours")
     double workedHours;
     /**
      * Нийт Амралттай байсан өдөр
      */
+    @Basic
+    @Column(name = "total_leave_hours")
     double totalLeaveHours;
     /**
      * Нийт илүү ажилласан цаг
@@ -52,26 +70,67 @@ public class EmployeeTimesheet {
      * <p>
      * гэх мэт
      */
+
+    @Basic
+    @Column(name = "probation_amount")
     double probationAmount;
     /**
      * Нийгмийн Даатгалын Шимтгэлийн хэмжээ
      */
+    @Basic
+    @Column(name = "sit_amount")
     double sitAmount;
     /**
      * Хүн амийн орлогийн албан татвар
      */
+    @Basic
+    @Column(name = "vat_amount")
     double vatAmount;
     /**
      * Эцсийн цалин
      * database-d employee_work_month table final_salary баган
      */
+    @Basic
+    @Column(name = "final_salary")
     double finalSalary;
     /**
      * Энэ цаг бүртгэлийн мэдээлэл али ажлын сард хамрагдах вэ гэх мэдээлэл
      * чи эндээс жил сарын салгаж авж хадгалан шүү
      */
+    @Transient
     private WorkMonths workMonths;
+    @Id
+    @Column(name = "id")
+    private BigDecimal id;
+    @Basic
+    @Column(name = "employee_register")
+    private String employeeRegister;
+    @Basic
+    @Column(name = "employee_position")
+    private String employeePosition;
+    @Basic
+    @Column(name = "total_overtime_hours")
+    private Double totalOvertimeHours;
+    @Basic
+    @Column(name = "work_month")
+    private BigDecimal workMonth;
 
+
+    public BigDecimal getId() {
+        return id;
+    }
+
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
+
+    public void setTotalLeaveHours(Double totalLeaveHours) {
+        this.totalLeaveHours = totalLeaveHours;
+    }
+
+    public void setProbationAmount(Double probationAmount) {
+        this.probationAmount = probationAmount;
+    }
 
     public Employee getEmployee() {
         return employee;
@@ -97,6 +156,7 @@ public class EmployeeTimesheet {
         this.mainSalary = mainSalary;
     }
 
+
     public int getWorkHours() {
         return workHours;
     }
@@ -105,6 +165,7 @@ public class EmployeeTimesheet {
         this.workHours = workHours;
     }
 
+
     public double getWorkedHours() {
         return workedHours;
     }
@@ -112,6 +173,7 @@ public class EmployeeTimesheet {
     public void setWorkedHours(double workedHours) {
         this.workedHours = workedHours;
     }
+
 
     public double getTotalLeaveHours() {
         return totalLeaveHours;
@@ -129,6 +191,7 @@ public class EmployeeTimesheet {
         this.totalOvertime = totalOvertime;
     }
 
+
     public double getProbationAmount() {
         return probationAmount;
     }
@@ -136,6 +199,7 @@ public class EmployeeTimesheet {
     public void setProbationAmount(double probationAmount) {
         this.probationAmount = probationAmount;
     }
+
 
     public double getSitAmount() {
         return sitAmount;
@@ -145,6 +209,7 @@ public class EmployeeTimesheet {
         this.sitAmount = sitAmount;
     }
 
+
     public double getVatAmount() {
         return vatAmount;
     }
@@ -153,11 +218,104 @@ public class EmployeeTimesheet {
         this.vatAmount = vatAmount;
     }
 
+
     public double getFinalSalary() {
         return finalSalary;
     }
 
     public void setFinalSalary(double finalSalary) {
         this.finalSalary = finalSalary;
+    }
+
+
+
+
+    public String getEmployeeRegister() {
+        return employeeRegister;
+    }
+
+    public void setEmployeeRegister(String employeeRegister) {
+        this.employeeRegister = employeeRegister;
+    }
+
+
+    public String getEmployeePosition() {
+        return employeePosition;
+    }
+
+    public void setEmployeePosition(String employeePosition) {
+        this.employeePosition = employeePosition;
+    }
+
+
+    public Double getTotalOvertimeHours() {
+        return totalOvertimeHours;
+    }
+
+    public void setTotalOvertimeHours(Double totalOvertimeHours) {
+        this.totalOvertimeHours = totalOvertimeHours;
+    }
+
+
+    public BigDecimal getWorkMonth() {
+        return workMonth;
+    }
+
+    public void setWorkMonth(BigDecimal workMonth) {
+        this.workMonth = workMonth;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EmployeeTimesheet that = (EmployeeTimesheet) o;
+
+        if (Double.compare(that.mainSalary, mainSalary) != 0) return false;
+        if (workHours != that.workHours) return false;
+        if (Double.compare(that.workedHours, workedHours) != 0) return false;
+        if (Double.compare(that.totalLeaveHours, totalLeaveHours) != 0) return false;
+        if (Double.compare(that.probationAmount, probationAmount) != 0) return false;
+        if (Double.compare(that.sitAmount, sitAmount) != 0) return false;
+        if (Double.compare(that.vatAmount, vatAmount) != 0) return false;
+        if (Double.compare(that.finalSalary, finalSalary) != 0) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (employeeRegister != null ? !employeeRegister.equals(that.employeeRegister) : that.employeeRegister != null)
+            return false;
+        if (employeePosition != null ? !employeePosition.equals(that.employeePosition) : that.employeePosition != null)
+            return false;
+        if (totalOvertimeHours != null ? !totalOvertimeHours.equals(that.totalOvertimeHours) : that.totalOvertimeHours != null)
+            return false;
+        if (workMonth != null ? !workMonth.equals(that.workMonth) : that.workMonth != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (employeeRegister != null ? employeeRegister.hashCode() : 0);
+        result = 31 * result + (employeePosition != null ? employeePosition.hashCode() : 0);
+        temp = Double.doubleToLongBits(mainSalary);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + workHours;
+        temp = Double.doubleToLongBits(workedHours);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(totalLeaveHours);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (totalOvertimeHours != null ? totalOvertimeHours.hashCode() : 0);
+        temp = Double.doubleToLongBits(probationAmount);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(sitAmount);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(vatAmount);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(finalSalary);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (workMonth != null ? workMonth.hashCode() : 0);
+        return result;
     }
 }

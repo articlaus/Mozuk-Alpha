@@ -21,26 +21,35 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author tseegii
  */
 @Entity
 @Table(name = "DEPARTMENT_HEADS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DepartmentHeads.findAll", query = "SELECT d FROM DepartmentHeads d"),
-    @NamedQuery(name = "DepartmentHeads.findById", query = "SELECT d FROM DepartmentHeads d WHERE d.id = :id")})
+        @NamedQuery(name = "DepartmentHeads.findAll", query = "SELECT d FROM DepartmentHeads d"),
+        @NamedQuery(name = "DepartmentHeads.findById", query = "SELECT d FROM DepartmentHeads d WHERE d.id = :id"),
+        @NamedQuery(name = "DepartmentHeads.findByDepartmentCode", query = "SELECT d FROM DepartmentHeads d WHERE d.id = :id"),
+        @NamedQuery(name = "DepartmentHeads.findByIsActive", query = "SELECT d FROM DepartmentHeads d WHERE d.isActive = :isActive"),
+        @NamedQuery(name = "DepartmentHeads.findByDepartmentCodeAndIsActive", query = "SELECT d FROM DepartmentHeads d WHERE d.departmentCode=:departmentCode AND d.isActive = :isActive"),
+        @NamedQuery(name = "DepartmentHeads.findByDepartmentCodeAndEmployeeCodeAndIsActive", query = "SELECT d FROM DepartmentHeads d WHERE d.departmentCode=:departmentCode AND d.employeeCode=:employeeCode AND d.isActive = :isActive"),
+
+})
 public class DepartmentHeads implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
     private BigDecimal id;
-    @JoinColumn(name = "employee_code", referencedColumnName = "code")
-    @OneToOne(optional = false)
-    private Employee employeeCode;
-    @JoinColumn(name = "department_code", referencedColumnName = "code")
-    @OneToOne(optional = false)
-    private Department departmentCode;
+    @Basic
+    @Column(name = "employee_code")
+    private String employeeCode;
+    @Basic
+    @Column(name = "department_code")
+    private String departmentCode;
+
+    @Basic
+    @Column(name = "isActive")
+    private boolean isActive;
 
     public DepartmentHeads() {
     }
@@ -57,20 +66,28 @@ public class DepartmentHeads implements Serializable {
         this.id = id;
     }
 
-    public Employee getEmployeeCode() {
+    public String getEmployeeCode() {
         return employeeCode;
     }
 
-    public void setEmployeeCode(Employee employeeCode) {
+    public void setEmployeeCode(String employeeCode) {
         this.employeeCode = employeeCode;
     }
 
-    public Department getDepartmentCode() {
+    public String getDepartmentCode() {
         return departmentCode;
     }
 
-    public void setDepartmentCode(Department departmentCode) {
+    public void setDepartmentCode(String departmentCode) {
         this.departmentCode = departmentCode;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     @Override
@@ -97,5 +114,5 @@ public class DepartmentHeads implements Serializable {
     public String toString() {
         return "com.model.entity.DepartmentHeads[ id=" + id + " ]";
     }
-    
+
 }

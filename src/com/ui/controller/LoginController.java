@@ -13,8 +13,6 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 
-import java.util.HashMap;
-
 /**
  * Created by Articlaus on 6/19/15.
  */

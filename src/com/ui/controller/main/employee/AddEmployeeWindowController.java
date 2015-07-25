@@ -95,7 +95,7 @@ public class AddEmployeeWindowController extends MainComponent {
     @Command
     public void uploadFile(BindContext ctx) {
         UploadEvent event = (UploadEvent) ctx.getTriggerEvent();
-        Media media = event.getMedia();
+        final Media media = event.getMedia();
         employee.setPortrait(media.getByteData());
         Button imageBtn = new Button("Үзэх");
 //        imageBtn.addEventListener(Events.ON_CLICK, new EventListener<Event>() {

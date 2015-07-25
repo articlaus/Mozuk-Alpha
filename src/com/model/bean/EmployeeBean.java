@@ -23,6 +23,9 @@ import java.util.List;
 @Stateless
 public class EmployeeBean extends BaseEJB {
 
+    @Inject
+    private OtherBean otherBean;
+
     public Employee findByCode(String code) {
         return getEm().find(Employee.class, code);
     }
@@ -40,12 +43,9 @@ public class EmployeeBean extends BaseEJB {
         }
     }
 
-    @Inject
-    private OtherBean otherBean;
-
     private void createWorkMonth(Employee employee) {
         EmployeeWorkMonth employeeWorkMonth = new EmployeeWorkMonth();
-        WorkMonths workMonths=otherBean.findByYearAndMonth();
+        WorkMonths workMonths = otherBean.findByYearAndMonth();
         saveByEmployeeWorkMonth(employee, workMonths);
     }
 
@@ -159,9 +159,10 @@ public class EmployeeBean extends BaseEJB {
     public List<EmployeeWorkMonth> findAllEmployeeWorkMonth() {
         return getEm().createNamedQuery("EmployeeWorkMonth.findAll", EmployeeWorkMonth.class).getResultList();
     }
+
     public List<EmployeeWorkMonth> findEmployeeWorkMonthByIsActive(boolean isActive) {
         return getEm().createNamedQuery("EmployeeWorkMonth.findByIsActive", EmployeeWorkMonth.class)
-                .setParameter("isActive",isActive)
+                .setParameter("isActive", isActive)
                 .getResultList();
     }
 
@@ -199,7 +200,7 @@ public class EmployeeBean extends BaseEJB {
         }
     }
 
-    public EmployeeWorkMonth saveByEmployeeWorkMonth(Employee employee,WorkMonths workMonths) {
+    public EmployeeWorkMonth saveByEmployeeWorkMonth(Employee employee, WorkMonths workMonths) {
         try {
             EmployeeWorkMonth ewm = new EmployeeWorkMonth();
             ewm.setId(SequenceUtil.nextBigDecimal());
@@ -217,11 +218,23 @@ public class EmployeeBean extends BaseEJB {
 
     public EmployeeWorkMonth updateByEmployeeWorkMonth(EmployeeWorkMonth employeeWorkMonth) {
         try {
-            employeeWorkMonth=getEm().merge(employeeWorkMonth);
+            employeeWorkMonth = getEm().merge(employeeWorkMonth);
             return employeeWorkMonth;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public boolean updateByEmployeeWorkMonths(List<EmployeeWorkMonth> employeeWorkMonths) {
+        try {
+            for (EmployeeWorkMonth employeeWorkMonth : employeeWorkMonths) {
+                getEm().merge(employeeWorkMonth);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true;
         }
     }
 
@@ -234,7 +247,6 @@ public class EmployeeBean extends BaseEJB {
             return false;
         }
     }
-
 
 
 }

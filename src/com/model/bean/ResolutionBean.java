@@ -10,5 +10,5 @@ import javax.ejb.Stateless;
  */
 @LocalBean
 @Stateless
-public class ResolutionBean extends BaseEJB{
+public class ResolutionBean extends BaseEJB {
 }
