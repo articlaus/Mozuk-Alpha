@@ -40,11 +40,16 @@ public class OtherBean extends BaseEJB {
     public List<Department> findAllDepartment() {
         List<Department> departments = getEm().createNamedQuery("Department.findAll", Department.class).getResultList();
         for (Department department : departments) {
-            DepartmentHeads heads = getEm().createNamedQuery("DepartmentHeads.findByDepartmentCodeAndIsActive", DepartmentHeads.class)
-                    .setParameter("departmentCode", department.getCode())
-                    .setParameter("isActive", true)
-                    .getSingleResult();
-            department.setEmployeeCode(getEm().find(Employee.class, heads.getEmployeeCode()));
+            DepartmentHeads heads = null;
+            try {
+                heads = getEm().createNamedQuery("DepartmentHeads.findByDepartmentCodeAndIsActive", DepartmentHeads.class)
+                        .setParameter("departmentCode", department.getCode())
+                        .setParameter("isActive", true)
+                        .getSingleResult();
+                department.setEmployeeCode(getEm().find(Employee.class, heads.getEmployeeCode()));
+            } catch (Exception e) {
+                department.setEmployeeCode(null);
+            }
         }
         return departments;
     }
@@ -483,6 +488,24 @@ public class OtherBean extends BaseEJB {
 
         return calendarPojos;
     }
+
+//-----------------------Variables----------------------
+    public List<Variables> findAllVariables() {
+        return getEm().createNamedQuery("VARIABLES.findAll",Variables.class).getResultList();
+    }
+
+    public List<Variables> findVariableByIsActive(boolean isActive) {
+        return getEm().createNamedQuery("VARIABLES.findByIsActive", Variables.class)
+                .setParameter("isActive", isActive)
+                .getResultList();
+    }
+
+    public List<Variables> findVariableByIsActive(String variableCode) {
+        return getEm().createNamedQuery("VARIABLES.findByVariableCode",Variables.class)
+                .setParameter("variableCode",variableCode)
+                .getResultList();
+    }
+
 
 
 }
