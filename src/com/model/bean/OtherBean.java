@@ -490,8 +490,9 @@ public class OtherBean extends BaseEJB {
     }
 
 //-----------------------Variables----------------------
+
     public List<Variables> findAllVariables() {
-        return getEm().createNamedQuery("VARIABLES.findAll",Variables.class).getResultList();
+        return getEm().createNamedQuery("VARIABLES.findAll", Variables.class).getResultList();
     }
 
     public List<Variables> findVariableByIsActive(boolean isActive) {
@@ -500,12 +501,49 @@ public class OtherBean extends BaseEJB {
                 .getResultList();
     }
 
-    public List<Variables> findVariableByIsActive(String variableCode) {
-        return getEm().createNamedQuery("VARIABLES.findByVariableCode",Variables.class)
-                .setParameter("variableCode",variableCode)
+    public List<Variables> findVariableByVariableCode(String variableCode) {
+        return getEm().createNamedQuery("VARIABLES.findByVariableCode", Variables.class)
+                .setParameter("variableCode", variableCode)
                 .getResultList();
     }
 
+    public List<Variables> findVariableByIsActiveAndVariableCode(String variableCode, boolean isActive) {
+        return getEm().createNamedQuery("VARIABLES.findByVariableCodeAndIsActive", Variables.class)
+                .setParameter("variableCode", variableCode)
+                .setParameter("isActive", isActive)
+                .getResultList();
+    }
+
+    public List<Variables> findVariableByVariableName(String variableName) {
+        return getEm().createNamedQuery("VARIABLES.findByVariableName", Variables.class)
+                .setParameter("variableName", variableName)
+                .getResultList();
+    }
+
+    public Variables findByVariableId(BigDecimal variableId) {
+        return getEm().find(Variables.class, variableId);
+    }
+
+    public boolean updateVariables(List<Variables> variables) {
+        try {
+            for (Variables variable : variables) {
+                getEm().merge(variable);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public Variables updateVariables(Variables variable) {
+        try {
+            return getEm().merge(variable);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
 }

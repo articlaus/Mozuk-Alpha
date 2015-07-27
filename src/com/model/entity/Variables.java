@@ -12,6 +12,14 @@ import java.util.Objects;
 @Entity
 @Table(name = "VARIABLES")
 @XmlRootElement
+@NamedQueries({
+        @NamedQuery(name = "VARIABLES.findAll", query = "SELECT v FROM Variables AS v "),
+        @NamedQuery(name = "VARIABLES.findByIsActive", query = "SELECT v FROM Variables AS v WHERE v.isActive=:isActive"),
+        @NamedQuery(name = "VARIABLES.findByVariableCode", query = "SELECT v FROM Variables AS v WHERE v.variableCode=:variableCode"),
+        @NamedQuery(name = "VARIABLES.findByVariableCodeAndIsActive", query = "SELECT v FROM Variables AS v WHERE v.isActive=:isActive AND v.variableCode=:variableCode"),
+        @NamedQuery(name = "VARIABLES.findByVariableName", query = "SELECT v FROM Variables AS v WHERE v.isActive=:isActive AND v.variableName=:variableName"),
+
+})
 public class Variables {
     @Id
     @Column(name = "id")
@@ -33,6 +41,10 @@ public class Variables {
     @Basic
     @Column(name = "isActive")
     private Boolean isActive;
+
+    @Basic
+    @Column(name = "variable_code")
+    private String variableCode;
 
 
     public BigDecimal getId() {
@@ -84,6 +96,14 @@ public class Variables {
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public String getVariableCode() {
+        return variableCode;
+    }
+
+    public void setVariableCode(String variableCode) {
+        this.variableCode = variableCode;
     }
 
     @Override
