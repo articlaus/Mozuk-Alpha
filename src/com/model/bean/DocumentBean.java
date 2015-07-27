@@ -38,6 +38,20 @@ public class DocumentBean extends BaseEJB {
         }
     }
 
+    public boolean saveAll(BigDecimal foreignKey, List<Document> documents) {
+        for (Document document : documents) {
+            document.setId(SequenceUtil.nextBigDecimal());
+            document.setForeignKey(foreignKey);
+            document.setCreatedDate(Calendar.getInstance().getTime());
+            getEm().persist(document);
+        }
+        return true;
+    }
+
+    private void createFile(byte[] bytes) {
+
+    }
+
     public Document update(Document document) {
         try {
             document = getEm().merge(document);

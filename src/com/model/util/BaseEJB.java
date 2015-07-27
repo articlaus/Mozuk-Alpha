@@ -16,9 +16,10 @@ public class BaseEJB {
     public static int RES_DEPARTMENT = 2;
     public static int RES_COMPANY = 3;
 
+    public static final String filePath = "C:\\Users\\huslee\\IdeaProjects\\Mozuk-Alpha\\out\\production\\Mozuk-Alpha\\META-INF\\";
 
     @PersistenceContext(unitName = "mozukUnit")
-    private EntityManager em;
+    private EntityManager em;Бү
 
     @Resource
     private SessionContext sessionContext;

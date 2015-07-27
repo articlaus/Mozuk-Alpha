@@ -37,7 +37,7 @@ public class FileUploadBean extends BaseEJB {
     private static int EMPLOYEE_NAME = 4;
     private static int EMPLOYEE_POSITION = 5;
     private static int WORK_HOURS = 6;
-    private String filePath = "C:\\Users\\huslee\\IdeaProjects\\Mozuk-Alpha\\out\\production\\Mozuk-Alpha\\META-INF\\";
+
     private InputStream is = null;
 
     private void getFileInputStream() {
@@ -176,7 +176,6 @@ public class FileUploadBean extends BaseEJB {
         }
 
     }
-
 
     public String getFilePath() {
         return filePath;

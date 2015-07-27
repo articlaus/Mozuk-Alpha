@@ -1,6 +1,8 @@
 package com.model.entity;
 
 
+import com.model.util.DataTypeUtils;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -8,7 +10,7 @@ import java.math.BigDecimal;
  * Ажилтаны сарын цалин бодож дэлгэрэнгүйгээр харуулах POJO
  * Ерөнхийдөө энд байгаа Entity утгуудийг дан String/Double/Int
  * төрлөөр хадгалан харин буцааж авахдаа Entity хэлбэрээр авбал сайн байна
- * <p>
+ * <p/>
  * Created by Arti on 7/22/2015.
  */
 @Entity
@@ -31,7 +33,6 @@ public class EmployeeTimesheet {
     Position position;
     /**
      * Үндсэн цалин
-     *
      */
     double mainSalary;
 
@@ -61,15 +62,30 @@ public class EmployeeTimesheet {
     double totalOvertime;
     /**
      * Хэрэв шийтгэлтэй байгаа бол шийтгэлээр хасагдаж буй цалин
-     * <p>
+     * <p/>
      * Энэ Доорхи 3 нь утга болох @probationAmount / @sitAmount / @vatAmount
-     * <p>
+     * <p/>
      * нийлж Transient deduction string үүсгэн
      * Жич
-     * ХАОАТ: 1,000,НДТ: 1,000
-     * <p>
+     * ШИ: 1000,ХАОАТ: 1,000, НДТ: 1,000
+     * <p/>
      * гэх мэт
      */
+    @Transient
+    private String deducation;
+
+    public String getDeducation() {
+        String deducation = "";
+        if (probationAmount > 0d) {
+            deducation += "Шийтгэл : " + DataTypeUtils.doubleToString(probationAmount);
+        }
+        deducation += "ХАОАТ: " + DataTypeUtils.doubleToString(sitAmount) + " НДТ : " + DataTypeUtils.doubleToString(vatAmount);
+        return deducation;
+    }
+
+    public void setDeducation(String deducation) {
+        this.deducation = deducation;
+    }
 
     @Basic
     @Column(name = "probation_amount")
@@ -226,8 +242,6 @@ public class EmployeeTimesheet {
     public void setFinalSalary(double finalSalary) {
         this.finalSalary = finalSalary;
     }
-
-
 
 
     public String getEmployeeRegister() {
