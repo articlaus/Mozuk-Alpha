@@ -328,10 +328,25 @@ public class OtherBean extends BaseEJB {
         }
     }
 
-    public WorkMonths findByPreviosYearAndMonth() {
+    public WorkMonths findByPreviousYearAndMonth() {
         DateTime dateTime = new DateTime();
         int year = dateTime.getYear();
         int month = dateTime.getMonthOfYear() - 1;
+        try {
+            return getEm().createNamedQuery("WorkMonths.findByYearAndMonth", WorkMonths.class)
+                    .setParameter("year", year)
+                    .setParameter("month", month)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public WorkMonths findByNextYearAndMonth() {
+        DateTime dateTime = new DateTime();
+        int year = dateTime.getYear();
+        int month = dateTime.getMonthOfYear() + 1;
         try {
             return getEm().createNamedQuery("WorkMonths.findByYearAndMonth", WorkMonths.class)
                     .setParameter("year", year)
