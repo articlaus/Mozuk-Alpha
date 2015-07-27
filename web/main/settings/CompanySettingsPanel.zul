@@ -52,7 +52,7 @@
                         <template name="model">
                             <listitem>
                                 <listcell label="@load(each.departmentTitle)"/>
-                                <listcell label="@load(each.departmentHeads.employeeCode.fullName)"/>
+                                <listcell label="@load(each.employeeCode.fullName)"/>
                                 <listcell label="@load(each.departmentDescription)" span="3"/>
                                 <listcell label="@load(each.createdDate)"/>
                                 <listcell>

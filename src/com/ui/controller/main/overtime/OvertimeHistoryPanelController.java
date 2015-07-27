@@ -105,17 +105,6 @@ public class OvertimeHistoryPanelController extends MainComponent {
                         treecell = new Treecell(entity.getReason());
                         treecell.setSpan(5);
                         treerow.appendChild(treecell);
-                        treecell = new Treecell();
-                        Button button = new Button("Засах");
-                        button.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
-                            @Override
-                            public void onEvent(Event event) throws Exception {
-                                editOvertime(entity);
-                            }
-                        });
-
-                        treecell.appendChild(button);
-                        treerow.appendChild(treecell);
 
                     } else if (data instanceof OvertimeDates) {
                         OvertimeDates entity = (OvertimeDates) data;

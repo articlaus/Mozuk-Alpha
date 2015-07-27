@@ -43,8 +43,8 @@ public class DepartmentWindowController extends MainComponent {
 
         if (getArgument("department") != null) {
             department = (Department) getArgument("department");
-            if (department.getDepartmentHeads() != null)
-                customBandbox.setSelectedT(department.getDepartmentHeads().getEmployeeCode());
+            if (department.getEmployeeCode() != null)
+                customBandbox.setSelectedT(department.getEmployeeCode());
             isEditing = true;
         } else {
             department = new Department();

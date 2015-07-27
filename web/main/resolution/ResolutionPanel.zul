@@ -1,0 +1,37 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <panel id="resolutionPanel" height="900px" width="100%" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('rp') @init('com.ui.controller.main.resolution.ResolutionPanelController')">
+        <toolbar>
+            <button iconSclass="z-icon-plus" onClick="addResolution"/>
+        </toolbar>
+        <panelchildren>
+            <listbox id="resolutionListBox" height="700px" model="@bind(rp.)">
+                <listhead menupopup="auto">
+                    <listheader label="Төрөл" sort="auto(resolutionType.resolutionType)"/>
+                    <listheader label="Ажилтан" sort="auto(employeeCode.fullName)"/>
+                    <listheader label="Хэлтэс" sort="auto(departmentCode.name)"/>
+                    <listheader label="Үүссэн Огноо" sort="auto(documentDate)"/>
+                    <listheader label="Тайлбар" sort="auto(resolutionDescription)"/>
+                    <listheader/>
+                </listhead>
+            </listbox>
+            <template name="model">
+                <listitem>
+                    <listcell label="@load(each.resolutionType.resolutionType)"/>
+                    <listcell label="@load(each.employeeCode.fullName)"/>
+                    <listcell label="@load(each.departmentCode.name)"/>
+                    <listcell label="@load(each.documentDate)"/>
+                    <listcell label="@load(each.resolutionDescription)"/>
+                    <listcell>
+                        <button iconSclass="z-icon-edit" onClick="@command('edit',entity=each)"/>
+                    </listcell>
+                </listitem>
+            </template>
+        </panelchildren>
+    </panel>
+
+</zk>

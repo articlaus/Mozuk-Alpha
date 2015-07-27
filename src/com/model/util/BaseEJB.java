@@ -19,7 +19,7 @@ public class BaseEJB {
     public static final String filePath = "C:\\Users\\huslee\\IdeaProjects\\Mozuk-Alpha\\out\\production\\Mozuk-Alpha\\META-INF\\";
 
     @PersistenceContext(unitName = "mozukUnit")
-    private EntityManager em;Бү
+    private EntityManager em;
 
     @Resource
     private SessionContext sessionContext;

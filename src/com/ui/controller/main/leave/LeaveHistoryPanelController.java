@@ -46,24 +46,25 @@ public class LeaveHistoryPanelController extends MainComponent {
         leaveList = leaveAbsenceBean.findAll();
         workMonthsCustomBandbox = new CustomBandbox<>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
         System.out.println("workMonthsCustomBandbox = " + workMonthsCustomBandbox.getListbox().getListModel().getSize());
-        System.out.println("orson = " );
+        System.out.println("orson = ");
         workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_SELECT, new EventListener<Event>() {
             @Override
             public void onEvent(Event event) throws Exception {
-                System.out.println("change me = ");
+                loadByMonths(workMonthsCustomBandbox.getSelectedT());
             }
         });
-
-//        leaveList = leaveAbsenceBean.findByWorkMonths(workMonthsCustomBandbox.getSelectedT());
-//        System.out.println("workMonthsCustomBandbox.getSelectedT() = " + workMonthsCustomBandbox.getSelectedT().getYearAndMonth());
-//        getBinder().loadComponent(leaveHistoryListBox, true);
         workCell.appendChild(workMonthsCustomBandbox);
         SearchBox<LeaveAbsence> searchBox = new SearchBox<>(leaveList, new String[]{"startDate", "endDate", "employeeCode.fullName", "workMonthsId.month"}, leaveHistoryListBox, getBinder());
         searchCell.appendChild(searchBox);
     }
 
+    public void loadByMonths(WorkMonths workMonths) {
+        leaveList = leaveAbsenceBean.findByWorkMonths(workMonths);
+        getBinder().loadComponent(leaveHistoryListBox, true);
+    }
+
     @Command
-    public void editLeave(@BindingParam("leave") LeaveAbsence leaveAbsence){
+    public void editLeave(@BindingParam("leave") LeaveAbsence leaveAbsence) {
         //todo Jasper report oor haruulah
     }
 
