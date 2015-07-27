@@ -1,0 +1,19 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <window id="probationWindow" width="400px" height="600px" title="Сахилгийн шийтгэл" closable="true"
+            apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('pw') @init('com.ui.controller.main.probation.ProbationWindowController')">
+        <grid>
+            <columns>
+                <column width="30%"/>
+                <column width="70%"/>
+            </columns>
+            <rows>
+                <row>
+                    <label
+                </row>
+            </rows>
+        </grid>
+
+    </window>
+</zk>
