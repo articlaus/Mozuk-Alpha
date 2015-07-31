@@ -9,6 +9,7 @@ import com.model.util.SequenceUtil;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,9 @@ import java.util.List;
 @LocalBean
 @Stateless
 public class OvertimeBean extends BaseEJB {
+
+    @Inject
+    private DocumentBean documentBean;
 
     public Overtime findByOvertimeId(BigDecimal overtimeId) {
         return getEm().find(Overtime.class, overtimeId);
@@ -63,6 +67,8 @@ public class OvertimeBean extends BaseEJB {
         try {
             overtime = save(overtime);
             saveByOvertimeDate(overtime.getOvertimeDatesList(), overtime);
+            if (overtime.getDocuments().size() > 0)
+                documentBean.saveAll(overtime.getId().toString(), overtime.getDocuments(), DOC_TYPE_OVERTIME);
             return overtime;
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,6 +80,8 @@ public class OvertimeBean extends BaseEJB {
         try {
             overtime = getEm().merge(overtime);
             updateByOvertimeDate(overtime.getOvertimeDatesList(),overtime);
+            if (overtime.getDocuments().size() > 0)
+                documentBean.saveAll(overtime.getId().toString(), overtime.getDocuments(), DOC_TYPE_OVERTIME);
             return overtime;
         } catch (Exception e) {
             e.printStackTrace();

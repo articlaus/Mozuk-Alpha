@@ -29,6 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Probation.findByEndDate", query = "SELECT p FROM Probation p WHERE p.endDate = :endDate"),
     @NamedQuery(name = "Probation.findByIsActive", query = "SELECT p FROM Probation p WHERE p.isActive = :isActive"),
     @NamedQuery(name = "Probation.findByCreatedDate", query = "SELECT p FROM Probation p WHERE p.createdDate = :createdDate"),
+    @NamedQuery(name = "Probation.findByEmployee", query = "SELECT p FROM Probation p WHERE p.employeeCode = :employeeCode"),
+    @NamedQuery(name = "Probation.findByDepartment", query = "SELECT p FROM Probation p WHERE p.departmentCode = :departmentCode"),
 })
 public class Probation implements Serializable {
     private static final long serialVersionUID = 1L;

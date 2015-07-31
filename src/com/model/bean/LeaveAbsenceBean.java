@@ -9,6 +9,7 @@ import com.model.util.SequenceUtil;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +21,9 @@ import java.util.List;
 @LocalBean
 @Stateless
 public class LeaveAbsenceBean extends BaseEJB {
+
+    @Inject
+    private DocumentBean documentBean;
 
     public LeaveAbsence findByLeaveAbsenceId(BigDecimal leaveAbsenceId) {
         return getEm().find(LeaveAbsence.class, leaveAbsenceId);
@@ -86,6 +90,8 @@ public class LeaveAbsenceBean extends BaseEJB {
             leaveAbsence.setId(SequenceUtil.nextBigDecimal());
             leaveAbsence.setCreatedDate(Calendar.getInstance().getTime());
             getEm().persist(leaveAbsence);
+            if (leaveAbsence.getDocuments().size() > 0)
+                documentBean.saveAll(leaveAbsence.getId().toString(), leaveAbsence.getDocuments(), DOC_TYPE_LEAVE);
             return leaveAbsence;
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,6 +102,8 @@ public class LeaveAbsenceBean extends BaseEJB {
     public LeaveAbsence update(LeaveAbsence leaveAbsence) {
         try {
             leaveAbsence = getEm().merge(leaveAbsence);
+            if (leaveAbsence.getDocuments().size() > 0)
+                documentBean.saveAll(leaveAbsence.getId().toString(), leaveAbsence.getDocuments(), DOC_TYPE_LEAVE);
             return leaveAbsence;
         } catch (Exception e) {
             e.printStackTrace();

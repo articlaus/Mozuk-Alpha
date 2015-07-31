@@ -17,7 +17,10 @@ public class BaseEJB {
     public static int RES_DEPARTMENT = 2;
     public static int RES_COMPANY = 3;
 
+    public static BigDecimal DOC_TYPE_OVERTIME = BigDecimal.valueOf(2);
+    public static BigDecimal DOC_TYPE_LEAVE = BigDecimal.valueOf(3);
     public static BigDecimal DOC_TYPE_RESOLUTION = BigDecimal.valueOf(4);
+    public static BigDecimal DOC_TYPE_PROBATION = BigDecimal.valueOf(5);
 
 //    public static final String filePath = "C:\\Users\\huslee\\IdeaProjects\\Mozuk-Alpha\\out\\production\\Mozuk-Alpha\\META-INF\\";
     public static final String filePath = "/home/tseegii/filePersist/";
