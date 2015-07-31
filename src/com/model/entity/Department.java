@@ -47,6 +47,10 @@ public class Department implements Serializable {
     @OneToMany(mappedBy = "departmentCode")
     private List<Probation> probationList;
 
+    @Basic
+    @Column(name = "isActive")
+    private Boolean isActive;
+
     public Department() {
     }
 
@@ -124,6 +128,14 @@ public class Department implements Serializable {
 
     public void setProbationList(List<Probation> probationList) {
         this.probationList = probationList;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
     @Override

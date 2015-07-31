@@ -54,6 +54,23 @@ public class OtherBean extends BaseEJB {
         return departments;
     }
 
+    public List<Department> findDepartment() {
+        List<Department> departments = getEm().createNamedQuery("Department.findAll", Department.class).getResultList();
+        for (Department department : departments) {
+            DepartmentHeads heads = null;
+            try {
+                heads = getEm().createNamedQuery("DepartmentHeads.findByDepartmentCodeAndIsActive", DepartmentHeads.class)
+                        .setParameter("departmentCode", department.getCode())
+                        .setParameter("isActive", true)
+                        .getSingleResult();
+                department.setEmployeeCode(getEm().find(Employee.class, heads.getEmployeeCode()));
+            } catch (Exception e) {
+                department.setEmployeeCode(null);
+            }
+        }
+        return departments;
+    }
+
     public Department saveByDepartment(Department department) {
         try {
 //            department.setCode(SequenceUtil.nextBigDecimal().toString());

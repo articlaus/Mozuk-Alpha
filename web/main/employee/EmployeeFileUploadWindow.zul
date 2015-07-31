@@ -1,25 +1,66 @@
-<zk xmlns="http://www.zkoss.org/2005/zul"
-    xmlns:n="http://www.w3.org/1999/xhtml">
+<zk xmlns="http://www.zkoss.org/2005/zul">
     <style src="/assets/FileUpload.css"/>
-    <window id="employeeFileUploadWindow" width="500px" height="300px"
+    <window id="employeeFileUploadWindow" width="500px" height="auto"
             apply="org.zkoss.bind.BindComposer" mode="modal" title="Файл Оруулах"
             viewModel="@id('efuw') @init('com.ui.controller.main.employee.EmployeeFileUploadController')"
             closable="true">
-        <toolbar>
-            <button label="Хадгалах" onClick="@command('save')"/>
-        </toolbar>
-        <groupbox width="100%" open="true" closable="false" sclass="attachments">
-            <caption label="Оруулах Файл аа доор цөөж оруулна уу"/>
-            <div id="target" children="@load(efuw.attachments)" height="100%" width="100%" sclass="dropzone">
-                <template name="children">
-                    <span sclass="attachment">
-                        <a iconSclass="z-icon-paperclip" label="@load(each)"/>
-                    </span>
-                </template>
-            </div>
-            <dropupload maxsize="5120" detection="browser" anchor="${target}"
-                        onUpload="@command('doUpload',files=event.medias)"
-                        content="Та хуулах файл аа энд тавиа уу."/>
-        </groupbox>
+        <grid sclass="table ">
+            <columns>
+                <column width="150px"/>
+                <column/>
+            </columns>
+            <rows>
+                <row >
+                    <label value="Файл сонгох : "/>
+                    <button id="btnUpload" label="Файл сонгох" upload="true" onUpload="@command('uploadFile')" />
+                </row>
+                <row >
+                    <label value="Файлийн нэр : "/>
+                    <textbox width="100%" value="@bind(efuw.document.fileName)" constraint="no empty"
+                             placeholder="Файлийн нэр : "/>
+                </row>
+
+                <row >
+                    <label value="Файл үүссэн огноо : "/>
+                    <datebox constraint="no empty" width="100%" value="@bind(efuw.document.documentDate)" format="yyyy/MM/dd"
+                              placeholder="Файл үүссэн огноо : "/>
+                </row>
+                <row >
+                    <label value="Тайлбар : "/>
+                    <textbox width="100%" rows="4" constraint="no empty" sclass="form-control input-sm"
+                             value="@bind(efuw.document.description)"
+                             placeholder="Тайлбар : "/>
+                </row>
+                <row >
+                    <label value="Файлийн төрөл : "/>
+                    <cell width="100%" id="fileTypeCell"/>
+                </row>
+                <row spans="2" align="right" style="background: #FFFFFF">
+                    <div>
+                        <button id="btnSave" mold="trendy" sclass="btn btn-default btn-small" label="Хадгалах"
+                                onClick="@command('btnSave')"/>
+                        <button id="btnCancel" mold="trendy" sclass="btn btn-default btn-small" label="Гарах"
+                                onClick="@global-command('windowCancelBtn')"/>
+                    </div>
+                </row>
+            </rows>
+        </grid>
+
+        <!--<toolbar>-->
+            <!--<button label="Хадгалах" onClick="@command('save')"/>-->
+        <!--</toolbar>-->
+        <!--<groupbox width="100%" open="true" closable="false" sclass="attachments">-->
+            <!--<caption label="Оруулах Файл аа доор зөөж оруулна уу"/>-->
+            <!--<div id="target" children="@load(efuw.attachments)" height="100%" width="100%" sclass="dropzone">-->
+                <!--<template name="children">-->
+                    <!--<span sclass="attachment">-->
+                        <!--<a iconSclass="z-icon-paperclip" label="@load(each)"/>-->
+                    <!--</span>-->
+                <!--</template>-->
+            <!--</div>-->
+            <!--<dropupload maxsize="5120" detection="browser" anchor="${target}"-->
+                        <!--onUpload="@command('doUpload',files=event.medias)"-->
+                        <!--content="Та хуулах файл аа энд тавиа уу."/>-->
+        <!--</groupbox>-->
     </window>
 </zk>

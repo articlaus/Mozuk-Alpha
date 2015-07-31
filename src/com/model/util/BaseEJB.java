@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.math.BigDecimal;
 
 /**
  * Created by tseegii on 6/23/15.
@@ -16,7 +17,10 @@ public class BaseEJB {
     public static int RES_DEPARTMENT = 2;
     public static int RES_COMPANY = 3;
 
-    public static final String filePath = "C:\\Users\\huslee\\IdeaProjects\\Mozuk-Alpha\\out\\production\\Mozuk-Alpha\\META-INF\\";
+    public static BigDecimal DOC_TYPE_RESOLUTION = BigDecimal.valueOf(4);
+
+//    public static final String filePath = "C:\\Users\\huslee\\IdeaProjects\\Mozuk-Alpha\\out\\production\\Mozuk-Alpha\\META-INF\\";
+    public static final String filePath = "/home/tseegii/filePersist/";
 
     @PersistenceContext(unitName = "mozukUnit")
     private EntityManager em;

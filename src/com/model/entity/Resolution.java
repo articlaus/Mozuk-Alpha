@@ -24,6 +24,11 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "Resolution.findByCode", query = "SELECT r FROM Resolution r WHERE r.code = :code"),
         @NamedQuery(name = "Resolution.findByCreatedDate", query = "SELECT r FROM Resolution r WHERE r.createdDate = :createdDate"),
         @NamedQuery(name = "Resolution.findByResolutionType", query = "SELECT r FROM Resolution r WHERE r.resolutionType = :resolutionType"),
+        @NamedQuery(name = "Resolution.findByEmployee", query = "SELECT r FROM Resolution r WHERE r.employeeCode = :employeeCode"),
+        @NamedQuery(name = "Resolution.findByDepartment", query = "SELECT r FROM Resolution r WHERE r.departmentCode = :departmentCode"),
+        @NamedQuery(name = "Resolution.findByResolutionRange", query = "SELECT r FROM Resolution r WHERE r.resolutionRange = :resolutionRange"),
+
+
 })
 public class Resolution implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -33,9 +38,10 @@ public class Resolution implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
-    @Basic(optional = false)
-    @Column(name = "resolution_type")
-    private String resolutionType;
+
+    @JoinColumn(name = "resolution_type_id", referencedColumnName = "id")
+    @ManyToOne
+    private ResolutionType resolutionType;
     @JoinColumn(name = "department_code", referencedColumnName = "code")
     @ManyToOne(optional = false)
     private Department departmentCode;
@@ -53,7 +59,7 @@ public class Resolution implements Serializable {
         this.code = code;
     }
 
-    public Resolution(String code, Date createdDate, String resolutionType) {
+    public Resolution(String code, Date createdDate, ResolutionType resolutionType) {
         this.code = code;
         this.createdDate = createdDate;
         this.resolutionType = resolutionType;
@@ -77,11 +83,11 @@ public class Resolution implements Serializable {
     }
 
 
-    public String getResolutionType() {
+    public ResolutionType getResolutionType() {
         return resolutionType;
     }
 
-    public void setResolutionType(String resolutionType) {
+    public void setResolutionType(ResolutionType resolutionType) {
         this.resolutionType = resolutionType;
     }
 
@@ -144,4 +150,6 @@ public class Resolution implements Serializable {
     public void setDocuments(List<Document> documents) {
         this.documents = documents;
     }
+
+
 }

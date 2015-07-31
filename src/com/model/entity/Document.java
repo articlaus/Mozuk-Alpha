@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Document.findByFileType", query = "SELECT d FROM Document d WHERE d.fileExtension = :fileExtension"),
     @NamedQuery(name = "Document.findByCreatedDate", query = "SELECT d FROM Document d WHERE d.createdDate = :createdDate"),
     @NamedQuery(name = "Document.findByDocumentType", query = "SELECT d FROM Document d WHERE d.documentTypeId = :documentTypeId"),
+    @NamedQuery(name = "Document.findByEmployee", query = "SELECT d FROM Document d WHERE d.employeeCode = :employeeCode"),
 })
 public class Document implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -35,7 +36,7 @@ public class Document implements Serializable {
     private BigDecimal id;
     @Basic(optional = false)
     @Column(name = "foreign_key")
-    private BigDecimal foreignKey;
+    private String foreignKey;
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
@@ -46,14 +47,19 @@ public class Document implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
+    @Column(name = "document_date")
+    @Temporal(TemporalType.DATE)
+    private Date documentDate;
     @Column(name = "file_path")
     private String filePath;
+    @Column(name = "content_type")
+    private String contentType;
     @JoinColumn(name = "document_type_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private DocumentType documentTypeId;
     @JoinColumn(name = "employee_code",referencedColumnName = "code")
     @ManyToOne
-    private Employee employeeeCode;
+    private Employee employeeCode;
     @JoinColumn(name = "username",referencedColumnName = "username")
     @ManyToOne
     private Users users;
@@ -65,7 +71,7 @@ public class Document implements Serializable {
         this.id = id;
     }
 
-    public Document(BigDecimal id, BigDecimal foreignKey, String fileName) {
+    public Document(BigDecimal id, String foreignKey, String fileName) {
         this.id = id;
         this.foreignKey = foreignKey;
         this.fileName = fileName;
@@ -79,11 +85,11 @@ public class Document implements Serializable {
         this.id = id;
     }
 
-    public BigDecimal getForeignKey() {
+    public String getForeignKey() {
         return foreignKey;
     }
 
-    public void setForeignKey(BigDecimal foreignKey) {
+    public void setForeignKey(String foreignKey) {
         this.foreignKey = foreignKey;
     }
 
@@ -135,12 +141,12 @@ public class Document implements Serializable {
         this.documentTypeId = documentTypeId;
     }
 
-    public Employee getEmployeeeCode() {
-        return employeeeCode;
+    public Employee getEmployeeCode() {
+        return employeeCode;
     }
 
-    public void setEmployeeeCode(Employee employeeeCode) {
-        this.employeeeCode = employeeeCode;
+    public void setEmployeeCode(Employee employeeCode) {
+        this.employeeCode = employeeCode;
     }
 
     public Users getUsers() {
@@ -149,6 +155,22 @@ public class Document implements Serializable {
 
     public void setUsers(Users users) {
         this.users = users;
+    }
+
+    public Date getDocumentDate() {
+        return documentDate;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public void setDocumentDate(Date documentDate) {
+        this.documentDate = documentDate;
     }
 
     @Override
