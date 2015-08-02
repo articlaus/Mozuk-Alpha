@@ -1,0 +1,38 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+    <panel id="workMonthsPanel" width="100%" height="700px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('wmp') @init('com.ui.controller.other.WorkMonthsPanelController')">
+        <toolbar>
+            <button iconSclass="z-icon-plus" onClick="@command('add')"/>
+            <button iconSclass="z-icon-refresh" onClick="@command('refresh')"/>
+        </toolbar>
+        <panelchildren>
+            <groupbox>
+                <caption label=""/>
+
+                <listbox id="workMonthsListBox" height="600px" model="@bind(wmp.workMonthsList)">
+                    <listhead>
+                        <listheader label="Он сар"/>
+                        <listheader label="Ажиллах ёстой цаг"/>
+                        <listheader label=""/>
+                    </listhead>
+                    <template name="model">
+                        <listitem>
+                            <listcell label="@load(each.yearAndMonth)"/>
+                            <listcell label="@load(each.totalWorkHours)"/>
+                            <listcell>
+                                <button iconSclass="z-icon-edit" disabled="@load(each.isLocked)"
+                                        onClick="@command('edit',entity=each)"/>
+                            </listcell>
+                        </listitem>
+                    </template>
+
+
+                </listbox>
+            </groupbox>
+        </panelchildren>
+    </panel>
+
+</zk>

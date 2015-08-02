@@ -1,21 +1,22 @@
 package com.ui.controller.main.overtime;
 
+import com.model.bean.DocumentBean;
 import com.model.bean.EmployeeBean;
 import com.model.bean.OvertimeBean;
-import com.model.entity.Employee;
-import com.model.entity.Overtime;
-import com.model.entity.OvertimeDates;
-import com.model.entity.WorkMonths;
+import com.model.entity.*;
+import com.model.util.BaseEJB;
 import com.ui.component.CustomBandbox;
 import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
 import com.ui.util.NotificationUtils;
 import org.zkoss.bind.annotation.*;
+import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Cell;
 import org.zkoss.zul.Listbox;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +27,13 @@ public class OvertimeWindowController extends MainComponent {
 
     List<OvertimeDates> overtimeDateList;
     List<OvertimeDates> removeList;
+    DocumentBean documentBean;
     Boolean isEditing = false;
     EmployeeBean employeeBean;
     OvertimeBean overtimeBean;
     Overtime overtime;
     OvertimeListPanelController listPanelController;
+    List<Document> documentList;
 
     @Wire
     Listbox overtimeTimeListBox;
@@ -46,12 +49,15 @@ public class OvertimeWindowController extends MainComponent {
         super.init();
         employeeBean = EBeanUtils.getBean(EmployeeBean.class);
         overtimeBean = EBeanUtils.getBean(OvertimeBean.class);
+        documentBean = EBeanUtils.getBean(DocumentBean.class);
     }
 
     @AfterCompose(superclass = true)
     @Override
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
+        documentList = new ArrayList<>();
+
         if (getArgument("overtime") != null) {
             overtime = (Overtime) getArgument("overtime");
             overtimeDateList = overtime.getOvertimeDatesList();
@@ -95,7 +101,9 @@ public class OvertimeWindowController extends MainComponent {
                 NotificationUtils.showFailure();
             }
         } else {
-            if (overtimeBean.saveOvertimeAndOvertimeDates(overtime) != null) {
+            overtime = overtimeBean.saveOvertimeAndOvertimeDates(overtime);
+            if (overtime != null) {
+                documentBean.saveAll(overtime.getId().toString(), documentList, BaseEJB.DOC_TYPE_OVERTIME);
                 NotificationUtils.showSuccess();
             } else {
                 NotificationUtils.showFailure();
@@ -108,6 +116,28 @@ public class OvertimeWindowController extends MainComponent {
         }
         listPanelController.refresh();
         getCurrentWindow().detach();
+    }
+
+
+    @Command
+    @NotifyChange("documentList")
+    public void doUpload(@BindingParam("files") Media[] files) {
+        Document doc = new Document();
+        for (Media file : files) {
+            doc = new Document();
+            doc.setBytes(file.getByteData());
+            doc.setEmployeeCode(employeeCustomBandbox.getSelectedT());
+            doc.setFileName(file.getName());
+            documentList.add(doc);
+        }
+    }
+
+    public List<Document> getDocumentList() {
+        return documentList;
+    }
+
+    public void setDocumentList(List<Document> documentList) {
+        this.documentList = documentList;
     }
 
     @Command

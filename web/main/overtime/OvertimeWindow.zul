@@ -1,6 +1,7 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <window id="overtimeWindow" width="700px" height="700px" mode="modal" border="normal" closable="true"
+    <style src="/assets/FileUpload.css"/>
+    <window id="overtimeWindow" width="700px" height="800px" mode="modal" border="normal" closable="true"
             apply="org.zkoss.bind.BindComposer" title="Илүү цагын мэдээлэл бүртгэх"
             viewModel="@id('ow') @init('com.ui.controller.main.overtime.OvertimeWindowController')">
         <vlayout>
@@ -34,6 +35,21 @@
                     </row>
                 </rows>
             </grid>
+
+            <groupbox width="100%" open="true" closable="false" sclass="attachments">
+                <caption label="Оруулах Файл аа доор зөөж оруулна уу"/>
+                <div id="target" children="@load(ow.documentList)" height="100%" width="100%"
+                     sclass="dropzone">
+                    <template name="children">
+                                    <span sclass="documentList">
+                                        <a iconSclass="z-icon-paperclip" label="@load(each.fileName)"/>
+                                    </span>
+                    </template>
+                </div>
+                <dropupload maxsize="5120" detection="browser" anchor="${target}"
+                            onUpload="@command('doUpload',files=event.medias)"
+                            content="Та хуулах файл аа энд тавиа уу."/>
+            </groupbox>fi
             <groupbox>
                 <caption label="Илүү ажиллах цагын жагсаалт"/>
                 <listbox id="overtimeTimeListBox" height="350px" model="@bind(ow.overtimeDateList)"
@@ -59,7 +75,8 @@
                                 <checkbox checked="@bind(each.isHoliday)"/>
                             </listcell>
                             <listcell>
-                                <button label="" iconSclass="z-icon-trash" onClick="@command('removeDates',dates=each)"/>
+                                <button label="" iconSclass="z-icon-trash"
+                                        onClick="@command('removeDates',dates=each)"/>
                             </listcell>
                         </listitem>
                     </template>

@@ -1,0 +1,29 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+    <window id="workMonthsWindow" width="400px" height="200px" mode="modal" border="normal" title="Ажлын Сар"
+            viewModel="@id('wmw') @init('com.ui.controller.other.WorkMonthWindowController')" closable="true">
+        <grid>
+            <columns>
+                <column width="50%"/>
+                <column width="50%"/>
+            </columns>
+            <rows>
+                <row>
+                    <label value="Ажлын сар :"/>
+                    <label id="workMonthLbl"/>
+                </row>
+                <row>
+                    <label value="Ажиллах ёстой нийт цаг :"/>
+                    <intbox value="@bind(wmw.workMonth.totalWorkHours)" width="100%"/>
+                </row>
+                <row>
+                    <cell colspan="2">
+                        <button iconSclass="z-icon-save" label="Хадгалах" onClick="@command('save')"/>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+    </window>
+</zk>
