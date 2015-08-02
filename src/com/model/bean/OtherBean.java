@@ -350,10 +350,17 @@ public class OtherBean extends BaseEJB {
         }
     }
 
-    public WorkMonths findByPreviousYearAndMonth() {
-        DateTime dateTime = new DateTime();
-        int year = dateTime.getYear();
-        int month = dateTime.getMonthOfYear() - 1;
+    public WorkMonths findByPreviousYearAndMonth(WorkMonths currentMonth) {
+        int year ;
+        int month;
+        if (currentMonth == null) {
+            DateTime dateTime = new DateTime();
+            year = dateTime.getYear();
+            month = dateTime.getMonthOfYear() - 1;
+        } else {
+            year = currentMonth.getYear();
+            month = currentMonth.getMonth() - 1;
+        }
         try {
             return getEm().createNamedQuery("WorkMonths.findByYearAndMonth", WorkMonths.class)
                     .setParameter("year", year)
@@ -365,10 +372,17 @@ public class OtherBean extends BaseEJB {
         }
     }
 
-    public WorkMonths findByNextYearAndMonth() {
-        DateTime dateTime = new DateTime();
-        int year = dateTime.getYear();
-        int month = dateTime.getMonthOfYear() + 1;
+    public WorkMonths findByNextYearAndMonth(WorkMonths currentMonth) {
+        int year ;
+        int month;
+        if (currentMonth == null) {
+            DateTime dateTime = new DateTime();
+            year = dateTime.getYear();
+            month = dateTime.getMonthOfYear() + 1;
+        } else {
+            year = currentMonth.getYear();
+            month = currentMonth.getMonth() + 1;
+        }
         try {
             return getEm().createNamedQuery("WorkMonths.findByYearAndMonth", WorkMonths.class)
                     .setParameter("year", year)
@@ -379,6 +393,8 @@ public class OtherBean extends BaseEJB {
             return null;
         }
     }
+
+
 
     public WorkMonths findByYearAndMonthAndIsLocked(int year, int month, boolean isLocked) {
         try {
