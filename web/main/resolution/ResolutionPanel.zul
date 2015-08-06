@@ -6,31 +6,37 @@
     <panel id="resolutionPanel" height="900px" width="100%" apply="org.zkoss.bind.BindComposer"
            viewModel="@id('rp') @init('com.ui.controller.main.resolution.ResolutionPanelController')">
         <toolbar>
-            <button iconSclass="z-icon-plus" onClick="addResolution"/>
+            <button iconSclass="z-icon-plus" onClick="@command('addResolution')" label="Нэмэх"/>
+            <cell id="searchCellResolution"/>
         </toolbar>
         <panelchildren>
-            <listbox id="resolutionListBox" height="700px" model="@bind(rp.)">
-                <listhead menupopup="auto">
-                    <listheader label="Төрөл" sort="auto(resolutionType.resolutionType)"/>
-                    <listheader label="Ажилтан" sort="auto(employeeCode.fullName)"/>
-                    <listheader label="Хэлтэс" sort="auto(departmentCode.name)"/>
-                    <listheader label="Үүссэн Огноо" sort="auto(documentDate)"/>
-                    <listheader label="Тайлбар" sort="auto(resolutionDescription)"/>
-                    <listheader/>
-                </listhead>
-            </listbox>
-            <template name="model">
-                <listitem>
-                    <listcell label="@load(each.resolutionType.resolutionType)"/>
-                    <listcell label="@load(each.employeeCode.fullName)"/>
-                    <listcell label="@load(each.departmentCode.name)"/>
-                    <listcell label="@load(each.documentDate)"/>
-                    <listcell label="@load(each.resolutionDescription)"/>
-                    <listcell>
-                        <button iconSclass="z-icon-edit" onClick="@command('edit',entity=each)"/>
-                    </listcell>
-                </listitem>
-            </template>
+            <groupbox closable="false">
+                <caption label="Албан тушаалын жагсаалт"/>
+
+                <listbox id="resolutionListBox" height="700px" model="@bind(rp.resolutionList)">
+                    <listhead menupopup="auto">
+                        <listheader label="Төрөл" sort="auto(resolutionType.resolutionType)"/>
+                        <listheader label="Ажилтан" sort="auto(employeeCode.fullName)"/>
+                        <listheader label="Хэлтэс" sort="auto(departmentCode.departmentTitle)"/>
+                        <listheader label="Үүссэн Огноо" sort="auto(createdDate)"/>
+                        <listheader label="Тайлбар" sort="auto(resolutionDescription)"/>
+                        <listheader/>
+                        <listheader/>
+                    </listhead>
+                </listbox>
+                <template name="model">
+                    <listitem>
+                        <listcell label="@load(each.resolutionType.resolutionType)"/>
+                        <listcell label="@load(each.employeeCode.fullName)"/>
+                        <listcell label="@load(each.departmentCode.departmentTitle)"/>
+                        <listcell label="@load(each.createdDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
+                        <listcell label="@load(each.resolutionDescription)" span="2"/>
+                        <listcell>
+                            <button iconSclass="z-icon-edit" onClick="@command('edit',entity=each)"/>
+                        </listcell>
+                    </listitem>
+                </template>
+            </groupbox>
         </panelchildren>
     </panel>
 

@@ -133,8 +133,9 @@ public class ResolutionBean extends BaseEJB {
             Date date = Calendar.getInstance().getTime();
             resolution.setCreatedDate(date);
             getEm().persist(resolution);
-            if (resolution.getDocuments().size() > 0)
-                documentBean.saveAll(resolution.getCode(), resolution.getDocuments(), DOC_TYPE_RESOLUTION);
+            if (resolution.getDocuments() != null)
+                if (resolution.getDocuments().size() > 0)
+                    documentBean.saveAll(resolution.getCode(), resolution.getDocuments(), DOC_TYPE_RESOLUTION);
             return resolution;
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,7 +146,7 @@ public class ResolutionBean extends BaseEJB {
     public Resolution update(Resolution resolution) {
         try {
             resolution = getEm().merge(resolution);
-            if (resolution.getDocuments().size() > 0)
+            if (resolution.getDocuments().size() > 0 || resolution.getDocuments() != null)
                 documentBean.saveAll(resolution.getCode(), resolution.getDocuments(), DOC_TYPE_RESOLUTION);
             return resolution;
         } catch (Exception e) {

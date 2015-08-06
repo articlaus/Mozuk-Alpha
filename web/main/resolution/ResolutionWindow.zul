@@ -1,8 +1,7 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <style src="/assets/FileUpload.css"/>
-    <window id="resolutionWindow" width="400px" height="600px" title="Албан Түшаал Нэмэх" closable="true"
-            apply="org.zkoss.bind.BindComposer"
+    <window id="resolutionWindow" width="400px" height="580px" title="Албан Түшаал Нэмэх" closable="true"
+            apply="org.zkoss.bind.BindComposer" mode="modal" position="center"
             viewModel="@id('rw') @init('com.ui.controller.main.resolution.ResolutionWindowController')">
         <grid>
             <columns>
@@ -12,7 +11,7 @@
             <rows>
                 <row>
                     <label value="Тушаалын Дугаар :"/>
-                    <textbox value="@bind(rw.resolution.code)" width="100%"/>
+                    <textbox value="@bind(rw.resolution.code)" width="100%" id="codeTxt"/>
                 </row>
                 <row>
                     <label value="Ажилтан :"/>
@@ -33,26 +32,13 @@
                 <row>
                     <label value="Файл Оруулах"/>
                     <cell>
-                        <!--todo file upload section-->
-                        <groupbox width="100%" open="true" closable="false" sclass="attachments">
-                            <caption label="Оруулах Файл аа доор цөөж оруулна уу"/>
-                            <div id="target" children="@load(efuw.attachments)" height="100%" width="100%"
-                                 sclass="dropzone">
-                                <template name="children">
-                    <span sclass="attachment">
-                        <a iconSclass="z-icon-paperclip" label="@load(each)"/>
-                    </span>
-                                </template>
-                            </div>
-                            <dropupload maxsize="5120" detection="browser" anchor="${target}"
-                                        onUpload="@command('doUpload',files=event.medias)"
-                                        content="Та хуулах файл аа энд тавиа уу."/>
-                        </groupbox>
+                        <button iconSclass="z-icon-upload" label="Файл Оруулах" onClick="@command('fileUpload')"/>
                     </cell>
                 </row>
                 <row>
                     <cell colspan="2" align="right">
                         <button iconSclass="z-icon-save" label="Хадгалах" onClick="@command('save')"/>
+                        <button iconSclass="z-icon-close" onClick="@global-command('windowCancelBtn')" label="Хаах"/>
                     </cell>
                 </row>
             </rows>

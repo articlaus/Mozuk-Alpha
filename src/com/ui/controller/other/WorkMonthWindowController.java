@@ -22,6 +22,7 @@ public class WorkMonthWindowController extends MainComponent {
     OtherBean otherBean;
     WorkMonths workMonth;
     WorkMonths curWorkMonth;
+    Boolean isEditing;
 
     @Wire
     Label workMonthLbl;
@@ -40,37 +41,57 @@ public class WorkMonthWindowController extends MainComponent {
         super.afterCompose(view);
         Calendar calendar = Calendar.getInstance();
         workMonthsPanelController = (WorkMonthsPanelController) getArgument("panel");
-        if (otherBean.findByYearAndMonth() == null) {
-            workMonth = new WorkMonths();
-            workMonth.setYear(calendar.get(Calendar.YEAR));
-            workMonth.setMonth(calendar.get(Calendar.MONTH) + 1);
-            workMonth.setIsLocked(false);
-        } else {
-            curWorkMonth = otherBean.findByYearAndMonth();
-            if (otherBean.findByNextYearAndMonth(curWorkMonth) == null) {
+        if (getArgument("workMonth") == null) {
+            if (otherBean.findByYearAndMonth() == null) {
                 workMonth = new WorkMonths();
                 workMonth.setYear(calendar.get(Calendar.YEAR));
-                workMonth.setMonth(calendar.get(Calendar.MONTH) + 2);
+                workMonth.setMonth(calendar.get(Calendar.MONTH) + 1);
                 workMonth.setIsLocked(false);
             } else {
-                NotificationUtils.showMsgWarning("Ирэх сарын мэдээлэл бүртгэгдсэн байна.");
+                curWorkMonth = otherBean.findByYearAndMonth();
+                if (otherBean.findByNextYearAndMonth(curWorkMonth) == null) {
+                    workMonth = new WorkMonths();
+                    workMonth.setYear(calendar.get(Calendar.YEAR));
+                    workMonth.setMonth(calendar.get(Calendar.MONTH) + 2);
+                    workMonth.setIsLocked(false);
+                } else {
+                    getCurrentWindow().detach();
+                    NotificationUtils.showMsgWarning("Ирэх сарын мэдээлэл бүртгэгдсэн байна.");
+                }
             }
+            isEditing = false;
+        } else {
+            workMonth = (WorkMonths) getArgument("workMonth");
+            isEditing = true;
         }
-        if (workMonth.getMonth() > 12) {
-            workMonth.setYear(workMonth.getYear() + 1);
-            workMonth.setMonth(1);
+        if (workMonth != null) {
+            if (workMonth.getMonth() > 12) {
+                workMonth.setYear(workMonth.getYear() + 1);
+                workMonth.setMonth(1);
+            }
+            workMonthLbl.setValue(workMonth.getYearAndMonth());
         }
-        workMonthLbl.setValue(workMonth.getYearAndMonth());
     }
+
 
     @Command
     public void save() {
-        if (otherBean.saveByWorkMonths(workMonth) != null) {
-            NotificationUtils.showSuccess();
-            workMonthsPanelController.loadValues();
-            getCurrentWindow().detach();
+        if (isEditing) {
+            if (otherBean.updateByWorkMonths(workMonth) != null) {
+                NotificationUtils.showSuccess();
+                workMonthsPanelController.loadValues();
+                getCurrentWindow().detach();
+            } else {
+                NotificationUtils.showFailure();
+            }
         } else {
-            NotificationUtils.showFailure();
+            if (otherBean.saveByWorkMonths(workMonth) != null) {
+                NotificationUtils.showSuccess();
+                workMonthsPanelController.loadValues();
+                getCurrentWindow().detach();
+            } else {
+                NotificationUtils.showFailure();
+            }
         }
     }
 

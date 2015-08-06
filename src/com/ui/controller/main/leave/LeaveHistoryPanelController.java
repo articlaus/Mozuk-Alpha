@@ -45,8 +45,6 @@ public class LeaveHistoryPanelController extends MainComponent {
         super.afterCompose(view);
         leaveList = leaveAbsenceBean.findAll();
         workMonthsCustomBandbox = new CustomBandbox<>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
-        System.out.println("workMonthsCustomBandbox = " + workMonthsCustomBandbox.getListbox().getListModel().getSize());
-        System.out.println("orson = ");
         workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_SELECT, new EventListener<Event>() {
             @Override
             public void onEvent(Event event) throws Exception {

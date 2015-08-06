@@ -1,16 +1,18 @@
 package com.ui.controller.main.resolution;
 
-import com.model.entity.Department;
-import com.model.entity.Document;
-import com.model.entity.Employee;
-import com.model.entity.Resolution;
+import com.model.bean.DocumentBean;
+import com.model.bean.ResolutionBean;
+import com.model.entity.*;
 import com.ui.component.CustomBandbox;
+import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
+import com.ui.util.NotificationUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Cell;
+import org.zkoss.zul.Textbox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +24,26 @@ public class ResolutionWindowController extends MainComponent {
     Resolution resolution;
     Boolean isEditing;
     private CustomBandbox<Employee> employeeCustomBandbox;
+    ResolutionBean resolutionBean;
+    DocumentBean documentBean;
 
     List<Document> documentList;
 
     @Wire
     Cell employeeCell, departmentCell, typeCell;
+    @Wire
+    Textbox codeTxt;
+
     private CustomBandbox<Department> departmentCustomBandbox;
+    private ResolutionPanelController controller;
+    private CustomBandbox<ResolutionType> resolutionTypeCustomBandbox;
 
     @Init(superclass = true)
     @Override
     public void init() {
         super.init();
+        resolutionBean = EBeanUtils.getBean(ResolutionBean.class);
+        documentBean = EBeanUtils.getBean(DocumentBean.class);
     }
 
     @AfterCompose(superclass = true)
@@ -42,13 +53,15 @@ public class ResolutionWindowController extends MainComponent {
         if (getArgument("resolution") != null) {
             isEditing = true;
             resolution = (Resolution) getArgument("resolution");
+            documentList = documentBean.findByForeignKey(resolution.getCode());
+            codeTxt.setDisabled(true);
         } else {
             isEditing = false;
             resolution = new Resolution();
             documentList = new ArrayList<>();
         }
 
-        //todo resolution list panel iig tohirgoo hiih
+        controller = (ResolutionPanelController) getArgument("controller");
 
         employeeCustomBandbox = new CustomBandbox<Employee>(Employee.class, "Employee.findAll", new String[]{"fullName"});
         employeeCustomBandbox.setWidth("100%");
@@ -56,40 +69,58 @@ public class ResolutionWindowController extends MainComponent {
             employeeCustomBandbox.setSelectedT(resolution.getEmployeeCode());
         employeeCell.appendChild(employeeCustomBandbox);
 
-        departmentCustomBandbox = new CustomBandbox<Department>(Department.class, "Department.findAll", new String[]{"name"});
+        departmentCustomBandbox = new CustomBandbox<Department>(Department.class, "Department.findAll", new String[]{"departmentTitle"});
         departmentCustomBandbox.setWidth("100%");
         if (isEditing)
             departmentCustomBandbox.setSelectedT(resolution.getDepartmentCode());
         departmentCell.appendChild(departmentCustomBandbox);
 
-        //todo resolution type custom band box
+        resolutionTypeCustomBandbox = new CustomBandbox<ResolutionType>(ResolutionType.class, "ResolutionType.findAll", new String[]{"resolutionType"});
+        resolutionTypeCustomBandbox.setWidth("100%");
+        if (isEditing)
+            resolutionTypeCustomBandbox.setSelectedT(resolution.getResolutionType());
+        typeCell.appendChild(resolutionTypeCustomBandbox);
 
     }
 
-    @Command
-    @NotifyChange("attachments")
-    public void doUpload(@BindingParam("files") Media[] files) {
-        if (isEditing) {
-            //todo read
-        } else {
-            Document document;
-            for (Media file : files) {
-                document = new Document();
-                document.setFileName(file.getName());
-                document.setFileExtension(file.getContentType());
+    public Resolution getResolution() {
+        return resolution;
+    }
 
-            }
-        }
+    public void setResolution(Resolution resolution) {
+        this.resolution = resolution;
     }
 
     @Command
     public void save() {
 
-        //todo save function
-        if (isEditing) {
+        resolution.setDocuments(documentList);
+        resolution.setEmployeeCode(employeeCustomBandbox.getSelectedT());
+        resolution.setDepartmentCode(departmentCustomBandbox.getSelectedT());
+        resolution.setResolutionType(resolutionTypeCustomBandbox.getSelectedT());
 
+        if (isEditing) {
+            if (resolutionBean.update(resolution) != null) {
+                NotificationUtils.showSuccess();
+                controller.loadValues();
+                getCurrentWindow().detach();
+            } else {
+                NotificationUtils.showFailure();
+            }
+        } else {
+            if (resolutionBean.save(resolution) != null) {
+                NotificationUtils.showSuccess();
+                controller.loadValues();
+                getCurrentWindow().detach();
+            } else {
+                NotificationUtils.showFailure();
+            }
         }
     }
 
+    @Command
+    public void fileUpload() {
+        //todo
+    }
 
 }

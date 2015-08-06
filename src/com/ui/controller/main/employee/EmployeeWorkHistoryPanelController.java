@@ -1,6 +1,7 @@
 package com.ui.controller.main.employee;
 
 import com.model.bean.EmployeeBean;
+import com.model.bean.OtherBean;
 import com.model.entity.Employee;
 import com.model.entity.EmployeeWorkMonth;
 import com.model.entity.WorkMonths;
@@ -13,6 +14,8 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Cell;
@@ -49,12 +52,14 @@ public class EmployeeWorkHistoryPanelController extends MainComponent {
         super.afterCompose(view);
         employee = (Employee) getMainInclude().getDynamicProperty("employee");
 
-
         workMonthsCustomBandbox = new CustomBandbox<WorkMonths>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
-//        workMonthsCustomBandbox.addEventListener(Events.ON_CHANGING, event -> {
-//            employeeWorkMonthList = employeeBean.findWorkMonthByWorkMonth(workMonthsCustomBandbox.getSelectedT());
-//            getBinder().loadComponent(employeeTimesheetHistoryListbox, true);
-//        });
+        workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_SELECT, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                employeeWorkMonthList = employeeBean.findWorkMonthByEmployeeAndWorkMonth(employee, workMonthsCustomBandbox.getSelectedT());
+                getBinder().loadComponent(employeeTimesheetHistoryListbox, true);
+            }
+        });
         workCell.appendChild(workMonthsCustomBandbox);
 //        SearchBox<EmployeeWorkMonth> searchBox = new SearchBox<>(employeeWorkMonthList, new String[]{"workMonthsid.yearAndMonth", "workMonth.totalWorkHours", "workedHours"}, employeeTimesheetHistoryListbox, getBinder());
 //        searchBox.setPlaceholder("Хайх");

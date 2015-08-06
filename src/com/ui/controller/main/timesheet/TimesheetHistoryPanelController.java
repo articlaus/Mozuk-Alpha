@@ -49,11 +49,7 @@ public class TimesheetHistoryPanelController extends MainComponent {
         super.afterCompose(view);
         employeeWorkMonthList = employeeBean.findAllEmployeeWorkMonth();
         workMonthsCustomBandbox = new CustomBandbox<WorkMonths>(WorkMonths.class, "WorkMonths.findAll", new String[]{"yearAndMonth"});
-//        workMonthsCustomBandbox.addEventListener(Events.ON_CHANGING, event -> {
-//            employeeWorkMonthList = employeeBean.findWorkMonthByWorkMonth(workMonthsCustomBandbox.getSelectedT());
-//            getBinder().loadComponent(employeeTimesheetHistoryListbox, true);
-//        });
-        workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_CHANGING, new EventListener<Event>() {
+        workMonthsCustomBandbox.getListbox().addEventListener(Events.ON_SELECT, new EventListener<Event>() {
             @Override
             public void onEvent(Event event) throws Exception {
                 employeeWorkMonthList = employeeBean.findWorkMonthByWorkMonth(workMonthsCustomBandbox.getSelectedT());

@@ -52,6 +52,10 @@ public class Resolution implements Serializable {
     private int resolutionRange;
 
 
+    @Column(name = "resolution_description")
+    private String resolutionDescription;
+
+
     public Resolution() {
     }
 
@@ -151,5 +155,11 @@ public class Resolution implements Serializable {
         this.documents = documents;
     }
 
+    public String getResolutionDescription() {
+        return resolutionDescription;
+    }
 
+    public void setResolutionDescription(String resolutionDescription) {
+        this.resolutionDescription = resolutionDescription;
+    }
 }

@@ -47,7 +47,7 @@ public class LeaveAbsence implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date endDate;
     @Basic(optional = false)
-    @Column(name = "number_of_days")
+    @Column(name = "number_of_hours")
     private int numberOfDays;
     @Basic(optional = false)
     @Column(name = "isPaid")

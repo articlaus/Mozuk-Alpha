@@ -18,12 +18,12 @@
                         <listheader label="Ажлын сар" sort="auto(workMonthsid.yearAndMonth)"/>
                         <listheader label="Ажиллах ёстой цаг" sort="auto(leaveTypeId.leaveType)"/>
                         <listheader label="Ажилласан цаг" sort="auto(startDate)"/>
-                        <listheader label="Дууссан Өдөр" sort="auto(endDate)"/>
+                        <listheader label="Авсан цалин" sort="auto(endDate)"/>
                     </listhead>
                     <template name="model">
                         <listitem>
                             <listcell label="@bind(each.workMonthsid.yearAndMonth)"/>
-                            <listcell label="@bind(each.workMonth.totalWorkHours)"/>
+                            <listcell label="@bind(each.workMonthsid.totalWorkHours)"/>
                             <listcell label="@bind(each.workedHours)"/>
                             <listcell
                                     label="@bind(each.finalSalary) @converter('formatedNumber', format='###,##0.00₮')"/>

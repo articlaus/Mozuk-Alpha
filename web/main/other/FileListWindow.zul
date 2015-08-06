@@ -1,0 +1,36 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <window id="fileListWindow" width="600px" height="400px" border="normal" mode="modal" title="Баримтын жагсаалт"
+            closable="true"
+            position="center" apply="org.zkoss.bind.BindComposer" viewModel="@id('flw') @init('')">
+        <listbox id="employeeFilesListBox" height="600px" model="@bind(efp.documentList)"
+                 mold="paging" pagingPosition="bottom">
+            <listhead menupopup="auto">
+                <listheader label="Нэр" sort="auto(fileName)"/>
+                <listheader label="Баримтын төрөл" sort="auto(documentTypeId.name)"/>
+                <listheader label="Файлын төрөл" sort="auto(fileExtension)"/>
+                <listheader label="Оруулсан огноо" sort="auto(createdDate)"/>
+                <listheader label="Файлийн огноо" sort="auto(documentDate)"/>
+                <listheader label="Тайлбар" sort="auto(description)"/>
+                <listheader/>
+            </listhead>
+            <template name="model">
+                <listitem>
+                    <listcell label="@load(each.fileName)"/>
+                    <listcell label="@load(each.documentTypeId.name)"/>
+                    <listcell label="@load(each.fileExtension)"/>
+                    <listcell label="@load(each.createdDate) @converter('formattedDate', format='yyyy/MM/dd')"/>
+                    <listcell
+                            label="@load(each.documentDate) @converter('formattedDate', format='yyyy/MM/dd')"/>
+                    <listcell label="@load(each.description)"/>
+                    <listcell>
+                        <button label="Татах" onClick="@command('fileDownload',documentId=each)"
+                                iconSclass="z-icon-download"/>
+                        <button label="Устгах" onClick="@command('fileRemove',documentId=each.id)"
+                                iconSclass="z-icon-remove"/>
+                    </listcell>
+                </listitem>
+            </template>
+        </listbox>
+    </window>
+</zk>

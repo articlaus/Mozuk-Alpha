@@ -46,7 +46,8 @@
                             <listheader label="Тайлбар" sort="auto(departmentDescription)"/>
                             <listheader/>
                             <listheader/>
-                            <listheader label="Үүссэн огноо" sort="auto(createdDate)"/>
+                            <listheader label="Үүссэн огноо"
+                                        sort="auto(createdDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
                             <listheader/>
                         </listhead>
                         <template name="model">
@@ -54,7 +55,8 @@
                                 <listcell label="@load(each.departmentTitle)"/>
                                 <listcell label="@load(each.employeeCode.fullName)"/>
                                 <listcell label="@load(each.departmentDescription)" span="3"/>
-                                <listcell label="@load(each.createdDate)"/>
+                                <listcell
+                                        label="@load(each.createdDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
                                 <listcell>
                                     <button iconSclass="z-icon-edit" onClick="@command('editDepartment',entity=each)"/>
                                     <button iconSclass="z-icon-remove"

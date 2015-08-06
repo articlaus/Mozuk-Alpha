@@ -51,12 +51,15 @@ public class WorkMonthsPanelController extends MainComponent {
 
     @Command
     public void edit(@BindingParam("entity") WorkMonths workMonths) {
-        //todo
+        getWindowMap().put("workMonth", workMonths);
+        getWindowMap().put("panel", this);
+        Executions.createComponents("main/settings/WorkMonthWindow.zul", null, getWindowMap());
     }
 
     @Command
     public void refresh() {
         loadValues();
+
     }
 
     public List<WorkMonths> getWorkMonthsList() {
