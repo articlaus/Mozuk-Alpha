@@ -10,7 +10,45 @@
             </columns>
             <rows>
                 <row>
-                    <label
+                    <label value="Ажилтаны Нэр :"/>
+                    <cell id="employeeCell"/>
+                </row>
+                <row>
+                    <label value="Хэлтэс"/>
+                        <cell id="departmentCell"/>
+                </row>
+
+                <row>
+                    <label value="Эхлэх өдөр :"/>
+                    <datebox value="@bind(pw.probation.startDate)" width="100%" format="yyyy/MM/dd"
+                             placeholder="Эхлэх өдөр"
+                             constraint="no empty"/>
+                </row>
+                <row>
+                    <label value="Дуусах өдөр :"/>
+                    <datebox value="@bind(pw.probation.endDate)" width="100%" format="yyyy/MM/dd"
+                             placeholder="Дуусах өдөр"
+                             constraint="no empty"/>
+                </row>
+                <row>
+                    <label value="Шалтгаан :"/>
+                    <textbox value="@bind(pw.probation.reason)" width="100%" rows="6"/>
+                </row>
+                <row>
+                    <label value="Хасалтын хувь :"/>
+                    <intbox value="@bind(pw.probation.deductionPercent)" width="100%" maxlength="3"/>
+                </row>
+                <row>
+                    <label value="Баримт :"/>
+                    <button iconSclass="z-icon-upload" label="Хуулах" onClick="@command('uploadWindow')"/>
+                    <button iconSclass="z-icon-file" label="Файл жагсаалт" onClick="@command('fileList')"/>
+                </row>
+                <row>
+                    <cell align="right" colspan="2">
+                        <button iconSclass="z-icon-save" label="Хадгалах" onClick="@command('save')"/>
+                        <button id="btnCancel" mold="trendy" iconSclass="z-icon-close" label="Гарах"
+                                onClick="@global-command('windowCancelBtn')"/>
+                    </cell>
                 </row>
             </rows>
         </grid>

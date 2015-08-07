@@ -12,6 +12,7 @@ import com.ui.util.NotificationUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Cell;
 import org.zkoss.zul.Listbox;
@@ -34,6 +35,8 @@ public class OvertimeWindowController extends MainComponent {
     Overtime overtime;
     OvertimeListPanelController listPanelController;
     List<Document> documentList;
+
+    Boolean fileUploaded = false;
 
     @Wire
     Listbox overtimeTimeListBox;
@@ -109,27 +112,29 @@ public class OvertimeWindowController extends MainComponent {
                 NotificationUtils.showFailure();
             }
         }
+        if (fileUploaded)
+            documentBean.save((Document) Executions.getCurrent().getSession().getAttribute("document"));
 
         for (OvertimeDates overtimeDates : removeList) {
             if (overtimeDates.getId() != null)
                 overtimeBean.deleteByOvertimeDate(overtimeDates.getId());
         }
+
         listPanelController.refresh();
         getCurrentWindow().detach();
     }
 
 
+    public void addDocument(Document document) {
+        documentList.add(document);
+    }
+
     @Command
-    @NotifyChange("documentList")
-    public void doUpload(@BindingParam("files") Media[] files) {
-        Document doc = new Document();
-        for (Media file : files) {
-            doc = new Document();
-            doc.setBytes(file.getByteData());
-            doc.setEmployeeCode(employeeCustomBandbox.getSelectedT());
-            doc.setFileName(file.getName());
-            documentList.add(doc);
-        }
+    public void uploadWindow() {
+        fileUploaded = true;
+        getWindowMap().put("type", BaseEJB.DOC_TYPE_OVERTIME);
+        getWindowMap().put("controller", this);
+        Executions.createComponents("main/employee/EmployeeFileUploadWindow.zul", null, getWindowMap());
     }
 
     public List<Document> getDocumentList() {
@@ -144,6 +149,16 @@ public class OvertimeWindowController extends MainComponent {
     public void addTime() {
         overtimeDateList.add(new OvertimeDates());
         getBinder().loadComponent(overtimeTimeListBox, true);
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documentList = documents;
+    }
+
+    @Command
+    public void fileList() {
+        getWindowMap().put("documentList", documentList);
+        Executions.createComponents("main/other/FileListWindow.zul", null, getWindowMap());
     }
 
     @Command

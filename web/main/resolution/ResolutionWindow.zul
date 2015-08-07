@@ -30,9 +30,10 @@
                     <textbox id="@bind(rw.resolution.resolutionDescription)" width="100%" rows="6"/>
                 </row>
                 <row>
-                    <label value="Файл Оруулах"/>
+                    <label value="Баримт :"/>
                     <cell>
                         <button iconSclass="z-icon-upload" label="Файл Оруулах" onClick="@command('fileUpload')"/>
+                        <button iconSclass="z-icon-file" label="Файл жагсаалт" onClick="@command('fileList')"/>
                     </cell>
                 </row>
                 <row>

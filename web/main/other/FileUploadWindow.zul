@@ -10,18 +10,30 @@
                 <column/>
             </columns>
             <rows>
-                <row >
+                <row>
                     <label value="Файл сонгох : "/>
                     <button id="btnUpload" label="Файл сонгох" upload="true" onUpload="@command('uploadFile')" />
                 </row>
                 <row >
                     <label value="Файлийн нэр : "/>
-                    <textbox readonly="true" sclass="form-control input-sm" value="@bind(fuw.fileName)"
+                    <textbox width="100%" value="@bind(fuw.document.fileName)" constraint="no empty"
                              placeholder="Файлийн нэр : "/>
                 </row>
-                <row>
-                    <label value="Ажлын сар : "/>
-                    <cell id="activeMonthCell"/>
+
+                <row >
+                    <label value="Файл үүссэн огноо : "/>
+                    <datebox constraint="no empty" width="100%" value="@bind(fuw.document.documentDate)" format="yyyy/MM/dd"
+                             placeholder="Файл үүссэн огноо : "/>
+                </row>
+                <row >
+                    <label value="Тайлбар : "/>
+                    <textbox width="100%" rows="4" constraint="no empty" sclass="form-control input-sm"
+                             value="@bind(fuw.document.description)"
+                             placeholder="Тайлбар : "/>
+                </row>
+                <row >
+                    <label value="Файлийн төрөл : "/>
+                    <cell width="100%" id="fileTypeCell"/>
                 </row>
                 <row spans="2" align="right" style="background: #FFFFFF">
                     <div>

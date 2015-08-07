@@ -32,6 +32,15 @@
                                          constraint="no empty"/>
                             </row>
                             <row>
+                                <label value="Файл Оруулах"/>
+                                <cell>
+                                    <button iconSclass="z-icon-upload" label="Файл Оруулах"
+                                            onClick="@command('fileUpload')"/>
+                                    <button iconSclass="z-icon-file" label="Файл жагсаалт"
+                                            onClick="@command('fileList')"/>
+                                </cell>
+                            </row>
+                            <row>
                                 <label value=""/>
                                 <checkbox id="chkActive" value="@bind(lmp.leaveAbsence.isPaid)" label="Цалинтай"/>
                             </row>

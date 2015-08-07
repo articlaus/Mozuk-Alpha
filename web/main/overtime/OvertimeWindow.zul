@@ -19,7 +19,11 @@
                         <label value="Ажлын Сар"/>
                         <cell id="workMonthCell"/>
                     </row>
-
+                    <row>
+                        <label value="Баримт :"/>
+                        <button iconSclass="z-icon-upload" label="Хуулах" onClick="@command('uploadWindow')"/>
+                        <button iconSclass="z-icon-file" label="Файл жагсаалт" onClick="@command('fileList')"/>
+                    </row>
                     <row>
                         <label value="Шалтгаан :"/>
                         <textbox id="reasonTxt" width="100%" rows="4"
@@ -35,21 +39,6 @@
                     </row>
                 </rows>
             </grid>
-
-            <groupbox width="100%" open="true" closable="false" sclass="attachments">
-                <caption label="Оруулах Файл аа доор зөөж оруулна уу"/>
-                <div id="target" children="@load(ow.documentList)" height="100%" width="100%"
-                     sclass="dropzone">
-                    <template name="children">
-                                    <span sclass="documentList">
-                                        <a iconSclass="z-icon-paperclip" label="@load(each.fileName)"/>
-                                    </span>
-                    </template>
-                </div>
-                <dropupload maxsize="5120" detection="browser" anchor="${target}"
-                            onUpload="@command('doUpload',files=event.medias)"
-                            content="Та хуулах файл аа энд тавиа уу."/>
-            </groupbox>fi
             <groupbox>
                 <caption label="Илүү ажиллах цагын жагсаалт"/>
                 <listbox id="overtimeTimeListBox" height="350px" model="@bind(ow.overtimeDateList)"

@@ -3,6 +3,7 @@ package com.ui.controller.main.resolution;
 import com.model.bean.DocumentBean;
 import com.model.bean.ResolutionBean;
 import com.model.entity.*;
+import com.model.util.BaseEJB;
 import com.ui.component.CustomBandbox;
 import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
@@ -10,6 +11,7 @@ import com.ui.util.NotificationUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Cell;
 import org.zkoss.zul.Textbox;
@@ -26,6 +28,7 @@ public class ResolutionWindowController extends MainComponent {
     private CustomBandbox<Employee> employeeCustomBandbox;
     ResolutionBean resolutionBean;
     DocumentBean documentBean;
+    Boolean fileUploaded = false;
 
     List<Document> documentList;
 
@@ -118,9 +121,27 @@ public class ResolutionWindowController extends MainComponent {
         }
     }
 
+    public void addDocuments(Document document) {
+        documentList.add(document);
+    }
+
+
+    @Command
+    public void fileList() {
+        getWindowMap().put("documentList", documentList);
+        Executions.createComponents("main/other/FileListWindow.zul", null, getWindowMap());
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documentList = documents;
+    }
+
     @Command
     public void fileUpload() {
-        //todo
+        fileUploaded = true;
+        getWindowMap().put("type", BaseEJB.DOC_TYPE_RESOLUTION);
+        getWindowMap().put("controller", this);
+        Executions.createComponents("main/other/FileUploadWindow.zul", null, getWindowMap());
     }
 
 }

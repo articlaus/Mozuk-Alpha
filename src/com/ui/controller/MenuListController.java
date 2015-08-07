@@ -59,6 +59,11 @@ public class MenuListController extends MainComponent {
 
 
     @Command
+    public void probation() {
+        getMainInclude().setSrc("main/probation/ProbationTab.zul");
+    }
+
+    @Command
     public void resolution() {
         getMainInclude().setSrc("main/resolution/ResolutionPanel.zul");
     }

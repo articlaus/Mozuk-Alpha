@@ -1,0 +1,45 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+    <panel id="probationListPanel" width="100%" height="700px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('plp') @init('com.ui.controller.main.probation.ProbationListPanelController')">
+        <toolbar>
+            <button iconSclass="z-icon-plus" label="?????" onClick="@command('addProbation')"/>
+            <cell id="searchCell"/>
+        </toolbar>
+        <panelchildren>
+            <groupbox closable="false">
+                <caption label="Идэвхийтэй сажилгийн шийтгэл"/>
+                <listbox id="probationActiveList" height="600px" model="@bind(plp.probations)">
+                    <listhead menupopup="auto">
+                        <listheader label="Ажилтаны нэр" sort="auto(employeeCode.fullName)"/>
+                        <listheader label="Хэлтэс" sort="auto(departmentCode.departmentTitle)"/>
+                        <listheader label="Эхлэх огноо" sort="auto(startDate)"/>
+                        <listheader label="Дуусах огноо" sort="auto(endDate)"/>
+                        <listheader label="Шалтгаан" sort="auto(probationReason)"/>
+                        <listheader/>
+                        <listheader/>
+                        <listheader/>
+                    </listhead>
+                    <template name="model">
+                        <listitem>
+                            <listcell label="@load(each.employeeCode.fullName)"/>
+                            <listcell label="@load(each.departmentCode.departmentTitle)"/>
+                            <listcell label="@load(each.startDate)"/>
+                            <listcell label="@load(each.endDate)"/>
+                            <listcell label="@load(each.probationReason)" span="3"/>
+                            <listcell>
+                                <cell align="center">
+                                    <button iconSclass="z-icon-edit" onClick="@command('edit',entity=each)"/>
+                                </cell>
+                            </listcell>
+                        </listitem>
+                    </template>
+
+                </listbox>
+            </groupbox>
+        </panelchildren>
+
+    </panel>
+</zk>

@@ -3,7 +3,7 @@
     <window id="fileListWindow" width="600px" height="400px" border="normal" mode="modal" title="Баримтын жагсаалт"
             closable="true"
             position="center" apply="org.zkoss.bind.BindComposer" viewModel="@id('flw') @init('')">
-        <listbox id="employeeFilesListBox" height="600px" model="@bind(efp.documentList)"
+        <listbox id="employeeFilesListBox" height="600px" model="@bind(flw.documentList)"
                  mold="paging" pagingPosition="bottom">
             <listhead menupopup="auto">
                 <listheader label="Нэр" sort="auto(fileName)"/>

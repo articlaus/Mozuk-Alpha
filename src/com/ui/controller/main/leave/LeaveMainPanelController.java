@@ -3,21 +3,21 @@ package com.ui.controller.main.leave;
 import com.model.bean.EmployeeBean;
 import com.model.bean.LeaveAbsenceBean;
 import com.model.bean.OtherBean;
-import com.model.entity.Employee;
-import com.model.entity.LeaveAbsence;
-import com.model.entity.LeaveType;
-import com.model.entity.WorkMonths;
+import com.model.entity.*;
+import com.model.util.BaseEJB;
 import com.ui.component.CustomBandbox;
 import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
 import com.ui.util.NotificationUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Cell;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Listbox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,10 +25,12 @@ import java.util.List;
  */
 public class LeaveMainPanelController extends MainComponent {
     List<LeaveAbsence> leaveList;
+    List<Document> documents;
     LeaveAbsence leaveAbsence;
     LeaveAbsenceBean leaveAbsenceBean;
     EmployeeBean employeeBean;
     OtherBean otherBean;
+    Boolean fileUploaded;
 
     @Wire
     Listbox leaveMainListBox;
@@ -61,6 +63,8 @@ public class LeaveMainPanelController extends MainComponent {
         employeeCustomBandbox.setWidth("100%");
         employeeCell.appendChild(employeeCustomBandbox);
 
+        documents = new ArrayList<>();
+
         leaveTypeCustomBandbox = new CustomBandbox<LeaveType>(LeaveType.class, "LeaveType.findAll", new String[]{"leaveType"});
         leaveTypeCustomBandbox.setWidth("100%");
         leaveTypeCustomBandbox.setPlaceholder("Амралтын Төрөл");
@@ -83,11 +87,13 @@ public class LeaveMainPanelController extends MainComponent {
     @NotifyChange("leaveAbsence")
     public void editLeave(@BindingParam("leave") LeaveAbsence leaveAbsence) {
         this.leaveAbsence = leaveAbsence;
+        documents = leaveAbsence.getDocuments();
         employeeCustomBandbox.setSelectedT(leaveAbsence.getEmployeeCode());
         leaveTypeCustomBandbox.setSelectedT(leaveAbsence.getLeaveTypeId());
         workMonthsCustomBandbox.setSelectedT(leaveAbsence.getWorkMonthsid());
         chkActive.setChecked(leaveAbsence.getIsPaid());
     }
+
 
     @Command
     @NotifyChange("leaveAbsence")
@@ -122,6 +128,28 @@ public class LeaveMainPanelController extends MainComponent {
             } else
                 NotificationUtils.showFailure();
         }
+    }
+
+    public void addDocuments(Document document) {
+        documents.add(document);
+    }
+
+    @Command
+    public void fileUpload() {
+        fileUploaded = true;
+        getWindowMap().put("type", BaseEJB.DOC_TYPE_LEAVE);
+        getWindowMap().put("controller", this);
+        Executions.createComponents("main/other/FileUploadWindow.zul", null, getWindowMap());
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
+
+    @Command
+    public void fileList() {
+        getWindowMap().put("documentList", documents);
+        Executions.createComponents("main/other/FileListWindow.zul", null, getWindowMap());
     }
 
     @Command

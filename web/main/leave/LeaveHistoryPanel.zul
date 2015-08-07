@@ -10,7 +10,7 @@
             </hbox>
         </toolbar>
         <panelchildren>
-            <groupbox>
+            <groupbox closable="false">
                 <caption label="Чөлөөний Түүх"/>
                 <listbox id="leaveHistoryListBox" height="600px" model="@bind(lht.leaveList)"
                          selectedItem="@bind(lht.leaveAbsence)" mold="paging" pagingPosition="bottom">

@@ -8,6 +8,7 @@ import com.model.util.SequenceUtil;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,6 +29,16 @@ public class DocumentBean extends BaseEJB {
 
     public List<Document> findAllDocument() {
         return getEm().createNamedQuery("Document.findAll", Document.class).getResultList();
+    }
+
+    public DocumentType findTypeById(BigDecimal id) {
+        try {
+            return (DocumentType) getEm().createNamedQuery("DocumentType.findById").
+                    setParameter("id", id).getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Document save(Document document) {
@@ -87,7 +98,7 @@ public class DocumentBean extends BaseEJB {
 
     public boolean delete(String document) {
         try {
-            Document doc=getEm().getReference(Document.class, document);
+            Document doc = getEm().getReference(Document.class, document);
             getEm().remove(doc);
             File file = new File(doc.getFilePath());
             file.delete();
@@ -136,7 +147,7 @@ public class DocumentBean extends BaseEJB {
 
     public boolean removeFile(BigDecimal documentId) {
         try {
-            Document document=getEm().find(Document.class, documentId);
+            Document document = getEm().find(Document.class, documentId);
             File file = new File(document.getFilePath());
             getEm().remove(document);
             return file.delete();
@@ -146,7 +157,6 @@ public class DocumentBean extends BaseEJB {
         }
 
     }
-
 
 
 }
