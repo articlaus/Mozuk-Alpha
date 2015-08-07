@@ -28,8 +28,6 @@
                             </listcell>
                         </listitem>
                     </template>
-
-
                 </listbox>
             </groupbox>
         </panelchildren>

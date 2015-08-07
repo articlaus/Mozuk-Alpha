@@ -60,7 +60,7 @@ public class ProbationWindowController extends MainComponent {
         employeeCustomBandbox.setWidth("100%");
         employeeCell.appendChild(employeeCustomBandbox);
 
-        departmentCustomBandbox = new CustomBandbox<Department>(Department.class, "Department.findAll", new String[]{"name"});
+        departmentCustomBandbox = new CustomBandbox<Department>(Department.class, "Department.findAll", new String[]{"departmentTitle"});
         departmentCustomBandbox.setWidth("100%");
         departmentCell.appendChild(departmentCustomBandbox);
     }

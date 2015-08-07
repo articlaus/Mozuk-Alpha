@@ -25,7 +25,8 @@
                             <listitem>
                                 <listcell label="@bind(each.positionTitle)"/>
                                 <listcell label="@bind(each.positionDescription)" span="4"/>
-                                <listcell label="@bind(each.createdDate)"/>
+                                <listcell
+                                        label="@bind(each.createdDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
                                 <listcell>
                                     <button iconSclass="z-icon-edit" onClick="@command('editPosition',entity=each)"/>
                                     <button iconSclass="z-icon-remove"
@@ -47,7 +48,7 @@
                             <listheader/>
                             <listheader/>
                             <listheader label="Үүссэн огноо"
-                                        sort="auto(createdDate) @converter('formatedDate',format='yyyy/MM/dd')"/>
+                                        sort="auto(createdDate)"/>
                             <listheader/>
                         </listhead>
                         <template name="model">
