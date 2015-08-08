@@ -23,7 +23,7 @@ public class BaseEJB {
     public static BigDecimal DOC_TYPE_PROBATION = BigDecimal.valueOf(5);
 
 //    public static final String filePath = "C:\\Users\\huslee\\IdeaProjects\\Mozuk-Alpha\\out\\production\\Mozuk-Alpha\\META-INF\\";
-    public static final String filePath = "/Users/Articlaus/Desktop/file/";
+    public static final String filePath = "C:\\Users\\Arti\\Documents\\files";
 
     @PersistenceContext(unitName = "mozukUnit")
     private EntityManager em;

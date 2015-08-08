@@ -12,7 +12,9 @@ import com.ui.controller.main.resolution.ResolutionWindowController;
 import com.ui.util.NotificationUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Filedownload;
+import org.zkoss.zul.Listbox;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,10 +29,15 @@ public class FileListWindowController extends MainComponent {
     List<Document> documentList;
     DocumentBean documentBean;
     BigDecimal type;
+
     private ResolutionWindowController resolutionWindowController;
     private OvertimeWindowController overtimeWindowController;
     private ProbationWindowController probationWindowController;
     private LeaveMainPanelController leaveMainPanelController;
+
+    @Wire
+    Listbox employeeFilesListBox;
+
 
     @Init(superclass = true)
     @Override
@@ -78,14 +85,26 @@ public class FileListWindowController extends MainComponent {
     }
 
     @Command
-    public void fileRemove(@BindingParam("documentId") BigDecimal documentId) {
-        for (Document document : documentList) {
-            if (document.getId().equals(documentId)) {
-                documentList.remove(document);
+    public void fileRemove(@BindingParam("documentId") Document documentId) {
+        if (documentId.getId() != null) {
+            documentList.remove(documentId);
+            documentBean.removeFile(documentId.getId());
+            if (documentBean.removeFile(documentId.getId())) {
+                if (type.equals(BaseEJB.DOC_TYPE_RESOLUTION)) {
+                    resolutionWindowController.setDocuments(documentList);
+                } else if (type.equals(BaseEJB.DOC_TYPE_OVERTIME)) {
+                    overtimeWindowController.setDocumentList(documentList);
+                } else if (type.equals(BaseEJB.DOC_TYPE_PROBATION)) {
+                    probationWindowController.setDocuments(documentList);
+                } else if (type.equals(BaseEJB.DOC_TYPE_LEAVE)) {
+                    leaveMainPanelController.setDocuments(documentList);
+                }
+                NotificationUtils.showDeletion();
+            } else {
+                NotificationUtils.showFailure();
             }
-        }
-
-        if (documentBean.removeFile(documentId)) {
+        } else {
+            documentList.remove(documentId);
             if (type.equals(BaseEJB.DOC_TYPE_RESOLUTION)) {
                 resolutionWindowController.setDocuments(documentList);
             } else if (type.equals(BaseEJB.DOC_TYPE_OVERTIME)) {
@@ -96,10 +115,8 @@ public class FileListWindowController extends MainComponent {
                 leaveMainPanelController.setDocuments(documentList);
             }
             NotificationUtils.showDeletion();
-        } else {
-            NotificationUtils.showFailure();
         }
 
+        getBinder().loadComponent(employeeFilesListBox, true);
     }
-
 }

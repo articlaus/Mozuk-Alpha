@@ -6,9 +6,9 @@
         <panelchildren>
             <tabbox>
                 <tabs>
-                    <tab id="Идэвхитэй сахилгын шийтгэл" label="Хувийн тохиргоо" iconSclass="z-icon-file"
+                    <tab id="probationReason" label="Идэвхитэй сахилгын шийтгэл" iconSclass="z-icon-file"
                          selected="true"/>
-                    <tab id="Жагсаалт" label="Байгуулгын тохиргоо" iconSclass="z-icon-history"/>
+                    <tab id="probationList" label="Жагсаалт" iconSclass="z-icon-history"/>
                 </tabs>
                 <tabpanels>
                     <tabpanel>

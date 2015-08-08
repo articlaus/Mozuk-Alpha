@@ -6,6 +6,7 @@ import com.model.entity.Resolution;
 import com.ui.component.SearchBox;
 import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
+import com.ui.util.NotificationUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -47,6 +48,7 @@ public class ProbationListPanelController extends MainComponent {
 
     public void loadValues() {
         probations = probationBean.findByIsActive(true);
+        getBinder().loadComponent(probationActiveList, true);
     }
 
     @Command
@@ -56,10 +58,25 @@ public class ProbationListPanelController extends MainComponent {
     }
 
     @Command
-    public void editProbation(@BindingParam("entity") Probation probation) {
+    public void refresh() {
+        loadValues();
+    }
+
+    @Command
+    public void edit(@BindingParam("entity") Probation probation) {
         getWindowMap().put("probation", probation);
         getWindowMap().put("controller", this);
         Executions.createComponents("/main/probation/ProbationWindow.zul", null, getWindowMap());
+    }
+
+    @Command
+    public void remove(@BindingParam("entity") Probation probation) {
+        if (probationBean.delete(probation.getId())) {
+            NotificationUtils.showDeletion();
+            loadValues();
+        } else {
+            NotificationUtils.showFailure();
+        }
     }
 
     public List<Probation> getProbations() {

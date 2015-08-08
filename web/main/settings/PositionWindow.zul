@@ -1,6 +1,6 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <window id="positionWindow" title="Албан Тушаал нэмэх" width="400px" height="350px"
+    <window id="positionWindow" title="Албан Тушаал нэмэх" width="400px" height="auto"
             mode="modal" border="normal" apply="org.zkoss.bind.BindComposer"
             viewModel="@id('pw') @init('com.ui.controller.other.PositionWindowController')">
         <grid>

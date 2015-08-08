@@ -23,6 +23,9 @@ import java.math.BigDecimal;
         @NamedQuery(name = "EmployeeTimesheet.deleteByWorkMonth", query = "DELETE FROM EmployeeTimesheet AS et WHERE et.workMonth=:workMonth"),
 })
 public class EmployeeTimesheet {
+
+
+
     /**
      * Тухайн Ажилтан
      * Эннээс Регистрийн дугаарыг авч хадгалан
@@ -156,6 +159,7 @@ public class EmployeeTimesheet {
 
 
     public Employee getEmployee() {
+
         return employee;
     }
 

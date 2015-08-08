@@ -1,12 +1,12 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <window id="probationWindow" width="400px" height="600px" title="Сахилгийн шийтгэл" closable="true"
+    <window id="probationWindow" width="400px" height="auto" title="Сахилгийн шийтгэл" closable="true"
             apply="org.zkoss.bind.BindComposer" mode="modal" position="center"
             viewModel="@id('pw') @init('com.ui.controller.main.probation.ProbationWindowController')">
         <grid>
             <columns>
-                <column width="30%"/>
-                <column width="70%"/>
+                <column width="40%"/>
+                <column width="60%"/>
             </columns>
             <rows>
                 <row>
@@ -15,7 +15,7 @@
                 </row>
                 <row>
                     <label value="Хэлтэс"/>
-                        <cell id="departmentCell"/>
+                    <cell id="departmentCell"/>
                 </row>
 
                 <row>
@@ -36,12 +36,19 @@
                 </row>
                 <row>
                     <label value="Хасалтын хувь :"/>
-                    <intbox value="@bind(pw.probation.deductionPercent)" width="100%" maxlength="3"/>
+                    <intbox value="@bind(pw.probation.deductionPercent)" width="100%" maxlength="2"/>
                 </row>
                 <row>
                     <label value="Баримт :"/>
-                    <button iconSclass="z-icon-upload" label="Хуулах" onClick="@command('uploadWindow')"/>
-                    <button iconSclass="z-icon-file" label="Файл жагсаалт" onClick="@command('fileList')"/>
+                    <cell>
+                        <button iconSclass="z-icon-upload" label="Хуулах" onClick="@command('uploadWindow')"/>
+                        <button iconSclass="z-icon-file" label="Файл жагсаалт" onClick="@command('fileList')"/>
+                    </cell>
+                </row>
+
+                <row>
+                    <label value=""/>
+                    <checkbox id="chkActive" value="@bind(pw.probation.isActive)" label="Идэвхитэй"/>
                 </row>
                 <row>
                     <cell align="right" colspan="2">

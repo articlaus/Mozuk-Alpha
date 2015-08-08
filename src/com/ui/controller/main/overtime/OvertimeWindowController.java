@@ -59,16 +59,18 @@ public class OvertimeWindowController extends MainComponent {
     @Override
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
-        documentList = new ArrayList<>();
+
 
         if (getArgument("overtime") != null) {
             overtime = (Overtime) getArgument("overtime");
             overtimeDateList = overtime.getOvertimeDatesList();
             isEditing = true;
+            documentList = documentBean.findByForeignKey(overtime.getId().toPlainString());
         } else {
             overtime = new Overtime();
             overtimeDateList = new ArrayList<>();
             isEditing = false;
+            documentList = new ArrayList<>();
         }
         removeList = new ArrayList<>();
 
@@ -97,6 +99,11 @@ public class OvertimeWindowController extends MainComponent {
         overtime.setEmployeeCode(employeeCustomBandbox.getSelectedT());
         overtime.setOvertimeDatesList(overtimeDateList);
         overtime.setWorkMonthsid(workMonthsCustomBandbox.getSelectedT());
+
+        for (Document document : documentList) {
+            document.setEmployeeCode(employeeCustomBandbox.getSelectedT());
+        }
+        overtime.setDocuments(documentList);
         if (isEditing) {
             if (overtimeBean.update(overtime) != null) {
                 NotificationUtils.showSuccess();
@@ -134,7 +141,7 @@ public class OvertimeWindowController extends MainComponent {
         fileUploaded = true;
         getWindowMap().put("type", BaseEJB.DOC_TYPE_OVERTIME);
         getWindowMap().put("controller", this);
-        Executions.createComponents("main/employee/EmployeeFileUploadWindow.zul", null, getWindowMap());
+        Executions.createComponents("main/other/FileUploadWindow.zul", null, getWindowMap());
     }
 
     public List<Document> getDocumentList() {
@@ -157,6 +164,7 @@ public class OvertimeWindowController extends MainComponent {
 
     @Command
     public void fileList() {
+        getWindowMap().put("type", BaseEJB.DOC_TYPE_OVERTIME);
         getWindowMap().put("documentList", documentList);
         Executions.createComponents("main/other/FileListWindow.zul", null, getWindowMap());
     }

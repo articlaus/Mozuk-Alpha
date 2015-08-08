@@ -40,6 +40,18 @@ public class EmployeeBean extends BaseEJB {
         }
     }
 
+    public Employee findByRegister(String register) {
+        Employee employee;
+        try {
+            employee = (Employee) getEm().createNamedQuery("Employee.findBySocialSecurityNumber").setParameter("socialSecurityNumber", register).getSingleResult();
+            employee.setEmployeePosition((EmployeePosition) getEm().createNamedQuery("EmployeePosition.findByEmployeeAndIsActive").setParameter("employeeCode", employee).setParameter("isActive", true).getSingleResult());
+            return employee;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     private void createWorkMonth(Employee employee) {
         EmployeeWorkMonth employeeWorkMonth = new EmployeeWorkMonth();
         WorkMonths workMonths = otherBean.findByYearAndMonth();
@@ -108,7 +120,7 @@ public class EmployeeBean extends BaseEJB {
 //            e.printStackTrace();
 //            return null;
 //        }
-        List<EmployeePosition> employeePositions=getEm().createNamedQuery("EmployeePosition.findByEmployeeAndIsActive", EmployeePosition.class)
+        List<EmployeePosition> employeePositions = getEm().createNamedQuery("EmployeePosition.findByEmployeeAndIsActive", EmployeePosition.class)
                 .setParameter("employeeCode", employee)
                 .setParameter("isActive", isActive)
                 .getResultList();
@@ -141,6 +153,7 @@ public class EmployeeBean extends BaseEJB {
             return null;
         }
     }
+
 
     public EmployeePosition updateByEmployeePosition(EmployeePosition employeePosition) {
         try {
@@ -205,6 +218,18 @@ public class EmployeeBean extends BaseEJB {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public boolean saveByEmployeeWorkMonthList(List<EmployeeWorkMonth> employeeWorkMonths) {
+        try {
+            for (EmployeeWorkMonth employeeWorkMonth : employeeWorkMonths) {
+                saveByEmployeeWorkMonth(employeeWorkMonth);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -304,7 +329,7 @@ public class EmployeeBean extends BaseEJB {
     }
 
     public List<SalaryAdditions> findBySalaryAddition(Employee employee) {
-        return getEm().createNamedQuery("SalaryAdditions.findByEmployeeCode",SalaryAdditions.class)
+        return getEm().createNamedQuery("SalaryAdditions.findByEmployeeCode", SalaryAdditions.class)
                 .setParameter("employeeCode", employee.getCode()).getResultList();
     }
 
@@ -313,15 +338,14 @@ public class EmployeeBean extends BaseEJB {
     }
 
     public double findAdditionalSalaryByEmployeeCode(Employee employee) {
-        Number number=getEm().createNamedQuery("SalaryAdditions.findDoubleByEmployeeCode", Number.class)
-        .setParameter("employeeCode",employee.getCode()).getSingleResult();
+        Number number = getEm().createNamedQuery("SalaryAdditions.findDoubleByEmployeeCode", Number.class)
+                .setParameter("employeeCode", employee.getCode()).getSingleResult();
         if (number != null) {
             return number.doubleValue();
         } else {
             return 0d;
         }
     }
-
 
 
 }

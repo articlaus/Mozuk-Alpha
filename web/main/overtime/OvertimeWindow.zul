@@ -1,7 +1,7 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
     <style src="/assets/FileUpload.css"/>
-    <window id="overtimeWindow" width="700px" height="800px" mode="modal" border="normal" closable="true"
+    <window id="overtimeWindow" width="700px" height="auto" mode="modal" border="normal" closable="true"
             apply="org.zkoss.bind.BindComposer" title="Илүү цагын мэдээлэл бүртгэх"
             viewModel="@id('ow') @init('com.ui.controller.main.overtime.OvertimeWindowController')">
         <vlayout>
@@ -21,8 +21,10 @@
                     </row>
                     <row>
                         <label value="Баримт :"/>
-                        <button iconSclass="z-icon-upload" label="Хуулах" onClick="@command('uploadWindow')"/>
-                        <button iconSclass="z-icon-file" label="Файл жагсаалт" onClick="@command('fileList')"/>
+                        <cell>
+                            <button iconSclass="z-icon-upload" label="Хуулах" onClick="@command('uploadWindow')"/>
+                            <button iconSclass="z-icon-file" label="Файл жагсаалт" onClick="@command('fileList')"/>
+                        </cell>
                     </row>
                     <row>
                         <label value="Шалтгаан :"/>
@@ -55,10 +57,10 @@
                                 <datebox format="yyyy/MM/dd" value="@bind(each.workDate)" width="100%"/>
                             </listcell>
                             <listcell>
-                                <textbox value="@bind(each.startTime)" width="100%"/>
+                                <textbox value="@bind(each.startTime)" width="100%" placeholder="12:00"/>
                             </listcell>
                             <listcell>
-                                <textbox value="@bind(each.endTime)" width="100%"/>
+                                <textbox value="@bind(each.endTime)" width="100%" placeholder="13:00"/>
                             </listcell>
                             <listcell>
                                 <checkbox checked="@bind(each.isHoliday)"/>

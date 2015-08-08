@@ -351,7 +351,7 @@ public class OtherBean extends BaseEJB {
     }
 
     public WorkMonths findByPreviousYearAndMonth(WorkMonths currentMonth) {
-        int year ;
+        int year;
         int month;
         if (currentMonth == null) {
             DateTime dateTime = new DateTime();
@@ -373,7 +373,7 @@ public class OtherBean extends BaseEJB {
     }
 
     public WorkMonths findByNextYearAndMonth(WorkMonths currentMonth) {
-        int year ;
+        int year;
         int month;
         if (currentMonth == null) {
             DateTime dateTime = new DateTime();
@@ -393,7 +393,6 @@ public class OtherBean extends BaseEJB {
             return null;
         }
     }
-
 
 
     public WorkMonths findByYearAndMonthAndIsLocked(int year, int month, boolean isLocked) {
@@ -479,8 +478,8 @@ public class OtherBean extends BaseEJB {
                         new CalendarPojo(
                                 overtime.getEmployeeCode().getFullName() +
                                         overtime.getReason()
-                                , workDate + overtimeDates.getStartTime()
-                                , workDate + overtimeDates.getEndTime()
+                                , workDate + "T" + overtimeDates.getStartTime()
+                                , workDate + "T" + overtimeDates.getEndTime()
                         )
                 );
             }

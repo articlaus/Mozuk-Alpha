@@ -2,7 +2,7 @@
     xmlns:h="http://www.w3.org/1999/xhtml"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
-    <window id="workMonthsWindow" width="400px" height="200px" mode="modal" border="normal" title="Ажлын Сар"
+    <window id="workMonthsWindow" width="400px" height="auto" mode="modal" border="normal" title="Ажлын Сар"
             viewModel="@id('wmw') @init('com.ui.controller.other.WorkMonthWindowController')" closable="true">
         <grid>
             <columns>

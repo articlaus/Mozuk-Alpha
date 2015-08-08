@@ -40,7 +40,7 @@ public class ProbationBean extends BaseEJB {
                 .getResultList();
     }
 
-    public List<Probation> findByEmployeeCodeAndIsActive(Employee employee,boolean isActive) {
+    public List<Probation> findByEmployeeCodeAndIsActive(Employee employee, boolean isActive) {
         return getEm().createNamedQuery("Probation.findByEmployeeAndIsActive", Probation.class)
                 .setParameter("employeeCode", employee)
                 .setParameter("isActive", isActive)
@@ -75,9 +75,9 @@ public class ProbationBean extends BaseEJB {
 
     public Probation update(Probation probation) {
         try {
-            probation=getEm().merge(probation);
             if (probation.getDocuments().size() > 0)
                 documentBean.saveAll(probation.getId().toString(), probation.getDocuments(), DOC_TYPE_PROBATION);
+            probation = getEm().merge(probation);
             return probation;
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,7 +87,7 @@ public class ProbationBean extends BaseEJB {
 
     public boolean delete(BigDecimal probationId) {
         try {
-            Probation probation=getEm().getReference(Probation.class, probationId);
+            Probation probation = getEm().getReference(Probation.class, probationId);
             getEm().remove(probation);
             return true;
         } catch (Exception e) {
@@ -95,7 +95,6 @@ public class ProbationBean extends BaseEJB {
             return false;
         }
     }
-
 
 
 }

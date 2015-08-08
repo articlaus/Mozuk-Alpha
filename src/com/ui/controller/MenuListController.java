@@ -68,5 +68,10 @@ public class MenuListController extends MainComponent {
         getMainInclude().setSrc("main/resolution/ResolutionPanel.zul");
     }
 
+    @Command
+    public void logout() {
+        Executions.getCurrent().getSession().setAttribute("currentUser", null);
+        Executions.sendRedirect("login.zul");
+    }
 
 }

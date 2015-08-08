@@ -48,6 +48,8 @@ public abstract class MainComponent {
         }
         binder = (AnnotateBinder) view.getAttribute("binder");
         mainInclude = (Include) Executions.getCurrent().getSession().getAttribute("mainInclude");
+        if (Executions.getCurrent().getSession().getAttribute("currentUser") == null)
+            Executions.sendRedirect("login.zul");
     }
 
 

@@ -101,7 +101,10 @@ public class ResolutionWindowController extends MainComponent {
         resolution.setEmployeeCode(employeeCustomBandbox.getSelectedT());
         resolution.setDepartmentCode(departmentCustomBandbox.getSelectedT());
         resolution.setResolutionType(resolutionTypeCustomBandbox.getSelectedT());
-
+        for (Document document : documentList) {
+            document.setEmployeeCode(employeeCustomBandbox.getSelectedT());
+        }
+        resolution.setDocuments(documentList);
         if (isEditing) {
             if (resolutionBean.update(resolution) != null) {
                 NotificationUtils.showSuccess();
@@ -128,6 +131,7 @@ public class ResolutionWindowController extends MainComponent {
 
     @Command
     public void fileList() {
+        getWindowMap().put("type", BaseEJB.DOC_TYPE_RESOLUTION);
         getWindowMap().put("documentList", documentList);
         Executions.createComponents("main/other/FileListWindow.zul", null, getWindowMap());
     }

@@ -1,6 +1,6 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <window title="Хэрэглэгчийн Мэдээлэл" id="userWindow" width="500px" height="500px" mode="modal" border="normal"
+    <window title="Хэрэглэгчийн Мэдээлэл" id="userWindow" width="500px" height="auto" mode="modal" border="normal"
             apply="org.zkoss.bind.BindComposer" viewModel="@id('uw') @init('')">
         <grid>
             <columns>

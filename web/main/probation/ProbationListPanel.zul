@@ -5,7 +5,8 @@
     <panel id="probationListPanel" width="100%" height="700px" apply="org.zkoss.bind.BindComposer"
            viewModel="@id('plp') @init('com.ui.controller.main.probation.ProbationListPanelController')">
         <toolbar>
-            <button iconSclass="z-icon-plus" label="?????" onClick="@command('addProbation')"/>
+            <button iconSclass="z-icon-plus" label="Нэмэх" onClick="@command('addProbation')"/>
+            <button iconSclass="z-icon-refresh" onClick="@command('refresh')"/>
             <cell id="searchCell"/>
         </toolbar>
         <panelchildren>
@@ -32,6 +33,7 @@
                             <listcell>
                                 <cell align="center">
                                     <button iconSclass="z-icon-edit" onClick="@command('edit',entity=each)"/>
+                                    <button iconSclass="z-icon-remove" onClick="@command('remove',entity=each)"/>
                                 </cell>
                             </listcell>
                         </listitem>

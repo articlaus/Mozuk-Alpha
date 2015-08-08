@@ -19,14 +19,14 @@
                                              onClick="@command('leaveList')"/>
                                     <navitem label="Илүү Цаг" iconSclass="z-icon-user-plus"
                                              onClick="@command('overtime')"/>
-                                    <navitem label="Сахилгын шийтгэл" iconSclass="z-icon-eye-close"
+                                    <navitem label="Сахилгын шийтгэл" iconSclass="z-icon-user-times"
                                              onClick="@command('probation')"/>
                                 </nav>
                                 <navitem label="Цалин Бодох" iconSclass="z-icon-money" onClick="@command('finalTime')"/>
                                 <navitem label="Албан Тушаал" iconSclass="z-icon-file"
                                          onClick="@command('resolution')"/>
                                 <navitem label="Тохиргоо" iconSclass="z-icon-gear" onClick="@command('settings')"/>
-
+                                <navitem label="Гарах" iconSclass="z-icon-arrow-left" onClick="@command('logout')"/>
                             </navbar>
                         </panelchildren>
                     </panel>

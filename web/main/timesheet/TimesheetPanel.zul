@@ -7,18 +7,19 @@
                 <button label="Хадгалах" onClick="@command('save')" iconSclass="z-icon-save"/>
                 <button label="Excel Татах" onClick="@command('dlExcel')" iconSclass="z-icon-download"/>
                 <button label="Excel Оруулах" onClick="@command('ulExcel')" iconSclass="z-icon-upload"/>
+                <button label="Цалин бодох" id="calculateBtn" onClick="@command('calculate')"
+                        iconSclass="z-icon-money"/>
             </cell>
         </toolbar>
         <panelchildren>
             <groupbox closable="false">
                 <caption label="Энэ Сарын Ажилчдын цаг оруулах"/>
                 <listbox id="employeeTimesheetListbox" height="600px" model="@bind(tp.employeeWorkMonthList)"
-                         selectedItem="@bind(tp.employeeWorkMonth)" mold="paging" pagingPosition="bottom">
+                         mold="paging" pagingPosition="bottom">
                     <listhead menupopup="auto">
                         <listheader label="Ажилтан" sort=""/>
                         <listheader label="Ажиллах ёстой цаг" sort=""/>
                         <listheader label="Ажилласан цаг" sort=""/>
-                        <!--<listheader label="Дууссан Өдөр" sort="auto(endDate)"/>-->
                     </listhead>
                     <template name="model">
                         <listitem>

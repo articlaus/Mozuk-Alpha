@@ -1,5 +1,6 @@
 package com.ui.controller.main.leave;
 
+import com.model.bean.DocumentBean;
 import com.model.bean.EmployeeBean;
 import com.model.bean.LeaveAbsenceBean;
 import com.model.bean.OtherBean;
@@ -26,6 +27,7 @@ import java.util.List;
 public class LeaveMainPanelController extends MainComponent {
     List<LeaveAbsence> leaveList;
     List<Document> documents;
+    DocumentBean documentBean;
     LeaveAbsence leaveAbsence;
     LeaveAbsenceBean leaveAbsenceBean;
     EmployeeBean employeeBean;
@@ -49,6 +51,7 @@ public class LeaveMainPanelController extends MainComponent {
     @Override
     public void init() {
         super.init();
+        documentBean = EBeanUtils.getBean(DocumentBean.class);
         leaveAbsenceBean = EBeanUtils.getBean(LeaveAbsenceBean.class);
         otherBean = EBeanUtils.getBean(OtherBean.class);
         employeeBean = EBeanUtils.getBean(EmployeeBean.class);
@@ -87,7 +90,7 @@ public class LeaveMainPanelController extends MainComponent {
     @NotifyChange("leaveAbsence")
     public void editLeave(@BindingParam("leave") LeaveAbsence leaveAbsence) {
         this.leaveAbsence = leaveAbsence;
-        documents = leaveAbsence.getDocuments();
+        documents = documentBean.findByForeignKey(leaveAbsence.getId().toPlainString());
         employeeCustomBandbox.setSelectedT(leaveAbsence.getEmployeeCode());
         leaveTypeCustomBandbox.setSelectedT(leaveAbsence.getLeaveTypeId());
         workMonthsCustomBandbox.setSelectedT(leaveAbsence.getWorkMonthsid());
@@ -113,6 +116,10 @@ public class LeaveMainPanelController extends MainComponent {
         leaveAbsence.setLeaveTypeId(leaveTypeCustomBandbox.getSelectedT());
         leaveAbsence.setWorkMonthsid(workMonthsCustomBandbox.getSelectedT());
         leaveAbsence.setIsPaid(chkActive.isChecked());
+        for (Document document : documents) {
+            document.setEmployeeCode(employeeCustomBandbox.getSelectedT());
+        }
+        leaveAbsence.setDocuments(documents);
         if (leaveAbsence.getId() != null) {
             if (leaveAbsenceBean.update(leaveAbsence) != null) {
                 NotificationUtils.showSuccess();
@@ -148,6 +155,7 @@ public class LeaveMainPanelController extends MainComponent {
 
     @Command
     public void fileList() {
+        getWindowMap().put("type", BaseEJB.DOC_TYPE_LEAVE);
         getWindowMap().put("documentList", documents);
         Executions.createComponents("main/other/FileListWindow.zul", null, getWindowMap());
     }

@@ -18,7 +18,6 @@ import java.util.Objects;
         @NamedQuery(name = "VARIABLES.findByVariableCode", query = "SELECT v FROM Variables AS v WHERE v.variableCode=:variableCode"),
         @NamedQuery(name = "VARIABLES.findByVariableCodeAndIsActive", query = "SELECT v FROM Variables AS v WHERE v.isActive=:isActive AND v.variableCode=:variableCode"),
         @NamedQuery(name = "VARIABLES.findByVariableName", query = "SELECT v FROM Variables AS v WHERE v.isActive=:isActive AND v.variableName=:variableName"),
-
 })
 public class Variables {
     @Id

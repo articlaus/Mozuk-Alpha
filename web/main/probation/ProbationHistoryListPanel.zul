@@ -3,15 +3,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 
-    <panel id="probationHistoryListPanel" width="100%" height="700px" apply="org.zkoss.bind.BindComposer"
-           viewModel="@id('phlp') @init('com.ui.controller.main.probation.ProbationListPanelController')">
+    <panel id="probationHistoryListPanel" width="100%" height="auto" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('phlp') @init('com.ui.controller.main.probation.ProbationHistoryListPanelController')">
         <toolbar>
             <cell id="searchCell"/>
+            <button iconSclass="z-icon-refresh" onClick="@command('refresh')"/>
         </toolbar>
         <panelchildren>
             <groupbox closable="false">
                 <caption label="Сахилгын шийтгэлын шалтгаан"/>
-                <listbox id="probationActiveList" height="600px" model="@bind(plp.probations)">
+                <listbox id="probationActiveList" height="600px" model="@bind(phlp.probations)">
                     <listhead menupopup="auto">
                         <listheader label="Ажилтаны нэр" sort="auto(employeeCode.fullName)"/>
                         <listheader label="Хэлтэс" sort="auto(departmentCode.departmentTitle)"/>
@@ -32,6 +33,7 @@
                             <listcell>
                                 <cell align="center">
                                     <button iconSclass="z-icon-edit" onClick="@command('edit',entity=each)"/>
+                                    <button iconSclass="z-icon-remove" onClick="@command('remove',entity=each)"/>
                                 </cell>
                             </listcell>
                         </listitem>

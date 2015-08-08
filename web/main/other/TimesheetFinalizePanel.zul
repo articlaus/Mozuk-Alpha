@@ -16,7 +16,8 @@
                             <button iconSclass="z-icon-arrow-right" onClick="@command('getNext')" id="btnNext"/>
                         </cell>
                         <cell align="center">
-                            <button iconSclass="z-icon-save" onClick="@command('finalize')" label="Эцэслэх"/>
+                            <button iconSclass="z-icon-save" id="lockBtn" onClick="@command('finalize')"
+                                    label="Эцэслэх"/>
                         </cell>
                         <cell/>
                     </row>
@@ -33,7 +34,9 @@
                     <listheader label="Ажилласан цаг" sort="auto(workedHours)"/>
                     <listheader label="Чөлөөтэй цаг" sort="auto(totalLeaveHours)"/>
                     <listheader label="Илүү цаг" sort="auto(totalOvertimeHours)"/>
-                    <listheader label="Шимтгэл" sort="auto(deduction)"/>
+                    <listheader label="Шимтгэл" sort="auto(deducation)"/>
+                    <listheader/>
+                    <listheader/>
                     <listheader label="Эцсийн цалин" sort="auto(finalSalary)"/>
                 </listhead>
                 <template name="model">
@@ -45,7 +48,7 @@
                         <listcell label="@load(each.workedHours)"/>
                         <listcell label="@load(each.totalLeaveHours)"/>
                         <listcell label="@load(each.totalOvertimeHours)"/>
-                        <listcell label="@load(each.deduction)"/>
+                        <listcell label="@load(each.deducation)" span="3"/>
                         <listcell label="@load(each.finalSalary)"/>
                     </listitem>
                 </template>

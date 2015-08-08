@@ -1,9 +1,17 @@
 package com.ui.controller.other;
 
+import com.model.bean.CalculationBean;
+import com.model.bean.EmployeeBean;
+import com.model.bean.OtherBean;
 import com.model.entity.EmployeeTimesheet;
+import com.model.entity.WorkMonths;
+import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
+import org.zkoss.zul.Listbox;
 
 import java.util.List;
 
@@ -12,17 +20,51 @@ import java.util.List;
  */
 public class TimesheetFinalizePanelController extends MainComponent {
     List<EmployeeTimesheet> employeeTimesheetList;
+    CalculationBean calculationBean;
+    OtherBean otherBean;
+    EmployeeBean employeeBean;
+    WorkMonths currentMonth;
+    WorkMonths prevMonth;
+    WorkMonths nextMonth;
+
+    @Wire
+    Listbox employeeTimeListbox;
+
+    @Wire
+    Button btnPrev, btnNext, lockBtn;
 
     @Init(superclass = true)
     @Override
     public void init() {
         super.init();
+        calculationBean = EBeanUtils.getBean(CalculationBean.class);
+        employeeBean = EBeanUtils.getBean(EmployeeBean.class);
+        otherBean = EBeanUtils.getBean(OtherBean.class);
     }
 
     @AfterCompose(superclass = true)
     @Override
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
+        currentMonth = otherBean.findByYearAndMonth();
+        prevMonth = otherBean.findByPreviousYearAndMonth(currentMonth);
+        nextMonth = otherBean.findByNextYearAndMonth(currentMonth);
+
+        loadValues();
+    }
+
+    public void loadValues() {
+        employeeTimesheetList = calculationBean.findByWorkMonth(currentMonth);
+        loadEmployeeAndPosition();
+        getBinder().loadComponent(employeeTimeListbox, true);
+    }
+
+
+    private void loadEmployeeAndPosition() {
+        for (EmployeeTimesheet employeeTimesheet : employeeTimesheetList) {
+            employeeTimesheet.setEmployee(employeeBean.findByRegister(employeeTimesheet.getEmployeeRegister()));
+            employeeTimesheet.setPosition(employeeTimesheet.getEmployee().getEmployeePosition().getPositionCode());
+        }
     }
 
     public List<EmployeeTimesheet> getEmployeeTimesheetList() {
@@ -36,16 +78,39 @@ public class TimesheetFinalizePanelController extends MainComponent {
 
     @Command
     public void getPrevious() {
-        //todo
+        currentMonth = prevMonth;
+        if (otherBean.findByPreviousYearAndMonth(currentMonth) != null)
+            prevMonth = otherBean.findByPreviousYearAndMonth(currentMonth);
+        else {
+            btnPrev.setDisabled(true);
+        }
+
+        btnNext.setDisabled(false);
+
+        lockBtn.setDisabled(currentMonth.getIsLocked());
+        getBinder().loadComponent(lockBtn, true);
+        nextMonth = otherBean.findByNextYearAndMonth(currentMonth);
+        loadValues();
     }
 
     @Command
     public void getNext() {
-        //todo
+        currentMonth = nextMonth;
+        prevMonth = otherBean.findByPreviousYearAndMonth(currentMonth);
+        if (otherBean.findByNextYearAndMonth(currentMonth) != null)
+            nextMonth = otherBean.findByNextYearAndMonth(currentMonth);
+        else {
+            btnNext.setDisabled(true);
+        }
+        lockBtn.setDisabled(currentMonth.getIsLocked());
+        getBinder().loadComponent(lockBtn, true);
+        btnPrev.setDisabled(false);
+        loadValues();
     }
 
     @Command
     public void finalize() {
-        //todo
+        currentMonth.setIsLocked(true);
+        otherBean.updateByWorkMonths(currentMonth);
     }
 }

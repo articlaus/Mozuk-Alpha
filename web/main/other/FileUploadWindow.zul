@@ -31,16 +31,12 @@
                              value="@bind(fuw.document.description)"
                              placeholder="Тайлбар : "/>
                 </row>
-                <row >
-                    <label value="Файлийн төрөл : "/>
-                    <cell width="100%" id="fileTypeCell"/>
-                </row>
                 <row spans="2" align="right" style="background: #FFFFFF">
                     <div>
                         <button id="btnSave" mold="trendy" sclass="btn btn-default btn-small" label="Хадгалах"
                                 onClick="@command('btnSave')"/>
-                        <button id="btnCancel" mold="trendy" sclass="btn btn-default btn-small" label="Гарах"
-                                onClick="@global-command('windowCancelBtn')"/>
+                        <!--<button id="btnCancel" mold="trendy" sclass="btn btn-default btn-small" label="Гарах"-->
+                        <!--onClick="@global-command('windowCancelBtn')"/>-->
                     </div>
                 </row>
             </rows>

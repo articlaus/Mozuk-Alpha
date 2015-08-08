@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ProbationHistoryListPanelController extends MainComponent {
 
-    List<Probation> probationList;
+    List<Probation> probations;
     ProbationBean probationBean;
 
     @Wire
@@ -38,9 +38,14 @@ public class ProbationHistoryListPanelController extends MainComponent {
     @Override
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
-        probationList = probationBean.findAll();
-        SearchBox<Probation> searchBox = new SearchBox<>(probationList, new String[]{"employeeCode.fullName", "departmentCode.departmentTitle", "employeeCode.fullName", "startDate", "endDate", "probationReason"}, probationActiveList, getBinder());
+        loadValues();
+        SearchBox<Probation> searchBox = new SearchBox<>(probations, new String[]{"employeeCode.fullName", "departmentCode.departmentTitle", "employeeCode.fullName", "startDate", "endDate", "probationReason"}, probationActiveList, getBinder());
         searchCell.appendChild(searchBox);
+    }
+
+    public void loadValues() {
+        probations = probationBean.findAll();
+        getBinder().loadComponent(probationActiveList, true);
     }
 
 
@@ -51,11 +56,17 @@ public class ProbationHistoryListPanelController extends MainComponent {
         Executions.createComponents("/main/probation/ProbationWindow.zul", null, getWindowMap());
     }
 
-    public List<Probation> getProbationList() {
-        return probationList;
+
+    @Command
+    public void refresh() {
+        loadValues();
     }
 
-    public void setProbationList(List<Probation> probationList) {
-        this.probationList = probationList;
+    public List<Probation> getProbations() {
+        return probations;
+    }
+
+    public void setProbations(List<Probation> probations) {
+        this.probations = probations;
     }
 }

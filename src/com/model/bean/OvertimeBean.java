@@ -1,9 +1,6 @@
 package com.model.bean;
 
-import com.model.entity.Employee;
-import com.model.entity.Overtime;
-import com.model.entity.OvertimeDates;
-import com.model.entity.WorkMonths;
+import com.model.entity.*;
 import com.model.util.BaseEJB;
 import com.model.util.SequenceUtil;
 
@@ -75,6 +72,9 @@ public class OvertimeBean extends BaseEJB {
 
     public Overtime save(Overtime overtime) {
         try {
+//            Variables variables = (Variables) getEm().createNamedQuery("VARIABLES.findByVariableCode").setParameter("variableCode", "OVT_MLT").getSingleResult();
+//            System.out.println("variables = " + variables.getVariableValue());
+            overtime.setMultiplier(1.5);
             overtime.setId(SequenceUtil.nextBigDecimal());
             getEm().persist(overtime);
             return overtime;
@@ -86,6 +86,9 @@ public class OvertimeBean extends BaseEJB {
 
     public Overtime saveOvertimeAndOvertimeDates(Overtime overtime) {
         try {
+//            Variables variables = (Variables) getEm().createNamedQuery("VARIABLES.findByVariableCode").setParameter("variableCode", "OVT_MLT").getSingleResult();
+//            System.out.println("variables = " + variables.getVariableValue());
+            overtime.setMultiplier(1.5);
             overtime = save(overtime);
             saveByOvertimeDate(overtime.getOvertimeDatesList(), overtime);
             if (overtime.getDocuments().size() > 0)

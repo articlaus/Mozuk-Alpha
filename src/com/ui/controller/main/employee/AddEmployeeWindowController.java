@@ -98,13 +98,13 @@ public class AddEmployeeWindowController extends MainComponent {
         final Media media = event.getMedia();
         employee.setPortrait(media.getByteData());
         Button imageBtn = new Button("Үзэх");
-//        imageBtn.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
-//            @Override
-//            public void onEvent(Event event) throws Exception {
-//                getWindowMap().put("image", media.getByteData());
-//                Executions.createComponents("/main/other/PortraitWindow.zul", null, getWindowMap());
-//            }
-//        });
+        imageBtn.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+            @Override
+            public void onEvent(Event event) throws Exception {
+                getWindowMap().put("image", media.getByteData());
+                Executions.createComponents("/main/other/PortraitWindow.zul", null, getWindowMap());
+            }
+        });
         imageBtn.setIconSclass("z-icon-image");
         imageCell.appendChild(imageBtn);
     }
