@@ -15,6 +15,13 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "EMPLOYEE_TIMESHEET", schema = "", catalog = "avocado")
+@NamedQueries({
+        @NamedQuery(name = "EmployeeTimesheet.findAll", query = "SELECT et FROM EmployeeTimesheet AS et"),
+        @NamedQuery(name = "EmployeeTimesheet.findByWorkMonth", query = "SELECT et FROM EmployeeTimesheet AS et WHERE et.workMonth=:workMonth"),
+        @NamedQuery(name = "EmployeeTimesheet.findByEmployeeRegister", query = "SELECT et FROM EmployeeTimesheet AS et WHERE et.employeeRegister=:employeeRegister"),
+        @NamedQuery(name = "EmployeeTimesheet.findByEmployeeRegisterAndWorkMonth", query = "SELECT et FROM EmployeeTimesheet AS et WHERE et.employeeRegister=:employeeRegister AND et.workMonth=:workMonth"),
+        @NamedQuery(name = "EmployeeTimesheet.deleteByWorkMonth", query = "DELETE FROM EmployeeTimesheet AS et WHERE et.workMonth=:workMonth"),
+})
 public class EmployeeTimesheet {
     /**
      * Тухайн Ажилтан
@@ -34,6 +41,8 @@ public class EmployeeTimesheet {
     /**
      * Үндсэн цалин
      */
+    @Basic
+    @Column(name = "main_salary")
     double mainSalary;
 
     /**
@@ -59,7 +68,7 @@ public class EmployeeTimesheet {
     /**
      * Нийт илүү ажилласан цаг
      */
-    double totalOvertime;
+
     /**
      * Хэрэв шийтгэлтэй байгаа бол шийтгэлээр хасагдаж буй цалин
      * <p/>
@@ -74,18 +83,6 @@ public class EmployeeTimesheet {
     @Transient
     private String deducation;
 
-    public String getDeducation() {
-        String deducation = "";
-        if (probationAmount > 0d) {
-            deducation += "Шийтгэл : " + DataTypeUtils.doubleToString(probationAmount);
-        }
-        deducation += "ХАОАТ: " + DataTypeUtils.doubleToString(sitAmount) + " НДТ : " + DataTypeUtils.doubleToString(vatAmount);
-        return deducation;
-    }
-
-    public void setDeducation(String deducation) {
-        this.deducation = deducation;
-    }
 
     @Basic
     @Column(name = "probation_amount")
@@ -131,6 +128,23 @@ public class EmployeeTimesheet {
     @Column(name = "work_month")
     private BigDecimal workMonth;
 
+    @Basic
+    @Column(name = "bonus_additions")
+    private String bonusAdditions;
+
+    public String getDeducation() {
+        String deducation = "";
+        if (probationAmount > 0d) {
+            deducation += "Шийтгэл : " + DataTypeUtils.doubleToString(probationAmount);
+        }
+        deducation += "ХАОАТ: " + DataTypeUtils.doubleToString(sitAmount) + " НДТ : " + DataTypeUtils.doubleToString(vatAmount);
+        return deducation;
+    }
+
+    public void setDeducation(String deducation) {
+        this.deducation = deducation;
+    }
+
 
     public BigDecimal getId() {
         return id;
@@ -140,13 +154,6 @@ public class EmployeeTimesheet {
         this.id = id;
     }
 
-    public void setTotalLeaveHours(Double totalLeaveHours) {
-        this.totalLeaveHours = totalLeaveHours;
-    }
-
-    public void setProbationAmount(Double probationAmount) {
-        this.probationAmount = probationAmount;
-    }
 
     public Employee getEmployee() {
         return employee;
@@ -199,13 +206,6 @@ public class EmployeeTimesheet {
         this.totalLeaveHours = totalLeaveHours;
     }
 
-    public double getTotalOvertime() {
-        return totalOvertime;
-    }
-
-    public void setTotalOvertime(double totalOvertime) {
-        this.totalOvertime = totalOvertime;
-    }
 
 
     public double getProbationAmount() {
@@ -279,6 +279,14 @@ public class EmployeeTimesheet {
         this.workMonth = workMonth;
     }
 
+    public String getBonusAdditions() {
+        return bonusAdditions;
+    }
+
+    public void setBonusAdditions(String bonusAdditions) {
+        this.bonusAdditions = bonusAdditions;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -331,5 +339,47 @@ public class EmployeeTimesheet {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (workMonth != null ? workMonth.hashCode() : 0);
         return result;
+    }
+
+
+    @Transient
+    private EmployeeWorkMonth employeeWorkMonth;
+
+    public EmployeeWorkMonth getEmployeeWorkMonth() {
+        return employeeWorkMonth;
+    }
+
+    public void setEmployeeWorkMonth(EmployeeWorkMonth employeeWorkMonth) {
+        this.employeeWorkMonth = employeeWorkMonth;
+    }
+
+    public WorkMonths getWorkMonths() {
+        return workMonths;
+    }
+
+    public void setWorkMonths(WorkMonths workMonths) {
+        this.workMonths = workMonths;
+    }
+
+
+    @Override
+    public String toString() {
+        return "EmployeeTimesheet{" +
+                ", id=" + id +
+                ", mainSalary=" + mainSalary +
+                ", workHours=" + workHours +
+                ", workedHours=" + workedHours +
+                ", totalLeaveHours=" + totalLeaveHours +
+                ", deducation='" + deducation + '\'' +
+                ", probationAmount=" + probationAmount +
+                ", sitAmount=" + sitAmount +
+                ", vatAmount=" + vatAmount +
+                ", finalSalary=" + finalSalary +
+                ", employeeRegister='" + employeeRegister + '\'' +
+                ", employeePosition='" + employeePosition + '\'' +
+                ", totalOvertimeHours=" + totalOvertimeHours +
+                ", workMonth=" + workMonth +
+                ", bonusAdditions='" + bonusAdditions + '\'' +
+                '}';
     }
 }

@@ -40,6 +40,13 @@ public class ProbationBean extends BaseEJB {
                 .getResultList();
     }
 
+    public List<Probation> findByEmployeeCodeAndIsActive(Employee employee,boolean isActive) {
+        return getEm().createNamedQuery("Probation.findByEmployeeAndIsActive", Probation.class)
+                .setParameter("employeeCode", employee)
+                .setParameter("isActive", isActive)
+                .getResultList();
+    }
+
     public List<Probation> findByDepartmentCode(Department department) {
         return getEm().createNamedQuery("Probation.findByDepartment", Probation.class)
                 .setParameter("departmentCode", department)

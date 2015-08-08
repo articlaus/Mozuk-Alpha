@@ -52,6 +52,27 @@ public class OvertimeBean extends BaseEJB {
                 .getResultList();
     }
 
+    public double findHoursByEmployeeAndWorkMonth(Employee employee, WorkMonths workMonth) {
+        List<Overtime> overtimes = getEm().createNamedQuery("Overtime.findByEmployeeAndWorkMonthsId", Overtime.class)
+                .setParameter("employeeCode", employee)
+                .setParameter("workMonthsid", workMonth)
+                .getResultList();
+        double hours = 0d;
+        if (overtimes.size() == 0) {
+            return hours;
+        } else {
+            for (Overtime overtime : overtimes) {
+                double multiplier = overtime.getMultiplier();
+                for (OvertimeDates overtimeDates : overtime.getOvertimeDatesList()) {
+                    if (!overtimeDates.getIsHoliday()) {
+                        hours += overtimeDates.getHours() * multiplier;
+                    }
+                }
+            }
+            return hours;
+        }
+    }
+
     public Overtime save(Overtime overtime) {
         try {
             overtime.setId(SequenceUtil.nextBigDecimal());
@@ -79,7 +100,7 @@ public class OvertimeBean extends BaseEJB {
     public Overtime update(Overtime overtime) {
         try {
             overtime = getEm().merge(overtime);
-            updateByOvertimeDate(overtime.getOvertimeDatesList(),overtime);
+            updateByOvertimeDate(overtime.getOvertimeDatesList(), overtime);
             if (overtime.getDocuments().size() > 0)
                 documentBean.saveAll(overtime.getId().toString(), overtime.getDocuments(), DOC_TYPE_OVERTIME);
             return overtime;
@@ -181,7 +202,7 @@ public class OvertimeBean extends BaseEJB {
         }
     }
 
-    public List<OvertimeDates> updateByOvertimeDate(List<OvertimeDates> overtimeDates,Overtime overtime) {
+    public List<OvertimeDates> updateByOvertimeDate(List<OvertimeDates> overtimeDates, Overtime overtime) {
         try {
             List<OvertimeDates> returnList = new ArrayList<>(overtimeDates.size());
             for (OvertimeDates overtimeDate : overtimeDates) {

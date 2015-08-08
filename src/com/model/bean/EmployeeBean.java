@@ -1,9 +1,6 @@
 package com.model.bean;
 
-import com.model.entity.Employee;
-import com.model.entity.EmployeePosition;
-import com.model.entity.EmployeeWorkMonth;
-import com.model.entity.WorkMonths;
+import com.model.entity.*;
 import com.model.util.BaseEJB;
 import com.model.util.SequenceUtil;
 import org.joda.time.DateTime;
@@ -105,13 +102,24 @@ public class EmployeeBean extends BaseEJB {
     }
 
     public EmployeePosition findByEmployeeCodeAndIsActive(Employee employee, boolean isActive) {
-        try {
-            return getEm().createNamedQuery("EmployeePosition.findByEmployeeAndIsActive", EmployeePosition.class)
-                    .setParameter("employeeCode", employee)
-                    .setParameter("isActive", isActive)
-                    .getSingleResult();
-        } catch (Exception e) {
-            e.printStackTrace();
+//        try {
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+        List<EmployeePosition> employeePositions=getEm().createNamedQuery("EmployeePosition.findByEmployeeAndIsActive", EmployeePosition.class)
+                .setParameter("employeeCode", employee)
+                .setParameter("isActive", isActive)
+                .getResultList();
+        if (employeePositions.size() == 0) {
+            return null;
+        } else {
+            for (EmployeePosition employeePosition : employeePositions) {
+                if (employeePosition.getIsActive()) {
+                    return employeePosition;
+                }
+            }
             return null;
         }
     }
@@ -247,6 +255,73 @@ public class EmployeeBean extends BaseEJB {
             return false;
         }
     }
+
+//----------------------Salary Additions --------------------
+
+    public SalaryAdditions save(SalaryAdditions salaryAdditions) {
+        try {
+            salaryAdditions.setId(SequenceUtil.nextBigDecimal());
+            getEm().persist(salaryAdditions);
+            return salaryAdditions;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean save(List<SalaryAdditions> salaryAdditionses) {
+        try {
+            for (SalaryAdditions salaryAdditionse : salaryAdditionses) {
+                save(salaryAdditionse);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public SalaryAdditions update(SalaryAdditions salaryAdditions) {
+        try {
+            getEm().merge(salaryAdditions);
+            return salaryAdditions;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean update(List<SalaryAdditions> salaryAdditionses) {
+        try {
+            for (SalaryAdditions salaryAdditionse : salaryAdditionses) {
+                update(salaryAdditionse);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<SalaryAdditions> findBySalaryAddition(Employee employee) {
+        return getEm().createNamedQuery("SalaryAdditions.findByEmployeeCode",SalaryAdditions.class)
+                .setParameter("employeeCode", employee.getCode()).getResultList();
+    }
+
+    public SalaryAdditions findBySalaryAdditionId(BigDecimal salaryAdditionId) {
+        return getEm().find(SalaryAdditions.class, salaryAdditionId);
+    }
+
+    public double findAdditionalSalaryByEmployeeCode(Employee employee) {
+        Number number=getEm().createNamedQuery("SalaryAdditions.findDoubleByEmployeeCode", Number.class)
+        .setParameter("employeeCode",employee.getCode()).getSingleResult();
+        if (number != null) {
+            return number.doubleValue();
+        } else {
+            return 0d;
+        }
+    }
+
 
 
 }

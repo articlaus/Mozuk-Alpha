@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "LeaveAbsence.findById", query = "SELECT l FROM LeaveAbsence l WHERE l.id = :id"),
         @NamedQuery(name = "LeaveAbsence.findByStartDate", query = "SELECT l FROM LeaveAbsence l WHERE l.startDate = :startDate"),
         @NamedQuery(name = "LeaveAbsence.findByEndDate", query = "SELECT l FROM LeaveAbsence l WHERE l.endDate = :endDate"),
-        @NamedQuery(name = "LeaveAbsence.findByNumberOfDays", query = "SELECT l FROM LeaveAbsence l WHERE l.numberOfDays = :numberOfDays"),
+        @NamedQuery(name = "LeaveAbsence.findByNumberOfDays", query = "SELECT l FROM LeaveAbsence l WHERE l.numberOfHours = :numberOfHours"),
         @NamedQuery(name = "LeaveAbsence.findByIsPaid", query = "SELECT l FROM LeaveAbsence l WHERE l.isPaid = :isPaid"),
         @NamedQuery(name = "LeaveAbsence.findByCreatedDate", query = "SELECT l FROM LeaveAbsence l WHERE l.createdDate = :createdDate"),
         @NamedQuery(name = "LeaveAbsence.findByEmployee", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeCode = :employeeId"),
@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "LeaveAbsence.findByWorkMonthsAndIsActive", query = "SELECT l FROM LeaveAbsence l WHERE l.workMonthsid = :workMonthsid AND l.employeeCode.isActive=:isActive"),
         @NamedQuery(name = "LeaveAbsence.findByEmployeeAndLeaveType", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeCode=:employeeId AND l.leaveTypeId = :leaveTypeId"),
         @NamedQuery(name = "LeaveAbsence.findByEmployeeAndWorkMonths", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeCode=:employeeId AND l.workMonthsid = :workMonthsid"),
+        @NamedQuery(name = "LeaveAbsence.findByEmployeeAndWorkMonthsAndIsPaid", query = "SELECT l FROM LeaveAbsence l WHERE l.employeeCode=:employeeId AND l.workMonthsid = :workMonthsid AND l.isPaid=:isPaid"),
         @NamedQuery(name = "LeaveAbsence.findByStartDateAndEndDate", query = "SELECT l FROM LeaveAbsence l WHERE l.startDate=:startDate AND l.endDate = :endDate"),
 
 })
@@ -48,7 +49,7 @@ public class LeaveAbsence implements Serializable {
     private Date endDate;
     @Basic(optional = false)
     @Column(name = "number_of_hours")
-    private int numberOfDays;
+    private int numberOfHours;
     @Basic(optional = false)
     @Column(name = "isPaid")
     private boolean isPaid;
@@ -77,11 +78,11 @@ public class LeaveAbsence implements Serializable {
         this.id = id;
     }
 
-    public LeaveAbsence(BigDecimal id, Date startDate, Date endDate, int numberOfDays, boolean isPaid, Date createdDate) {
+    public LeaveAbsence(BigDecimal id, Date startDate, Date endDate, int numberOfHours, boolean isPaid, Date createdDate) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.numberOfDays = numberOfDays;
+        this.numberOfHours = numberOfHours;
         this.isPaid = isPaid;
         this.createdDate = createdDate;
     }
@@ -110,12 +111,12 @@ public class LeaveAbsence implements Serializable {
         this.endDate = endDate;
     }
 
-    public int getNumberOfDays() {
-        return numberOfDays;
+    public int getNumberOfHours() {
+        return numberOfHours;
     }
 
-    public void setNumberOfDays(int numberOfDays) {
-        this.numberOfDays = numberOfDays;
+    public void setNumberOfHours(int numberOfDays) {
+        this.numberOfHours = numberOfDays;
     }
 
     public boolean getIsPaid() {

@@ -5,6 +5,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -83,6 +85,21 @@ public class DataTypeUtils {
     public static int daysBetween(Date start, Date end) {
         int days = Days.daysBetween(new LocalDate(start), new LocalDate(end)).getDays();
         return days;
+    }
+
+    public double calculateHours(String startTimeStr, String endTimeStr) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm");
+        DateTime startTime = formatter.parseDateTime(startTimeStr);
+        DateTime endTime = formatter.parseDateTime(endTimeStr);
+        int startHour = startTime.getHourOfDay();
+        int startMinute = startTime.getMinuteOfHour();
+        int endHour = endTime.getHourOfDay();
+        int endMinute = endTime.getMinuteOfHour();
+        int hoursBetween = endHour - startHour;
+        int minuteBetween = endMinute - startMinute;
+        int minute = hoursBetween * 60 + minuteBetween;
+        DecimalFormat df = new DecimalFormat("###.##");
+        return Double.valueOf(df.format(minute / 60d));
     }
 
     /**

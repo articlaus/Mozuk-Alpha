@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "OvertimeDates.findByHours", query = "SELECT o FROM OvertimeDates o WHERE o.hours = :hours"),
     @NamedQuery(name = "OvertimeDates.findByIsHoliday", query = "SELECT o FROM OvertimeDates o WHERE o.isHoliday = :isHoliday"),
     @NamedQuery(name = "OvertimeDates.findByOvertime", query = "SELECT o FROM OvertimeDates o WHERE o.overtimeid = :overtimeid"),
+
 })
 public class OvertimeDates implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -57,7 +58,7 @@ public class OvertimeDates implements Serializable {
     private String endTime;
     @Basic(optional = false)
     @Column(name = "hours")
-    private int hours;
+    private double hours;
     @Basic(optional = false)
 
     @Column(name = "isHoliday")
@@ -112,11 +113,11 @@ public class OvertimeDates implements Serializable {
         this.endTime = endTime;
     }
 
-    public int getHours() {
+    public double getHours() {
         return hours;
     }
 
-    public void setHours(int hours) {
+    public void setHours(double hours) {
         this.hours = hours;
     }
 

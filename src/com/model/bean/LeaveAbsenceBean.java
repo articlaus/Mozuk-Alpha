@@ -121,4 +121,27 @@ public class LeaveAbsenceBean extends BaseEJB {
         }
     }
 
+    public int findHoursByEmployeeAndWorkMonthAndIsPaid(Employee employee, WorkMonths workMonths, boolean isPaid) {
+        List<LeaveAbsence> leaveAbsences=getEm().createNamedQuery("LeaveAbsence.findByEmployeeAndWorkMonthsAndIsPaid", LeaveAbsence.class)
+                .setParameter("employeeId", employee)
+                .setParameter("workMonthsid", workMonths)
+                .setParameter("isPaid", isPaid)
+                .getResultList();
+        int hours = 0;
+        if (leaveAbsences.size() == 0) {
+            return hours;
+        } else {
+            for (LeaveAbsence leaveAbsence : leaveAbsences) {
+                if (leaveAbsence.getLeaveTypeId().getId().equals(BigDecimal.valueOf(1))) {
+                    hours += leaveAbsence.getNumberOfHours();
+                }
+
+                if (leaveAbsence.getLeaveTypeId().getId().equals(BigDecimal.valueOf(2))) {
+                    hours += leaveAbsence.getNumberOfHours();
+                }
+            }
+            return hours;
+        }
+    }
+
 }

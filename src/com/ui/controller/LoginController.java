@@ -1,5 +1,6 @@
 package com.ui.controller;
 
+import com.model.bean.CalculationBean;
 import com.model.bean.LoginBean;
 import com.model.entity.Users;
 import com.ui.component.base.EBeanUtils;
@@ -23,12 +24,14 @@ public class LoginController extends MainComponent {
 
     @Wire
     Textbox usernameTxt, passwordTxt;
+    private CalculationBean calculationBean;
 
     @Init(superclass = true)
     @Override
     public void init() {
         super.init();
         loginBean = EBeanUtils.getBean(LoginBean.class);
+        calculationBean = EBeanUtils.getBean(CalculationBean.class);
     }
 
 
@@ -41,6 +44,8 @@ public class LoginController extends MainComponent {
     @Command
     public void login() {
         validate();
+//        calculationBean.call();
+//        calculationBean.findByWorkMonth()
     }
 
     public boolean isNull(String value) {

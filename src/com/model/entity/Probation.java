@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Probation.findByIsActive", query = "SELECT p FROM Probation p WHERE p.isActive = :isActive"),
     @NamedQuery(name = "Probation.findByCreatedDate", query = "SELECT p FROM Probation p WHERE p.createdDate = :createdDate"),
     @NamedQuery(name = "Probation.findByEmployee", query = "SELECT p FROM Probation p WHERE p.employeeCode = :employeeCode"),
+    @NamedQuery(name = "Probation.findByEmployeeAndIsActive", query = "SELECT p FROM Probation p WHERE p.employeeCode = :employeeCode AND p.isActive=:isActive"),
     @NamedQuery(name = "Probation.findByDepartment", query = "SELECT p FROM Probation p WHERE p.departmentCode = :departmentCode"),
 })
 public class Probation implements Serializable {
