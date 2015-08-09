@@ -1,0 +1,32 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:n="http://www.w3.org/1999/xhtml">
+    <panel id="employeeSalaryAdditionTab" width="100%" height="900px" apply="org.zkoss.bind.BindComposer"
+           viewModel="@id('esat') @init('com.ui.controller.main.employee.EmployeeSalaryAdditionsController')">
+        <toolbar>
+            <button iconSclass="z-icon-plus" onClick="@command('addAddition')"/>
+        </toolbar>
+        <panelchildren>
+            <listbox id="employeeSalaryListbox" model="@bind(esat.salaryAdditionses)" height="800px">
+                <listhead menupopup="auto">
+                    <listheader label="Нэмэлтийн нэр" sort="auto(additionName)"/>
+                    <listheader label="Нэмэлтийн хэмжээ" sort="auto(additionAmount)"/>
+                    <listheader/>
+                </listhead>
+                <template name="model">
+                    <listitem>
+                        <listcell>
+                            <textbox value="@bind(each.additionName)" width="100%"/>
+                        </listcell>
+                        <listcell>
+                            <textbox value="@bind(each.additionAmount)" width="100%"/>
+                        </listcell>
+                        <listcell>
+                            <button iconSclass="z-icon-remove" onClick="@command('remove',entity=each)"/>
+                        </listcell>
+                    </listitem>
+                </template>
+            </listbox>
+        </panelchildren>
+    </panel>
+
+</zk>

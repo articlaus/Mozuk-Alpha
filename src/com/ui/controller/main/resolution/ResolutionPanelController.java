@@ -47,14 +47,16 @@ public class ResolutionPanelController extends MainComponent {
 
     @Command
     public void addResolution() {
+
+        getWindowMap().put("resolution", null);
         getWindowMap().put("controller", this);
         Executions.createComponents("/main/resolution/ResolutionWindow.zul", null, getWindowMap());
     }
 
     @Command
-    public void edit(@BindingParam("entity") Resolution resolution){
+    public void edit(@BindingParam("entity") Resolution resolution) {
         getWindowMap().put("controller", this);
-        getWindowMap().put("resolution",resolution);
+        getWindowMap().put("resolution", resolution);
         Executions.createComponents("/main/resolution/ResolutionWindow.zul", null, getWindowMap());
     }
 

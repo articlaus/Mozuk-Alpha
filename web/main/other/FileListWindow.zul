@@ -1,6 +1,6 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <window id="fileListWindow" width="800px" height="auto" border="normal" mode="modal" title="Баримтын жагсаалт"
+    <window id="fileListWindow" width="900px" height="auto" border="normal" mode="modal" title="Баримтын жагсаалт"
             closable="true"
             position="center" apply="org.zkoss.bind.BindComposer"
             viewModel="@id('flw') @init('com.ui.controller.other.FileListWindowController')">

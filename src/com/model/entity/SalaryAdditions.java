@@ -15,6 +15,8 @@ import java.math.BigDecimal;
         @NamedQuery(name = "SalaryAdditions.findDoubleByEmployeeCode", query = "SELECT SUM(s.additionAmount) FROM SalaryAdditions AS s WHERE s.employeeCode=:employeeCode"),
 })
 public class SalaryAdditions implements Serializable {
+
+
     @Id
     @Column(name = "id")
     private BigDecimal id;

@@ -50,6 +50,7 @@
                         <listheader label="Эхлэх Цаг" sort="auto(startTime)"/>
                         <listheader label="Дуусах Цаг" sort="auto(endTime)"/>
                         <listheader label="Амралтын Өдөр" sort="auto(isHoliday)"/>
+                        <listheader/>
                     </listhead>
                     <template name="model">
                         <listitem>

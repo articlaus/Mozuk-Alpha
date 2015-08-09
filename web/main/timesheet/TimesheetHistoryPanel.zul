@@ -10,7 +10,7 @@
         </toolbar>
         <panelchildren>
             <groupbox closable="false">
-                <caption label="Энэ Сарын Ажилчдын цаг оруулах"/>
+                <caption label="Ажилчидын цаг бүртгэлийн түүх"/>
                 <listbox id="employeeTimesheetHistoryListbox" height="600px" model="@bind(thp.employeeWorkMonthList)"
                          mold="paging" pagingPosition="bottom">
                     <listhead menupopup="auto">

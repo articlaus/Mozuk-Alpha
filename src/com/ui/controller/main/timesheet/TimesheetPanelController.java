@@ -55,7 +55,7 @@ public class TimesheetPanelController extends MainComponent {
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
         refresh();
-        calculateBtn.setDisabled(otherBean.findByYearAndMonth().getIsLocked());
+//        calculateBtn.setDisabled(otherBean.findByYearAndMonth().getIsLocked());
     }
 
     public void refresh() {

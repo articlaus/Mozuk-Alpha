@@ -39,10 +39,10 @@
 
 
                 <groupbox closable="false">
-                    <caption label="Хэлтэсийн жагсаалт"/>
+                    <caption label="Хэлтсийн жагсаалт"/>
                     <listbox id="departmentListBox" height="300px" model="@bind(csp.departmentList)">
                         <listhead menupopup="auto">
-                            <listheader label="Хэлтэсын нэр" sort="auto(departmentTitle)"/>
+                            <listheader label="Хэлтсийн нэр" sort="auto(departmentTitle)"/>
                             <listheader label="Дарга" sort="auto(departmentHeads.employeeCode.fullName)"/>
                             <listheader label="Тайлбар" sort="auto(departmentDescription)"/>
                             <listheader/>

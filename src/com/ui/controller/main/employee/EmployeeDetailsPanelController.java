@@ -48,7 +48,6 @@ public class EmployeeDetailsPanelController extends MainComponent {
         super.afterCompose(view);
         employee = (Employee) getMainInclude().getDynamicProperty("employee");
 
-        System.out.println("employee = " + employee);
         calculateMaritalBox();
         getBinder().loadComponent(maritalBox, true);
     }

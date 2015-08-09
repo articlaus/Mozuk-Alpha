@@ -347,5 +347,13 @@ public class EmployeeBean extends BaseEJB {
         }
     }
 
-
+    public boolean deleteSalaryAdditions(BigDecimal salaryAdditionId) {
+        try {
+            getEm().remove(getEm().getReference(SalaryAdditions.class, salaryAdditionId));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

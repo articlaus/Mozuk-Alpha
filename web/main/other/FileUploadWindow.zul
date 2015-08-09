@@ -1,6 +1,6 @@
 <zk xmlns="http://www.zkoss.org/2005/zul">
     <window id="fileUploadWindow" title="Excel файл оруулах"
-            height="auto" width="600px" mode="modal" position="center" border="normal"
+            height="auto" width="600px" mode="modal" position="center" border="normal" closable="true"
             apply="org.zkoss.bind.BindComposer"
             viewModel="@id('fuw') @init('com.ui.controller.other.FileUploadWindow')">
 

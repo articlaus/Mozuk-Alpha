@@ -5,7 +5,7 @@
             <tabbox>
                 <tabs>
                     <tab id="personalSettings" label="Хувийн тохиргоо" iconSclass="z-icon-user" selected="true"/>
-                    <tab id="departmentTab" label="Байгуулгын тохиргоо" iconSclass="z-icon-building"/>
+                    <tab id="departmentTab" label="Байгууллагын тохиргоо" iconSclass="z-icon-building"/>
                     <tab id="workMonthTab" label="Ажлын сар" iconSclass="z-icon-history"/>
                 </tabs>
                 <tabpanels>
