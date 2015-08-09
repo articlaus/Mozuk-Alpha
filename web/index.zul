@@ -1,6 +1,7 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:n="http://www.w3.org/1999/xhtml">
-    <panel width="100%" height="900px">
+    <panel width="100%" height="900px" title="Хүний Нөөцийн Цогц Шийдэл">
+
         <panelchildren>
             <borderlayout>
                 <west width="20%" border="none">
@@ -41,7 +42,12 @@
                     </panel>
                 </center>
 
-                <south height="0%"/>
+                <south height="5%" border="none">
+                    <panel title="2015 он Mozuk LLC." border="none">
+
+                    </panel>
+
+                </south>
             </borderlayout>
         </panelchildren>
     </panel>

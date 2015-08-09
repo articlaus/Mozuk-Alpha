@@ -50,7 +50,7 @@ public class CalendarPanelController extends MainComponent {
         Date currentDate = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        initCalendar = "$('#calendar').fullCalendar({height: 700,header: {left: 'prev,next today', center: 'title',right: 'month,agendaWeek,agendaDay'}," +
+        initCalendar = "$('#calendar').fullCalendar({lang:'en-gb',height: 700,header: {left: 'prev,next today', center: 'title',right: 'month,agendaWeek,agendaDay'}," +
                 "defaultDate: '" + format.format(currentDate) + "',editable: false,droppable: false,drop: function() {if (removeDraggable.is(':checked')) { $(this).remove();}},";
     }
 

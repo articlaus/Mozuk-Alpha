@@ -2,6 +2,7 @@
     xmlns:n="http://www.w3.org/1999/xhtml">
     <style src="/assets/fullcalendar/fullcalendar.min.css"/>
 
+
     <panel width="100%" id="calendarPanel" height="100%" apply="org.zkoss.bind.BindComposer"
            viewModel="@id('cp') @init('com.ui.controller.main.CalendarPanelController')">
 
@@ -16,4 +17,5 @@
     <script type="text/javascript" src="/assets/fullcalendar/moment.min.js"></script>
     <script type="text/javascript" src="/assets/fullcalendar/jquery-ui.custom.min.js"></script>
     <script type="text/javascript" src="/assets/fullcalendar/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="/assets/fullcalendar/lang-all.js"></script>
 </zk>

@@ -898,11 +898,11 @@
         })
     }(), function () {
         (t.defineLocale || t.lang).call(t, "en-au", {
-            months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"),
-            monthsShort: "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_"),
-            weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),
-            weekdaysShort: "Sun_Mon_Tue_Wed_Thu_Fri_Sat".split("_"),
-            weekdaysMin: "Su_Mo_Tu_We_Th_Fr_Sa".split("_"),
+            months: "Хулгана Сар_Үхэр Сар_Бар сар_Туулай Сар_Луу Сар_Могой Сар_Морь Сар_Хонь Сар_Бич Сар_Тахиа Сар_Нохой Сар_Гахай Сар".split("_"),
+            monthsShort: "1_2_3_4_5_6_7_8_9_10_11_12".split("_"),
+            weekdays: "Ням_Даваа_Мягмар_Лхагва_Пүрэв_Баасан_Бямба".split("_"),
+            weekdaysShort: "Ням_Дав_Мяг_Лхаг_Пүрэв_Баасан_Бямба".split("_"),
+            weekdaysMin: "Ням_Дав_Мяг_Лха_Пү_Ба_Бя".split("_"),
             longDateFormat: {
                 LT: "h:mm A",
                 LTS: "h:mm:ss A",
@@ -912,11 +912,11 @@
                 LLLL: "dddd, D MMMM YYYY LT"
             },
             calendar: {
-                sameDay: "[Today at] LT",
-                nextDay: "[Tomorrow at] LT",
-                nextWeek: "dddd [at] LT",
-                lastDay: "[Yesterday at] LT",
-                lastWeek: "[Last] dddd [at] LT",
+                sameDay: "[Өнөөдөр] LT",
+                nextDay: "[Маргааш] LT",
+                nextWeek: "dddd [-] LT",
+                lastDay: "[Өчигдөр] LT",
+                lastWeek: "[Сүүлд] dddd [-] LT",
                 sameElse: "L"
             },
             relativeTime: {
@@ -941,15 +941,15 @@
             },
             week: {dow: 1, doy: 4}
         }), e.fullCalendar.datepickerLang("en-au", "en-AU", {
-            closeText: "Done",
-            prevText: "Prev",
-            nextText: "Next",
-            currentText: "Today",
-            monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-            monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-            dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+            closeText: "Болсон",
+            prevText: "Өмнөх",
+            nextText: "Дараах",
+            currentText: "Өнөөдөр",
+            monthNames: ["Хулгана Сар", "Үхэр Сар", "Бар сар", "Туулай Сар", "Луу Сар", "Могой Сар", "Морь Сар", "Хонь Сар", "Бич Сар", "Тахиа Сар", "Нохой Сар", "Гахай Сар"],
+            monthNamesShort: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+            dayNames: ["Ням", "Даваа", "Мягмар", "Лхагва", "Пүрэв", "Баасан", "Бямба"],
+            dayNamesShort: ["Ням", "Даваа", "Мягмар", "Лхагва", "Пүрэв", "Баасан", "Бямба"],
+            dayNamesMin: ["Ня", "Да", "Мя", "Лх", "Пү", "Ба", "Бя"],
             weekHeader: "Wk",
             dateFormat: "dd/mm/yy",
             firstDay: 1,
@@ -959,11 +959,11 @@
         }), e.fullCalendar.lang("en-au")
     }(), function () {
         (t.defineLocale || t.lang).call(t, "en-ca", {
-            months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"),
-            monthsShort: "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_"),
-            weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),
-            weekdaysShort: "Sun_Mon_Tue_Wed_Thu_Fri_Sat".split("_"),
-            weekdaysMin: "Su_Mo_Tu_We_Th_Fr_Sa".split("_"),
+            months: "Хулгана Сар_Үхэр Сар_Бар сар_Туулай Сар_Луу Сар_Могой Сар_Морь Сар_Хонь Сар_Бич Сар_Тахиа Сар_Нохой Сар_Гахай Сар".split("_"),
+            monthsShort: "1_2_3_4_5_6_7_8_9_10_11_12".split("_"),
+            weekdays: "Ням_Даваа_Мягмар_Лхагва_Пүрэв_Баасан_Бямба".split("_"),
+            weekdaysShort: "Ням_Дав_Мяг_Лхаг_Пүрэв_Баасан_Бямба".split("_"),
+            weekdaysMin: "Ням_Дав_Мяг_Лха_Пү_Ба_Бя".split("_"),
             longDateFormat: {
                 LT: "h:mm A",
                 LTS: "h:mm:ss A",
@@ -973,11 +973,11 @@
                 LLLL: "dddd, D MMMM, YYYY LT"
             },
             calendar: {
-                sameDay: "[Today at] LT",
-                nextDay: "[Tomorrow at] LT",
-                nextWeek: "dddd [at] LT",
-                lastDay: "[Yesterday at] LT",
-                lastWeek: "[Last] dddd [at] LT",
+                sameDay: "[Өнөөдөр] LT",
+                nextDay: "[Маргааш] LT",
+                nextWeek: "dddd [-] LT",
+                lastDay: "[Өчигдөр] LT",
+                lastWeek: "[Сүүлд] dddd [-] LT",
                 sameElse: "L"
             },
             relativeTime: {
@@ -1003,11 +1003,11 @@
         }), e.fullCalendar.lang("en-ca")
     }(), function () {
         (t.defineLocale || t.lang).call(t, "en-gb", {
-            months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"),
-            monthsShort: "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_"),
-            weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),
-            weekdaysShort: "Sun_Mon_Tue_Wed_Thu_Fri_Sat".split("_"),
-            weekdaysMin: "Su_Mo_Tu_We_Th_Fr_Sa".split("_"),
+            months: "Хулгана Сар_Үхэр Сар_Бар сар_Туулай Сар_Луу Сар_Могой Сар_Морь Сар_Хонь Сар_Бич Сар_Тахиа Сар_Нохой Сар_Гахай Сар".split("_"),
+            monthsShort: "1_2_3_4_5_6_7_8_9_10_11_12".split("_"),
+            weekdays: "Ням_Даваа_Мягмар_Лхагва_Пүрэв_Баасан_Бямба".split("_"),
+            weekdaysShort: "Ням_Даваа_Мягмар_Лхагва_Пүрэв_Баасан_Бямба".split("_"),
+            weekdaysMin: "Ням_Дав_Мяг_Лха_Пү_Ба_Бя".split("_"),
             longDateFormat: {
                 LT: "HH:mm",
                 LTS: "HH:mm:ss",
@@ -1017,45 +1017,45 @@
                 LLLL: "dddd, D MMMM YYYY LT"
             },
             calendar: {
-                sameDay: "[Today at] LT",
-                nextDay: "[Tomorrow at] LT",
-                nextWeek: "dddd [at] LT",
-                lastDay: "[Yesterday at] LT",
-                lastWeek: "[Last] dddd [at] LT",
+                sameDay: "[Өнөөдөр] LT",
+                nextDay: "[Маргааш] LT",
+                nextWeek: "dddd [-] LT",
+                lastDay: "[Өчигдөр] LT",
+                lastWeek: "[Сүүлд] dddd [-] LT",
                 sameElse: "L"
             },
             relativeTime: {
-                future: "in %s",
-                past: "%s ago",
-                s: "a few seconds",
-                m: "a minute",
-                mm: "%d minutes",
-                h: "an hour",
-                hh: "%d hours",
-                d: "a day",
-                dd: "%d days",
-                M: "a month",
-                MM: "%d months",
-                y: "a year",
-                yy: "%d years"
+                future: " %s",
+                past: "%s өмнө",
+                s: "хэсэг хугацааны дараа",
+                m: "хэдэн минуь",
+                mm: "%d хэдэн минутанд",
+                h: "цаг",
+                hh: "%d цагын",
+                d: "өдөр",
+                dd: "%d өдөрт",
+                M: "сар",
+                MM: "%d сард",
+                y: "жил",
+                yy: "%d жилд"
             },
             ordinalParse: /\d{1,2}(st|nd|rd|th)/,
             ordinal: function (e) {
-                var t = e % 10, a = 1 === ~~(e % 100 / 10) ? "th" : 1 === t ? "st" : 2 === t ? "nd" : 3 === t ? "rd" : "th";
+                var t = e % 10, a = 1 === ~~(e % 100 / 10) ? "нд" : 1 === t ? "нд" : 2 === t ? "нд" : 3 === t ? "нд" : "нд";
                 return e + a
             },
             week: {dow: 1, doy: 4}
         }), e.fullCalendar.datepickerLang("en-gb", "en-GB", {
-            closeText: "Done",
-            prevText: "Prev",
-            nextText: "Next",
-            currentText: "Today",
-            monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-            monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-            dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-            weekHeader: "Wk",
+            closeText: "Болсон",
+            prevText: "Өмнөх",
+            nextText: "Дараах",
+            currentText: "Өнөөдөр",
+            monthNames: ["Хулгана Сар", "Үхэр Сар", "Бар сар", "Туулай Сар", "Луу Сар", "Могой Сар", "Морь Сар", "Хонь Сар", "Бич Сар", "Тахиа Сар", "Нохой Сар", "Гахай Сар"],
+            monthNamesShort: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+            dayNames: ["Ням", "Даваа", "Мягмар", "Лхагва", "Пүрэв", "Баасан", "Бямба"],
+            dayNamesShort: ["Ням", "Даваа", "Мягмар", "Лхагва", "Пүрэв", "Баасан", "Бямба"],
+            dayNamesMin: ["Ня", "Да", "Мя", "Лх", "Пү", "Ба", "Бя"],
+            weekHeader: "",
             dateFormat: "dd/mm/yy",
             firstDay: 1,
             isRTL: !1,
