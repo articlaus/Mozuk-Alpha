@@ -47,8 +47,20 @@ public class TimesheetFinalizePanelController extends MainComponent {
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         super.afterCompose(view);
         currentMonth = otherBean.findByYearAndMonth();
-        prevMonth = otherBean.findByPreviousYearAndMonth(currentMonth);
-        nextMonth = otherBean.findByNextYearAndMonth(currentMonth);
+        if (otherBean.findByPreviousYearAndMonth(currentMonth) != null)
+            prevMonth = otherBean.findByPreviousYearAndMonth(currentMonth);
+        else {
+            prevMonth=new WorkMonths();
+            btnPrev.setDisabled(true);
+        }
+
+
+        if (otherBean.findByNextYearAndMonth(currentMonth) != null)
+            nextMonth = otherBean.findByNextYearAndMonth(currentMonth);
+        else {
+            nextMonth=new WorkMonths();
+            btnNext.setDisabled(true);
+        }
 
         loadValues();
     }

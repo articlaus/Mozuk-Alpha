@@ -58,17 +58,35 @@ public class CalculationBean extends BaseEJB {
                 .getResultList();
     }
 
+    public List<EmployeeTimesheet> calculateTimeSheet(WorkMonths workMonth) {
 
-    public void call() {
-        WorkMonths workMonths = getEm().find(WorkMonths.class, BigDecimal.valueOf(2));
-//        List<EmployeeTimesheet> employeeTimesheets=calculateTimeSheet(workMonths);
-        List<EmployeeTimesheet> employeeTimesheets=findByWorkMonth(workMonths);
+        List<EmployeeTimesheet> employeeTimesheets = build(workMonth);
 
-        System.out.println("employeeTimesheets.size() = " + employeeTimesheets.size());
         for (EmployeeTimesheet employeeTimesheet : employeeTimesheets) {
-            System.out.println("employeeTimesheet = " + employeeTimesheet);
+            if (employeeTimesheet.getPosition() != null) {
+                double timeSalary = employeeTimesheet.getMainSalary() / workMonth.getTotalWorkHours();
+                double salaryAddition = employeeBean.findAdditionalSalaryByEmployeeCode(employeeTimesheet.getEmployee());
+                int leaveHours = leaveAbsenceBean.findHoursByEmployeeAndWorkMonthAndIsPaid(employeeTimesheet.getEmployee(), workMonth, false);
+                double monthSalary = calculateSalaryOfTime(employeeTimesheet.getMainSalary(), workMonth.getTotalWorkHours(), employeeTimesheet.getEmployeeWorkMonth().getWorkedHours(), leaveHours, salaryAddition);
+                System.out.println("salaryOfTIME monthSalary = " + monthSalary);
+                double probationAmount = calculateProbation(monthSalary, employeeTimesheet.getEmployee(), workMonth);
+                monthSalary -= probationAmount;
+                System.out.println("probation monthSalary = " + monthSalary);
+                double overtime = calculateOvertime(employeeTimesheet.getEmployee(), workMonth);
+                monthSalary += timeSalary * overtime;
+                System.out.println("overtime monthSalary = " + monthSalary);
+                employeeTimesheet.setTotalLeaveHours(leaveHours);
+                employeeTimesheet.setTotalOvertimeHours(overtime);
+                employeeTimesheet.setProbationAmount(probationAmount);
+                employeeTimesheet.setBonusAdditions(DataTypeUtils.doubleToString(salaryAddition));
+                employeeTimesheet = calculateTax(monthSalary, employeeTimesheet);
+            }
         }
-
+        deleteTimesheet(workMonth);
+        for (EmployeeTimesheet employeeTimesheet : employeeTimesheets) {
+            getEm().persist(employeeTimesheet);
+        }
+        return employeeTimesheets;
     }
 
     private List<EmployeeTimesheet> build(WorkMonths workMonth) {
@@ -103,38 +121,6 @@ public class CalculationBean extends BaseEJB {
         }
         return employeeTimesheets;
     }
-
-    public List<EmployeeTimesheet> calculateTimeSheet(WorkMonths workMonth) {
-
-        List<EmployeeTimesheet> employeeTimesheets = build(workMonth);
-
-        for (EmployeeTimesheet employeeTimesheet : employeeTimesheets) {
-            if (employeeTimesheet.getPosition() != null) {
-                double timeSalary = employeeTimesheet.getMainSalary() / workMonth.getTotalWorkHours();
-                double salaryAddition = employeeBean.findAdditionalSalaryByEmployeeCode(employeeTimesheet.getEmployee());
-                int leaveHours = leaveAbsenceBean.findHoursByEmployeeAndWorkMonthAndIsPaid(employeeTimesheet.getEmployee(), workMonth, false);
-                double monthSalary = calculateSalaryOfTime(employeeTimesheet.getMainSalary(), workMonth.getTotalWorkHours(), employeeTimesheet.getEmployeeWorkMonth().getWorkedHours(), leaveHours, salaryAddition);
-                System.out.println("salaryOfTIME monthSalary = " + monthSalary);
-                double probationAmount = calculateProbation(monthSalary, employeeTimesheet.getEmployee(), workMonth);
-                monthSalary -= probationAmount;
-                System.out.println("probation monthSalary = " + monthSalary);
-                double overtime = calculateOvertime(employeeTimesheet.getEmployee(), workMonth);
-                monthSalary += timeSalary * overtime;
-                System.out.println("overtime monthSalary = " + monthSalary);
-                employeeTimesheet.setTotalLeaveHours(leaveHours);
-                employeeTimesheet.setTotalOvertimeHours(overtime);
-                employeeTimesheet.setProbationAmount(probationAmount);
-                employeeTimesheet.setBonusAdditions(DataTypeUtils.doubleToString(salaryAddition));
-                employeeTimesheet = calculateTax(monthSalary, employeeTimesheet);
-            }
-        }
-        deleteTimesheet(workMonth);
-        for (EmployeeTimesheet employeeTimesheet : employeeTimesheets) {
-            getEm().persist(employeeTimesheet);
-        }
-        return employeeTimesheets;
-    }
-
 
     private EmployeeTimesheet calculateTax(double incomeValue, EmployeeTimesheet employeeTimesheet) {
         System.out.println("incomeValue = " + incomeValue);
@@ -184,5 +170,16 @@ public class CalculationBean extends BaseEJB {
         return overtime;
     }
 
+    //    public void call() {
+//        WorkMonths workMonths = getEm().find(WorkMonths.class, BigDecimal.valueOf(2));
+////        List<EmployeeTimesheet> employeeTimesheets=calculateTimeSheet(workMonths);
+//        List<EmployeeTimesheet> employeeTimesheets=findByWorkMonth(workMonths);
+//
+//        System.out.println("employeeTimesheets.size() = " + employeeTimesheets.size());
+//        for (EmployeeTimesheet employeeTimesheet : employeeTimesheets) {
+//            System.out.println("employeeTimesheet = " + employeeTimesheet);
+//        }
+//
+//    }
 
 }

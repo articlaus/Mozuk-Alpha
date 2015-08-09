@@ -5,6 +5,7 @@ import com.model.bean.EmployeeBean;
 import com.model.bean.OvertimeBean;
 import com.model.entity.*;
 import com.model.util.BaseEJB;
+import com.model.util.DataTypeUtils;
 import com.ui.component.CustomBandbox;
 import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
@@ -103,6 +104,11 @@ public class OvertimeWindowController extends MainComponent {
         for (Document document : documentList) {
             document.setEmployeeCode(employeeCustomBandbox.getSelectedT());
         }
+
+        for (OvertimeDates overtimeDates : overtimeDateList) {
+            overtimeDates.setHours(DataTypeUtils.calculateHours(overtimeDates.getStartTime(), overtimeDates.getEndTime()));
+        }
+
         overtime.setDocuments(documentList);
         if (isEditing) {
             if (overtimeBean.update(overtime) != null) {

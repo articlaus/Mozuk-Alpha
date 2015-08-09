@@ -87,7 +87,7 @@ public class DataTypeUtils {
         return days;
     }
 
-    public double calculateHours(String startTimeStr, String endTimeStr) {
+    public static double calculateHours(String startTimeStr, String endTimeStr) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm");
         DateTime startTime = formatter.parseDateTime(startTimeStr);
         DateTime endTime = formatter.parseDateTime(endTimeStr);
