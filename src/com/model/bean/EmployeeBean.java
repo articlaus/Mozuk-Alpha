@@ -43,7 +43,7 @@ public class EmployeeBean extends BaseEJB {
     public Employee findByRegister(String register) {
         Employee employee;
         try {
-            employee = (Employee) getEm().createNamedQuery("Employee.findBySocialSecurityNumber").setParameter("socialSecurityNumber", register).getSingleResult();
+            employee = getEm().createNamedQuery("Employee.findBySocialSecurityNumber", Employee.class).setParameter("socialSecurityNumber", register).getSingleResult();
             employee.setEmployeePosition((EmployeePosition) getEm().createNamedQuery("EmployeePosition.findByEmployeeAndIsActive").setParameter("employeeCode", employee).setParameter("isActive", true).getSingleResult());
             return employee;
         } catch (Exception ex) {
@@ -53,9 +53,13 @@ public class EmployeeBean extends BaseEJB {
     }
 
     private void createWorkMonth(Employee employee) {
-        EmployeeWorkMonth employeeWorkMonth = new EmployeeWorkMonth();
+//        EmployeeWorkMonth employeeWorkMonth = new EmployeeWorkMonth();
         WorkMonths workMonths = otherBean.findByYearAndMonth();
         saveByEmployeeWorkMonth(employee, workMonths);
+        workMonths = otherBean.findByNextYearAndMonth(workMonths);
+        if (workMonths != null) {
+            saveByEmployeeWorkMonth(employee, workMonths);
+        }
     }
 
     public Employee update(Employee employee) {

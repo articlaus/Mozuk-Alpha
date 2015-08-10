@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 @Table(name = "SALARY_ADDITIONS")
 @NamedQueries({
         @NamedQuery(name = "SalaryAdditions.findAll", query = "SELECT s FROM SalaryAdditions AS s "),
-        @NamedQuery(name = "SalaryAdditions.findByEmployeeCode", query = "SELECT s FROM SalaryAdditions AS s WHERE s.employeeCode=:employeeCode"),
-        @NamedQuery(name = "SalaryAdditions.findDoubleByEmployeeCode", query = "SELECT SUM(s.additionAmount) FROM SalaryAdditions AS s WHERE s.employeeCode=:employeeCode"),
+        @NamedQuery(name = "SalaryAdditions.findByEmployeeCode", query = "SELECT s FROM SalaryAdditions AS s WHERE s.employeeCode.code=:employeeCode"),
+        @NamedQuery(name = "SalaryAdditions.findDoubleByEmployeeCode", query = "SELECT SUM(s.additionAmount) FROM SalaryAdditions AS s WHERE s.employeeCode.code=:employeeCode"),
 })
 public class SalaryAdditions implements Serializable {
 
@@ -26,9 +26,9 @@ public class SalaryAdditions implements Serializable {
     @Basic
     @Column(name = "addition_amount")
     private Double additionAmount;
-    @Basic
-    @Column(name = "employee_code")
-    private String employeeCode;
+    @ManyToOne
+    @JoinColumn(name = "employee_code",referencedColumnName = "code")
+    private Employee employeeCode;
 
 
     public BigDecimal getId() {
@@ -57,12 +57,11 @@ public class SalaryAdditions implements Serializable {
         this.additionAmount = additionAmount;
     }
 
-
-    public String getEmployeeCode() {
+    public Employee getEmployeeCode() {
         return employeeCode;
     }
 
-    public void setEmployeeCode(String employeeCode) {
+    public void setEmployeeCode(Employee employeeCode) {
         this.employeeCode = employeeCode;
     }
 

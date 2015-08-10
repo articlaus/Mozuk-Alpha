@@ -66,6 +66,7 @@ public class CalculationBean extends BaseEJB {
             if (employeeTimesheet.getPosition() != null) {
                 double timeSalary = employeeTimesheet.getMainSalary() / workMonth.getTotalWorkHours();
                 double salaryAddition = employeeBean.findAdditionalSalaryByEmployeeCode(employeeTimesheet.getEmployee());
+
                 int leaveHours = leaveAbsenceBean.findHoursByEmployeeAndWorkMonthAndIsPaid(employeeTimesheet.getEmployee(), workMonth, false);
                 double monthSalary = calculateSalaryOfTime(employeeTimesheet.getMainSalary(), workMonth.getTotalWorkHours(), employeeTimesheet.getEmployeeWorkMonth().getWorkedHours(), leaveHours, salaryAddition);
                 System.out.println("salaryOfTIME monthSalary = " + monthSalary);
@@ -78,7 +79,15 @@ public class CalculationBean extends BaseEJB {
                 employeeTimesheet.setTotalLeaveHours(leaveHours);
                 employeeTimesheet.setTotalOvertimeHours(overtime);
                 employeeTimesheet.setProbationAmount(probationAmount);
-                employeeTimesheet.setBonusAdditions(DataTypeUtils.doubleToString(salaryAddition));
+
+                List<SalaryAdditions> salaryAdditionsList= getEm().createNamedQuery("SalaryAdditions.findByEmployeeCode", SalaryAdditions.class)
+                        .setParameter("employeeCode", employeeTimesheet.getEmployee().getCode()).getResultList();
+                String bonusAdditions = "";
+                for (SalaryAdditions salaryAdditions : salaryAdditionsList) {
+                    bonusAdditions += salaryAdditions.getAdditionName() + " : " + DataTypeUtils.doubleToString(salaryAdditions.getAdditionAmount())+System.lineSeparator();
+                }
+                System.out.println("bonusAdditions = " + bonusAdditions);
+                employeeTimesheet.setBonusAdditions(bonusAdditions);
                 employeeTimesheet = calculateTax(monthSalary, employeeTimesheet);
             }
         }

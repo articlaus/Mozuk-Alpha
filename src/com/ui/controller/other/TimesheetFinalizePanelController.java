@@ -3,6 +3,7 @@ package com.ui.controller.other;
 import com.model.bean.CalculationBean;
 import com.model.bean.EmployeeBean;
 import com.model.bean.OtherBean;
+import com.model.entity.Employee;
 import com.model.entity.EmployeeTimesheet;
 import com.model.entity.WorkMonths;
 import com.ui.component.base.EBeanUtils;
@@ -74,7 +75,9 @@ public class TimesheetFinalizePanelController extends MainComponent {
 
     private void loadEmployeeAndPosition() {
         for (EmployeeTimesheet employeeTimesheet : employeeTimesheetList) {
-            employeeTimesheet.setEmployee(employeeBean.findByRegister(employeeTimesheet.getEmployeeRegister()));
+            Employee employee=employeeBean.findByRegister(employeeTimesheet.getEmployeeRegister());
+            employeeTimesheet.setEmployee(employee);
+            System.out.println("employee = " + employee);
             employeeTimesheet.setPosition(employeeTimesheet.getEmployee().getEmployeePosition().getPositionCode());
         }
     }
