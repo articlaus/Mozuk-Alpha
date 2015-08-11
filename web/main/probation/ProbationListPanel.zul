@@ -11,7 +11,7 @@
         </toolbar>
         <panelchildren>
             <groupbox closable="false">
-                <caption label="Идэвхийтэй сажилгийн шийтгэл"/>
+                <caption label="Идэвхитэй сажилгийн шийтгэл"/>
                 <listbox id="probationActiveList" height="600px" model="@bind(plp.probations)">
                     <listhead menupopup="auto">
                         <listheader label="Ажилтаны нэр" sort="auto(employeeCode.fullName)"/>

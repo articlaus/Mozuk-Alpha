@@ -7,6 +7,7 @@ import com.ui.component.CustomBandbox;
 import com.ui.component.SearchBox;
 import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
+import com.ui.util.NotificationUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -60,6 +61,14 @@ public class LeaveHistoryPanelController extends MainComponent {
         leaveList = leaveAbsenceBean.findByWorkMonths(workMonths);
         getBinder().loadComponent(leaveHistoryListBox, true);
     }
+
+    @Command
+    public void refresh() {
+        leaveList = leaveAbsenceBean.findAll();
+        getBinder().loadComponent(leaveHistoryListBox, true);
+        NotificationUtils.showRefresh();
+    }
+
 
     @Command
     public void editLeave(@BindingParam("leave") LeaveAbsence leaveAbsence) {

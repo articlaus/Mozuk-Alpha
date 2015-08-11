@@ -4,6 +4,7 @@
            viewModel="@id('esat') @init('com.ui.controller.main.employee.EmployeeSalaryAdditionsController')">
         <toolbar>
             <button iconSclass="z-icon-plus" onClick="@command('addAddition')"/>
+            <button iconSclass="z-icon-refresh" onClick="@command('refresh')"/>
         </toolbar>
         <panelchildren>
             <listbox id="employeeSalaryListbox" model="@bind(esat.salaryAdditionses)" height="800px">

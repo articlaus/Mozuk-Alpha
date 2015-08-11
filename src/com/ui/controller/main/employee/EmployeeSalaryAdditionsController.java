@@ -48,6 +48,12 @@ public class EmployeeSalaryAdditionsController extends MainComponent {
         getBinder().loadComponent(employeeSalaryListbox, true);
     }
 
+    @Command
+    public void refresh() {
+        loadValues();
+        NotificationUtils.showRefresh();
+    }
+
 
     @Command
     public void add() {
@@ -73,8 +79,14 @@ public class EmployeeSalaryAdditionsController extends MainComponent {
     @Command
     public void save() {
         for (SalaryAdditions salaryAdditionse : salaryAdditionses) {
-//            if (salaryAdditionse.getId() != null)
-//                employeeBean.
+            if (salaryAdditionse.getId() != null)
+                employeeBean.deleteSalaryAdditions(salaryAdditionse.getId());
+        }
+
+        if (employeeBean.save(salaryAdditionses)) {
+            NotificationUtils.showSuccess();
+        } else {
+            NotificationUtils.showDeletion();
         }
     }
 

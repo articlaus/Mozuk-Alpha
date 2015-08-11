@@ -7,6 +7,7 @@ import com.model.entity.OvertimeDates;
 import com.ui.component.base.BaseTreeModel;
 import com.ui.component.base.EBeanUtils;
 import com.ui.component.base.MainComponent;
+import com.ui.util.NotificationUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -52,7 +53,7 @@ public class OvertimeListPanelController extends MainComponent {
         super.afterCompose(view);
         overtimeMap = new HashMap<>();
 
-        refresh();
+        loadValues();
         initComponents();
     }
 
@@ -69,10 +70,16 @@ public class OvertimeListPanelController extends MainComponent {
     }
 
 
-    public void refresh() {
+    public void loadValues() {
         overtimeList = overtimeBean.findByWorkMonthsId(otherBean.findByYearAndMonth());
         overtimeTreeModel = new BaseTreeModel(overtimeList, "overtimeDatesList");
         getBinder().loadComponent(overtimeTree, true);
+    }
+
+    @Command
+    public void refresh() {
+        loadValues();
+        NotificationUtils.showRefresh();
     }
 
     private void initComponents() {

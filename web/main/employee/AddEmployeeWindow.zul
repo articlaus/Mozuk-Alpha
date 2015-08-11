@@ -47,7 +47,7 @@
                             constraint="no empty"/>
                 </row>
                 <row>
-                    <label value="Төрсөн өдөр :"/>
+                    <label value="Төрсөн он сар :"/>
                     <datebox value="@bind(aew.employee.dob)" width="100%" format="yyyy/MM/dd" placeholder="Төрсөн өдөр"
                              constraint="no empty"/>
                 </row>
@@ -61,7 +61,7 @@
                     </combobox>
                 </row>
                 <row>
-                    <label value="Гэр бүлийн xэмжээ :"/>
+                    <label value="Ам бүлийн тоо :"/>
                     <intbox value="@bind(aew.employee.familySize)" width="100%" placeholder="Гэр бүлийн Хэмжээ"
                             constraint="no empty"/>
                 </row>

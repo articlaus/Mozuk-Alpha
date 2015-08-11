@@ -9,19 +9,25 @@ public class NotificationUtils {
 
     public static void showMsgWarning(String msg) {
         String printMsg = msg.replaceAll(" ", System.lineSeparator());
-        Clients.showNotification(printMsg, Clients.NOTIFICATION_TYPE_WARNING, null, "middle_center", 0, true);
+        Clients.showNotification(printMsg, Clients.NOTIFICATION_TYPE_WARNING, null, "middle_center", 2000, true);
     }
 
     public static void showSelectValueMsg() {
         String str = "Та Засах утгаа Сонгон уу.";
         str.replaceAll(" ", System.lineSeparator());
-        Clients.showNotification(str, Clients.NOTIFICATION_TYPE_WARNING, null, "middle_center", 0, true);
+        Clients.showNotification(str, Clients.NOTIFICATION_TYPE_WARNING, null, "middle_center", 2000, true);
     }
 
     public static void showSuccess() {
         String str = "Амжилттай Хадгалагдлаа!";
         str.replaceAll(" ", System.lineSeparator());
-        Clients.showNotification(str, Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 0, true);
+        Clients.showNotification(str, Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 2000, true);
+    }
+
+    public static void showRefresh() {
+        String str = "Мэдээллийг шинэжлэв.";
+        str.replaceAll(" ", System.lineSeparator());
+        Clients.showNotification(str, Clients.NOTIFICATION_TYPE_INFO, null, "middle_center", 2000, true);
     }
 
     public static void showFailure() {
@@ -45,4 +51,6 @@ public class NotificationUtils {
         String printMsg = msg.replaceAll(" ", System.lineSeparator());
         Clients.showNotification(printMsg, Clients.NOTIFICATION_TYPE_INFO, null, "end_after", 5000, false);
     }
+
+
 }

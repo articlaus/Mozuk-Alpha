@@ -4,11 +4,12 @@
         <toolbar>
             <cell>
                 <button label="Нэмэх" iconSclass="z-icon-plus-circle" onClick="@command('addOvertime')"/>
+                <button iconSclass="z-icon-refresh" onClick="@command('refresh')"/>
             </cell>
         </toolbar>
         <panelchildren>
             <groupbox closable="false" height="1000px">
-                <caption label="Энэ сарын илүү цагын мэдээлэл"/>
+                <caption label="Энэ сарын илүү цагийн мэдээлэл"/>
                 <tree width="100%" id="overtimeTree" height="600px"
                       model="@bind(olp.overtimeTreeModel)">
                     <treecols>

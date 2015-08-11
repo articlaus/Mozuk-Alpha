@@ -4,6 +4,7 @@
            viewModel="@id('lht') @init('com.ui.controller.main.leave.LeaveHistoryPanelController')">
         <toolbar>
             <hbox>
+                <button iconSclass="z-icon-refresh" onClick="@command('refresh')"/>
                 <label value="Сар :"/>
                 <cell id="workCell"/>
                 <cell id="searchCell"/>
@@ -17,7 +18,7 @@
                     <listhead menupopup="auto">
                         <listheader label="Ажилтан" sort="auto(employeeCode.fullName)"/>
                         <listheader label="Төрөл" sort="auto(leaveTypeId.leaveType)"/>
-                        <listheader label="Эхлэсэн Өдөр" sort="auto(startDate)"/>
+                        <listheader label="Эхэлсэн Өдөр" sort="auto(startDate)"/>
                         <listheader label="Дууссан Өдөр" sort="auto(endDate)"/>
                         <listheader/>
                     </listhead>

@@ -6,6 +6,7 @@
                 <tabs>
                     <tab id="employeeDetails" label="Ерөнхий Мэдээлэл" iconSclass="z-icon-user" selected="true"/>
                     <tab id="employeePosition" label="Албан Тушаал" iconSclass="z-icon-file"/>
+                    <tab id="employeeSalaryAddition" label="Цалингийн нэмэгдэл" iconSclass="z-icon-plus"/>
                     <tab id="employeeWorkHistory" label="Ажлын Түүх" iconSclass="z-icon-history"/>
                     <tab id="employeeFileUploadTab" label="Баримт" iconSclass="z-icon-file"/>
                 </tabs>
@@ -15,6 +16,9 @@
                     </tabpanel>
                     <tabpanel>
                         <include src="/main/position/EmployeePositionListPanel.zul"/>
+                    </tabpanel>
+                    <tabpanel>
+                        <include src="/main/employee/EmployeeSalaryAdditionTab.zul"/>
                     </tabpanel>
                     <tabpanel>
                         <include src="/main/employee/EmployeeWorkHistoryPanel.zul"/>

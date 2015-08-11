@@ -4,13 +4,14 @@
            viewModel="@id('ohp') @init('com.ui.controller.main.overtime.OvertimeHistoryPanelController')">
         <toolbar>
             <hbox>
+                <button iconSclass="z-icon-refresh" onClick="@command('refresh')"/>
                 <label value="Сар :"/>
                 <cell id="workCell"/>
             </hbox>
         </toolbar>
         <panelchildren>
             <groupbox height="600px">
-                <caption label="Илүү цагын түүх"/>
+                <caption label="Илүү цагийн түүх"/>
                 <tree width="100%" id="overtimeTree"
                       model="@bind(ohp.overtimeTreeModel)"
                       vflex="true">
